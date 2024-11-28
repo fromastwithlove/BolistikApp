@@ -1,6 +1,6 @@
 //
-//  bolistikApp.swift
-//  bolistik
+//  BolistikApp.swift
+//  Bolistik
 //
 //  Created by Adil Yergaliyev on 28.11.24.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct bolistikApp: App {
+struct BolistikApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

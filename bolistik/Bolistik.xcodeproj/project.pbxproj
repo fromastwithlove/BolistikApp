@@ -24,25 +24,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		C5685AB62CF8F2D30075537F /* bolistik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bolistik.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C5685AC62CF8F2D40075537F /* bolistikTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = bolistikTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C5685AD02CF8F2D40075537F /* bolistikUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = bolistikUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5685AB62CF8F2D30075537F /* Bolistik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bolistik.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5685AC62CF8F2D40075537F /* BolistikTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BolistikTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5685AD02CF8F2D40075537F /* BolistikUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BolistikUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		C5685AB82CF8F2D30075537F /* bolistik */ = {
+		C5685AB82CF8F2D30075537F /* Bolistik */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = bolistik;
+			path = Bolistik;
 			sourceTree = "<group>";
 		};
-		C5685AC92CF8F2D40075537F /* bolistikTests */ = {
+		C5685AC92CF8F2D40075537F /* BolistikTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = bolistikTests;
+			path = BolistikTests;
 			sourceTree = "<group>";
 		};
-		C5685AD32CF8F2D40075537F /* bolistikUITests */ = {
+		C5685AD32CF8F2D40075537F /* BolistikUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = bolistikUITests;
+			path = BolistikUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -75,9 +75,9 @@
 		C5685AAD2CF8F2D30075537F = {
 			isa = PBXGroup;
 			children = (
-				C5685AB82CF8F2D30075537F /* bolistik */,
-				C5685AC92CF8F2D40075537F /* bolistikTests */,
-				C5685AD32CF8F2D40075537F /* bolistikUITests */,
+				C5685AB82CF8F2D30075537F /* Bolistik */,
+				C5685AC92CF8F2D40075537F /* BolistikTests */,
+				C5685AD32CF8F2D40075537F /* BolistikUITests */,
 				C5685AB72CF8F2D30075537F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -85,9 +85,9 @@
 		C5685AB72CF8F2D30075537F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C5685AB62CF8F2D30075537F /* bolistik.app */,
-				C5685AC62CF8F2D40075537F /* bolistikTests.xctest */,
-				C5685AD02CF8F2D40075537F /* bolistikUITests.xctest */,
+				C5685AB62CF8F2D30075537F /* Bolistik.app */,
+				C5685AC62CF8F2D40075537F /* BolistikTests.xctest */,
+				C5685AD02CF8F2D40075537F /* BolistikUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,9 +95,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C5685AB52CF8F2D30075537F /* bolistik */ = {
+		C5685AB52CF8F2D30075537F /* Bolistik */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C5685ADA2CF8F2D40075537F /* Build configuration list for PBXNativeTarget "bolistik" */;
+			buildConfigurationList = C5685ADA2CF8F2D40075537F /* Build configuration list for PBXNativeTarget "Bolistik" */;
 			buildPhases = (
 				C5685AB22CF8F2D30075537F /* Sources */,
 				C5685AB32CF8F2D30075537F /* Frameworks */,
@@ -108,18 +108,18 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				C5685AB82CF8F2D30075537F /* bolistik */,
+				C5685AB82CF8F2D30075537F /* Bolistik */,
 			);
-			name = bolistik;
+			name = Bolistik;
 			packageProductDependencies = (
 			);
 			productName = bolistik;
-			productReference = C5685AB62CF8F2D30075537F /* bolistik.app */;
+			productReference = C5685AB62CF8F2D30075537F /* Bolistik.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C5685AC52CF8F2D40075537F /* bolistikTests */ = {
+		C5685AC52CF8F2D40075537F /* BolistikTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C5685ADD2CF8F2D40075537F /* Build configuration list for PBXNativeTarget "bolistikTests" */;
+			buildConfigurationList = C5685ADD2CF8F2D40075537F /* Build configuration list for PBXNativeTarget "BolistikTests" */;
 			buildPhases = (
 				C5685AC22CF8F2D40075537F /* Sources */,
 				C5685AC32CF8F2D40075537F /* Frameworks */,
@@ -131,18 +131,18 @@
 				C5685AC82CF8F2D40075537F /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				C5685AC92CF8F2D40075537F /* bolistikTests */,
+				C5685AC92CF8F2D40075537F /* BolistikTests */,
 			);
-			name = bolistikTests;
+			name = BolistikTests;
 			packageProductDependencies = (
 			);
 			productName = bolistikTests;
-			productReference = C5685AC62CF8F2D40075537F /* bolistikTests.xctest */;
+			productReference = C5685AC62CF8F2D40075537F /* BolistikTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		C5685ACF2CF8F2D40075537F /* bolistikUITests */ = {
+		C5685ACF2CF8F2D40075537F /* BolistikUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C5685AE02CF8F2D40075537F /* Build configuration list for PBXNativeTarget "bolistikUITests" */;
+			buildConfigurationList = C5685AE02CF8F2D40075537F /* Build configuration list for PBXNativeTarget "BolistikUITests" */;
 			buildPhases = (
 				C5685ACC2CF8F2D40075537F /* Sources */,
 				C5685ACD2CF8F2D40075537F /* Frameworks */,
@@ -154,13 +154,13 @@
 				C5685AD22CF8F2D40075537F /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				C5685AD32CF8F2D40075537F /* bolistikUITests */,
+				C5685AD32CF8F2D40075537F /* BolistikUITests */,
 			);
-			name = bolistikUITests;
+			name = BolistikUITests;
 			packageProductDependencies = (
 			);
 			productName = bolistikUITests;
-			productReference = C5685AD02CF8F2D40075537F /* bolistikUITests.xctest */;
+			productReference = C5685AD02CF8F2D40075537F /* BolistikUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -187,12 +187,14 @@
 					};
 				};
 			};
-			buildConfigurationList = C5685AB12CF8F2D30075537F /* Build configuration list for PBXProject "bolistik" */;
-			developmentRegion = en;
+			buildConfigurationList = C5685AB12CF8F2D30075537F /* Build configuration list for PBXProject "Bolistik" */;
+			developmentRegion = kk;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ru,
+				kk,
 			);
 			mainGroup = C5685AAD2CF8F2D30075537F;
 			minimizedProjectReferenceProxies = 1;
@@ -201,9 +203,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C5685AB52CF8F2D30075537F /* bolistik */,
-				C5685AC52CF8F2D40075537F /* bolistikTests */,
-				C5685ACF2CF8F2D40075537F /* bolistikUITests */,
+				C5685AB52CF8F2D30075537F /* Bolistik */,
+				C5685AC52CF8F2D40075537F /* BolistikTests */,
+				C5685ACF2CF8F2D40075537F /* BolistikUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -259,12 +261,12 @@
 /* Begin PBXTargetDependency section */
 		C5685AC82CF8F2D40075537F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C5685AB52CF8F2D30075537F /* bolistik */;
+			target = C5685AB52CF8F2D30075537F /* Bolistik */;
 			targetProxy = C5685AC72CF8F2D40075537F /* PBXContainerItemProxy */;
 		};
 		C5685AD22CF8F2D40075537F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C5685AB52CF8F2D30075537F /* bolistik */;
+			target = C5685AB52CF8F2D30075537F /* Bolistik */;
 			targetProxy = C5685AD12CF8F2D40075537F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -468,7 +470,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/bolistik.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/bolistik";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bolistik.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Bolistik";
 			};
 			name = Debug;
 		};
@@ -487,7 +489,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/bolistik.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/bolistik";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bolistik.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Bolistik";
 			};
 			name = Release;
 		};
@@ -528,7 +530,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C5685AB12CF8F2D30075537F /* Build configuration list for PBXProject "bolistik" */ = {
+		C5685AB12CF8F2D30075537F /* Build configuration list for PBXProject "Bolistik" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C5685AD82CF8F2D40075537F /* Debug */,
@@ -537,7 +539,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C5685ADA2CF8F2D40075537F /* Build configuration list for PBXNativeTarget "bolistik" */ = {
+		C5685ADA2CF8F2D40075537F /* Build configuration list for PBXNativeTarget "Bolistik" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C5685ADB2CF8F2D40075537F /* Debug */,
@@ -546,7 +548,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C5685ADD2CF8F2D40075537F /* Build configuration list for PBXNativeTarget "bolistikTests" */ = {
+		C5685ADD2CF8F2D40075537F /* Build configuration list for PBXNativeTarget "BolistikTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C5685ADE2CF8F2D40075537F /* Debug */,
@@ -555,7 +557,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C5685AE02CF8F2D40075537F /* Build configuration list for PBXNativeTarget "bolistikUITests" */ = {
+		C5685AE02CF8F2D40075537F /* Build configuration list for PBXNativeTarget "BolistikUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C5685AE12CF8F2D40075537F /* Debug */,

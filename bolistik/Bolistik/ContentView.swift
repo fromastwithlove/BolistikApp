@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  bolistik
+//  Bolistik
 //
 //  Created by Adil Yergaliyev on 28.11.24.
 //

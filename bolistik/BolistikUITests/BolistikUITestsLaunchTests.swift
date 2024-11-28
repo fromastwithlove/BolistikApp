@@ -1,13 +1,13 @@
 //
-//  bolistikUITestsLaunchTests.swift
-//  bolistikUITests
+//  BolistikUITestsLaunchTests.swift
+//  BolistikUITests
 //
 //  Created by Adil Yergaliyev on 28.11.24.
 //
 
 import XCTest
 
-final class bolistikUITestsLaunchTests: XCTestCase {
+final class BolistikUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
