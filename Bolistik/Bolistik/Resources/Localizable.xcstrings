@@ -1,7 +1,66 @@
 {
-  "sourceLanguage" : "kk",
+  "sourceLanguage" : "en",
   "strings" : {
-    "Hello, world!" : {
+    "button.start" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loslegen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Get started"
+          }
+        },
+        "kk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Бастау"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Начать"
+          }
+        }
+      }
+    },
+    "Effortlessly divide your costs using Bolistik!" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teilen Sie Ihre Kosten mühelos mit Bölistik!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effortlessly divide your costs using Bolistik!"
+          }
+        },
+        "kk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Шығындарыңызды Бöлістік арқылы оңай бөлісіңіз!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Легко разделяйте свои расходы с помощью Бöлістік!"
+          }
+        }
+      }
+    },
+    "Get started" : {
+
+    },
+    "Hello, World!" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -25,6 +84,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Привет, Мир!"
+          }
+        }
+      }
+    },
+    "Send via SMS" : {
+
+    },
+    "Send via WhatsApp" : {
+
+    },
+    "Split your finances wisely and with ease when traveling with friends or family." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teilen Sie Ihre Finanzen klug und mühelos, wenn Sie mit Freunden oder Familie reisen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Split your finances wisely and with ease when traveling with friends or family."
+          }
+        },
+        "kk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Достарыңызбен немесе отбасыңызбен саяхаттағанда, қаржыларыңызды ақылмен әрі оңай басқарыңыз."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Разделяйте свои финансы разумно и с легкостью, путешествуя с друзьями или семьей."
           }
         }
       }

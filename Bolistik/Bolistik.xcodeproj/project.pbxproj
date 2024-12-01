@@ -188,7 +188,7 @@
 				};
 			};
 			buildConfigurationList = C5685AB12CF8F2D30075537F /* Build configuration list for PBXProject "Bolistik" */;
-			developmentRegion = kk;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,

@@ -11,7 +11,7 @@ import SwiftUI
 struct BolistikApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            WelcomeView()
         }
     }
 }
