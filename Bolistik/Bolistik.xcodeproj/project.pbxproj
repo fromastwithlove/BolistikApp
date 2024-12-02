@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C56C2E7F2CFE5A65005DDD3B /* PhoneNumberKit in Frameworks */ = {isa = PBXBuildFile; productRef = C56C2E7E2CFE5A65005DDD3B /* PhoneNumberKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		C5685AC72CF8F2D40075537F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C56C2E7F2CFE5A65005DDD3B /* PhoneNumberKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 				C5685AB82CF8F2D30075537F /* Bolistik */,
 				C5685AC92CF8F2D40075537F /* BolistikTests */,
 				C5685AD32CF8F2D40075537F /* BolistikUITests */,
+				C56C2E7D2CFE5A65005DDD3B /* Frameworks */,
 				C5685AB72CF8F2D30075537F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +96,13 @@
 				C5685AD02CF8F2D40075537F /* BolistikUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		C56C2E7D2CFE5A65005DDD3B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -112,6 +125,7 @@
 			);
 			name = Bolistik;
 			packageProductDependencies = (
+				C56C2E7E2CFE5A65005DDD3B /* PhoneNumberKit */,
 			);
 			productName = bolistik;
 			productReference = C5685AB62CF8F2D30075537F /* Bolistik.app */;
@@ -199,6 +213,9 @@
 			);
 			mainGroup = C5685AAD2CF8F2D30075537F;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				C56C2E7C2CFE5998005DDD3B /* XCRemoteSwiftPackageReference "PhoneNumberKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C5685AB72CF8F2D30075537F /* Products */;
 			projectDirPath = "";
@@ -570,6 +587,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C56C2E7C2CFE5998005DDD3B /* XCRemoteSwiftPackageReference "PhoneNumberKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/marmelroy/PhoneNumberKit?tab=readme-ov-file";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C56C2E7E2CFE5A65005DDD3B /* PhoneNumberKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C56C2E7C2CFE5998005DDD3B /* XCRemoteSwiftPackageReference "PhoneNumberKit" */;
+			productName = PhoneNumberKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C5685AAE2CF8F2D30075537F /* Project object */;
 }

@@ -1,0 +1,15 @@
+{
+  "originHash" : "e4067e720cd6e54f4d7c0b160cf551cdcf056cf8f3ce4a63104719a7ad3d8603",
+  "pins" : [
+    {
+      "identity" : "phonenumberkit?tab=readme-ov-file",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/marmelroy/PhoneNumberKit?tab=readme-ov-file",
+      "state" : {
+        "revision" : "4ca759e952bb62162afb8448b3240a63becddd86",
+        "version" : "4.0.1"
+      }
+    }
+  ],
+  "version" : 3
+}

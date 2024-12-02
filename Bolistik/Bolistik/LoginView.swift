@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct LoginView: View {
+    
+    @State private var isPhoneNumberValid: Bool = false
+    
     var body: some View {
         VStack(alignment: .center) {
             Text("auth.title")
@@ -23,6 +26,8 @@ struct LoginView: View {
                 .resizable()
                 .scaledToFit()
             Spacer()
+            PhoneNumberInputView(isValid: $isPhoneNumberValid)
+                .padding(.vertical)
             NavigationLink(destination: EmptyView()) {
                 ActionText(text: "auth.sendViaSMS", tintColor: .accent)
             }
