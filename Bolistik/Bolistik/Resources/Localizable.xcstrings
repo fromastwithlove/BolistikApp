@@ -1,7 +1,147 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "button.start" : {
+    "auth.sendViaSMS" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per SMS senden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send via SMS"
+          }
+        },
+        "kk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SMS арқылы жіберу"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отправить через SMS"
+          }
+        }
+      }
+    },
+    "auth.sendViaWhatsApp" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per WhatsApp senden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send via WhatsApp"
+          }
+        },
+        "kk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WhatsApp арқылы жіберу"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отправить через WhatsApp"
+          }
+        }
+      }
+    },
+    "auth.subtitle" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitte geben Sie Ihre Handynummer an; wir senden Ihnen ein Einmalpasswort (OTP), um den Registrierungsprozess abzuschließen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please provide your mobile phone number; we will send you a one-time password (OTP) to complete the signup process."
+          }
+        },
+        "kk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тіркелу үдерісін аяқтау үшін біз сізге бір реттік құпия сөз (OTP) жіберуіміз үшін телефон нөміріңізді енгізіңіз."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пожалуйста, укажите номер вашего мобильного телефона; мы отправим вам одноразовый пароль (OTP) для завершения процесса регистрации."
+          }
+        }
+      }
+    },
+    "auth.termAndCondition" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durch das Erstellen und/oder Verwenden eines Kontos stimmen Sie unseren Allgemeinen Geschäftsbedingungen zu."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By creating and/or using an account, you \nagree to our Terms & Conditions."
+          }
+        },
+        "kk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Есептік жазбаны жасап және/немесе пайдалана отырып, сіз біздің Шарттарымыз бен Ережелерімізге келісесіз."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создавая и/или используя аккаунт, вы соглашаетесь с нашими Условиями и Положениями."
+          }
+        }
+      }
+    },
+    "auth.title" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrierung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registration"
+          }
+        },
+        "kk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тіркелу"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Регистрация"
+          }
+        }
+      }
+    },
+    "welcome.start" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -29,72 +169,7 @@
         }
       }
     },
-    "Effortlessly divide your costs using Bolistik!" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Teilen Sie Ihre Kosten mühelos mit Bölistik!"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Effortlessly divide your costs using Bolistik!"
-          }
-        },
-        "kk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Шығындарыңызды Бöлістік арқылы оңай бөлісіңіз!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Легко разделяйте свои расходы с помощью Бöлістік!"
-          }
-        }
-      }
-    },
-    "Get started" : {
-
-    },
-    "Hello, World!" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hallo, Welt!"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hello, World!"
-          }
-        },
-        "kk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Сәлем, Әлем!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Привет, Мир!"
-          }
-        }
-      }
-    },
-    "Send via SMS" : {
-
-    },
-    "Send via WhatsApp" : {
-
-    },
-    "Split your finances wisely and with ease when traveling with friends or family." : {
+    "welcome.subtitle" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -118,6 +193,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Разделяйте свои финансы разумно и с легкостью, путешествуя с друзьями или семьей."
+          }
+        }
+      }
+    },
+    "welcome.title" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teilen Sie Ihre Kosten mühelos mit Bölistik!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effortlessly divide your costs using Bolistik!"
+          }
+        },
+        "kk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Шығындарыңызды Бöлістік арқылы оңай бөлісіңіз!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Легко разделяйте свои расходы с помощью Бöлістік!"
           }
         }
       }

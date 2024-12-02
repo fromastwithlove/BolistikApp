@@ -9,25 +9,28 @@ import SwiftUI
 
 struct WelcomeView: View {
     var body: some View {
-        VStack(alignment: .leading) {
-            Image("Welcome")
-                .resizable()
-                .scaledToFit()
-                .aspectRatio(contentMode: .fit)
-            Spacer()
-            Text("Effortlessly divide your costs using Bolistik!")
-                .font(.largeTitle)
-                .foregroundStyle(Color.accentColor)
-                .padding(.horizontal)
-                .padding(.vertical)
-            Text("Split your finances wisely and with ease when traveling with friends or family.")
-                .font(.title3)
-                .foregroundStyle(Color.gray)
-                .padding(.horizontal)
-            Spacer()
-            ActionButton(text: "button.start", tintColor: .accentColor) {}
+        NavigationStack {
+            VStack(alignment: .leading) {
+                Image("Welcome")
+                    .resizable()
+                    .scaledToFit()
+                Spacer()
+                Text("welcome.title")
+                    .font(.largeTitle)
+                    .foregroundStyle(Color.accentColor)
+                    .padding(.vertical)
+                    .padding(.horizontal)
+                Text("welcome.subtitle")
+                    .font(.title3)
+                    .foregroundStyle(Color.gray)
+                    .padding(.horizontal)
+                Spacer()
+                NavigationLink(destination: LoginView()) {
+                    ActionText(text: "welcome.start", tintColor: .accentColor)
+                }
+            }
+            .padding()
         }
-        .padding()
     }
 }
 
