@@ -26,7 +26,6 @@ struct LoginView: View {
                 .resizable()
                 .scaledToFit()
             Spacer()
-            PhoneNumberInputView(isValid: $isPhoneNumberValid)
                 .padding(.vertical)
             NavigationLink(destination: EmptyView()) {
                 ActionText(text: "auth.sendViaSMS", tintColor: .accent)

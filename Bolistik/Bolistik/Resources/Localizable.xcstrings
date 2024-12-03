@@ -141,33 +141,8 @@
         }
       }
     },
-    "welcome.start" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Loslegen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Get started"
-          }
-        },
-        "kk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Бастау"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Начать"
-          }
-        }
-      }
+    "Sign in with Apple (Mock)" : {
+
     },
     "welcome.subtitle" : {
       "localizations" : {
