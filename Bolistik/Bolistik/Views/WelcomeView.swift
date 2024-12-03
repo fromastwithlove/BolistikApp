@@ -9,8 +9,6 @@ import SwiftUI
 
 struct WelcomeView: View {
     
-    @Environment(\.colorScheme) var colorScheme
-    
     var body: some View {
         NavigationStack {
             VStack(alignment: .center) {

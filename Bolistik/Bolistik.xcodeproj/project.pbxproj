@@ -78,7 +78,6 @@
 				C5685AB82CF8F2D30075537F /* Bolistik */,
 				C5685AC92CF8F2D40075537F /* BolistikTests */,
 				C5685AD32CF8F2D40075537F /* BolistikUITests */,
-				C56C2E7D2CFE5A65005DDD3B /* Frameworks */,
 				C5685AB72CF8F2D30075537F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -91,13 +90,6 @@
 				C5685AD02CF8F2D40075537F /* BolistikUITests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		C56C2E7D2CFE5A65005DDD3B /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
