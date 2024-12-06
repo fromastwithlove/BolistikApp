@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct BolistikApp: App {
+    
+    @StateObject var authViewModel = AuthViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            WelcomeView()
+            LoginView()
+                .environmentObject(authViewModel)
         }
     }
 }

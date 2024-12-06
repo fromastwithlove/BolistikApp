@@ -2,49 +2,61 @@
 //  LoginView.swift
 //  Bolistik
 //
-//  Created by Adil Yergaliyev on 30.11.24.
+//  Created by Adil Yergaliyev on 28.11.24.
 //
 
 import SwiftUI
+import AuthenticationServices
 
 struct LoginView: View {
     
-    @State private var isPhoneNumberValid: Bool = false
+    @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var authViewModel: AuthViewModel
     
     var body: some View {
-        VStack(alignment: .center) {
-            Text("auth.title")
-                .font(.largeTitle)
-                .foregroundStyle(Color.accentColor)
-                .padding(.vertical)
-                .padding(.horizontal)
-            Text("auth.subtitle")
-                .font(.subheadline)
-                .foregroundStyle(Color.gray)
-                .padding(.horizontal)
-            Image("Auth")
-                .resizable()
-                .scaledToFit()
-            Spacer()
-                .padding(.vertical)
-            NavigationLink(destination: EmptyView()) {
-                ActionText(text: "auth.sendViaSMS", tintColor: .accent)
-            }
-            NavigationLink(destination: EmptyView()) {
-                ActionText(text: "auth.sendViaWhatsApp", tintColor: .accent)
-            }
-            Spacer()
-            NavigationLink(destination: EmptyView()) {
-                Text("auth.termAndCondition")
-                    .font(.subheadline)
+        GeometryReader { geometry in
+            VStack {
+                Spacer()
+                
+                Image("Welcome")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: geometry.size.width * 0.8)
+                
+                Text("welcome.title")
+                    .font(.largeTitle)
+                    .foregroundStyle(Color.accentColor)
+                    .padding(.vertical)
+                    .multilineTextAlignment(.center)
+                
+                Text("welcome.subtitle")
+                    .font(.title3)
                     .foregroundStyle(Color.gray)
-                    .padding(.horizontal)
+                    .multilineTextAlignment(.center)
+                
+                Spacer()
+                
+                SignInWithAppleButton(.signUp) { request in
+                    request.requestedScopes = [.fullName, .email]
+                } onCompletion: { result in
+                    authViewModel.signInWithApple(result: result)
+                }
+                // FIXME: The style doesn't change dynamically
+                .signInWithAppleButtonStyle(
+                    colorScheme == .dark ? .white : .black
+                )
+                .frame(height: geometry.size.height * 0.075)
             }
+            .frame(maxHeight: .infinity)
+            .padding()
         }
-        .padding()
     }
 }
 
 #Preview {
-    LoginView()
+    LoginView().environment(\.colorScheme, .light)
+}
+
+#Preview {
+    LoginView().environment(\.colorScheme, .dark)
 }
