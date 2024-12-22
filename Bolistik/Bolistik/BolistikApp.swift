@@ -10,12 +10,36 @@ import SwiftUI
 @main
 struct BolistikApp: App {
     
-    @StateObject var authViewModel = AuthViewModel()
+    @Environment(\.scenePhase) private var scenePhase
+    @ObservedObject private var model: UserViewModel
+    
+    let logger = AppLogger(category: "App")
+    var services: Services
+    
+    init() {
+        logger.debug("App is initialized")
+        services = Services(appConfiguration: BolistikApplication(), networkService: NetworkService(), userService: UserService())
+        model = UserViewModel(userService: services.userService)
+    }
     
     var body: some Scene {
         WindowGroup {
-            LoginView()
-                .environmentObject(authViewModel)
+            Group {
+                if model.isAuthenticated {
+                    MainView(model: model)
+                        .transition(.slide)
+                } else {
+                    LoginView(model: model)
+                        .transition(.slide)
+                }
+            }
+            .animation(.easeInOut(duration: 0.5), value: model.isAuthenticated)
+        }
+        .onChange(of: scenePhase) {
+            if scenePhase == .active {
+                logger.debug("App is active")
+                model.verifyAuthenticationStatus()
+            }
         }
     }
 }

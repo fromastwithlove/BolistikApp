@@ -11,7 +11,7 @@ import AuthenticationServices
 struct LoginView: View {
     
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var authViewModel: AuthViewModel
+    @ObservedObject var model: UserViewModel
     
     var body: some View {
         GeometryReader { geometry in
@@ -36,27 +36,24 @@ struct LoginView: View {
                 
                 Spacer()
                 
-                SignInWithAppleButton(.signUp) { request in
+                SignInWithAppleButtonView { request in
                     request.requestedScopes = [.fullName, .email]
                 } onCompletion: { result in
-                    authViewModel.signInWithApple(result: result)
+                    model.signInWithApple(result: result)
                 }
-                // FIXME: The style doesn't change dynamically
-                .signInWithAppleButtonStyle(
-                    colorScheme == .dark ? .white : .black
-                )
-                .frame(height: geometry.size.height * 0.075)
+                .frame(height: geometry.size.height * 0.1)
+                
+                NavigationLink(destination: EmptyView()) {
+                    Text("auth.termAndCondition")
+                        .font(.subheadline)
+                        .foregroundStyle(Color.gray)
+                }
             }
-            .frame(maxHeight: .infinity)
             .padding()
         }
     }
 }
 
 #Preview {
-    LoginView().environment(\.colorScheme, .light)
-}
-
-#Preview {
-    LoginView().environment(\.colorScheme, .dark)
+    LoginView(model: UserViewModel(userService: UserService()))
 }
