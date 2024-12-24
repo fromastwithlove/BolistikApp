@@ -11,34 +11,35 @@ import SwiftUI
 struct BolistikApp: App {
     
     @Environment(\.scenePhase) private var scenePhase
-    @ObservedObject private var model: UserViewModel
-    
-    let logger = AppLogger(category: "App")
-    var services: Services
-    
-    init() {
-        logger.debug("App is initialized")
-        services = Services(appConfiguration: BolistikApplication(), networkService: NetworkService(), userService: UserService())
-        model = UserViewModel(userService: services.userService)
-    }
+    @StateObject private var appManager: AppManager = AppManager(services: Services(appConfiguration: BolistikApplication(),
+                                                                                    networkService: NetworkService(),
+                                                                                    accountService: AccountService()))
+    private let logger = AppLogger(category: "App State")
     
     var body: some Scene {
         WindowGroup {
             Group {
-                if model.isAuthenticated {
-                    MainView(model: model)
-                        .transition(.slide)
-                } else {
-                    LoginView(model: model)
-                        .transition(.slide)
+                switch appManager.launchState {
+                case .initializing:
+                    ProgressView().progressViewStyle(CircularProgressViewStyle())
+                case .awaitingAuthentication:
+                    LoginView()
+                        .environment(appManager)
+                        .transition(.move(edge: .bottom)
+                                    .combined(with: .opacity))
+                case .ready:
+                    MainView()
+                        .environment(appManager)
+                        .transition(.move(edge: .top)
+                                    .combined(with: .opacity))
                 }
             }
-            .animation(.easeInOut(duration: 0.5), value: model.isAuthenticated)
+            .animation(.default, value: appManager.launchState)
         }
         .onChange(of: scenePhase) {
             if scenePhase == .active {
                 logger.debug("App is active")
-                model.verifyAuthenticationStatus()
+                appManager.verifyAuthenticationStatus()
             }
         }
     }

@@ -9,19 +9,23 @@ import SwiftUI
 
 struct MainView: View {
     
-    @ObservedObject var model: UserViewModel
+    @EnvironmentObject var appManager: AppManager
     
     private let logger = AppLogger(category: "UI")
     
     var body: some View {
         TabView {
             Tab("Profile", systemImage: "person.crop.circle.fill") {
-                ProfileView(model: model)
+                ProfileView(model: UserViewModel(accountService: appManager.services.accountService))
             }
         }
     }
 }
 
 #Preview {
-    MainView(model: UserViewModel(userService: UserService()))
+    let appManager = AppManager(services: Services(appConfiguration: BolistikApplication(),
+                                                   networkService: NetworkService(),
+                                                   accountService: AccountService()))
+    MainView()
+        .environmentObject(appManager)
 }

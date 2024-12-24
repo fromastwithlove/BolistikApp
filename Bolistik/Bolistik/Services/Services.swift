@@ -9,11 +9,11 @@ actor Services {
     
     let appConfiguration: AppConfiguration
     let networkService: NetworkService
-    let userService: UserService
+    let accountService: AccountService
     
-    init(appConfiguration: AppConfiguration, networkService: NetworkService, userService: UserService) {
+    init(appConfiguration: AppConfiguration, networkService: NetworkService, accountService: AccountService) {
         self.appConfiguration = appConfiguration
         self.networkService = networkService
-        self.userService = userService
+        self.accountService = accountService
     }
 }

@@ -1,5 +1,5 @@
 //
-//  UserService.swift
+//  AccountService.swift
 //  Bolistik
 //
 //  Created by Adil Yergaliyev on 08.12.24.
@@ -13,9 +13,10 @@ enum AuthenticationState {
     case unknown
 }
 
-actor UserService {
+actor AccountService {
 
     // MARK: Private
+    
     private let logger = AppLogger(category: "Session")
     private var authenticationState: AuthenticationState = .unknown
     
