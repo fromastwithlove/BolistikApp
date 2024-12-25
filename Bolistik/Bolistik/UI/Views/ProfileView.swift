@@ -50,8 +50,9 @@ struct ProfileView: View {
     }
 }
 
-// TODO: Make preview work
 #Preview {
     let model = UserViewModel(accountService: AccountService())
+    model.fullName = PersonNameComponents(givenName: "Adil", familyName: "Yergaliyev")
+    model.email = "preview@bolistik.kz"
     return ProfileView(model: model)
 }

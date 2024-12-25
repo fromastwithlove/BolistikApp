@@ -35,10 +35,4 @@ struct SignInWithAppleButtonView: View {
     SignInWithAppleButtonView(onRequest: { _ in }, onCompletion: { _ in })
         .frame(height: 60)
         .padding()
-        .environment(\.colorScheme, .light)
-    
-    SignInWithAppleButtonView(onRequest: { _ in }, onCompletion: { _ in })
-        .frame(height: 60)
-        .padding()
-        .environment(\.colorScheme, .dark)
 }

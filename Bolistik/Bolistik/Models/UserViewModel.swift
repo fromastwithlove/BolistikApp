@@ -23,8 +23,8 @@ final class UserViewModel: ObservableObject {
     
     var isLoading: Bool = false
     var error: LocalizedError?
-    private(set) var fullName: PersonNameComponents?
-    private(set) var email: String?
+    var fullName: PersonNameComponents?
+    var email: String?
     
     // MARK: Public
     
