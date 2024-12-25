@@ -5,18 +5,11 @@
 //  Created by Adil Yergaliyev on 08.12.24.
 //
 
-public protocol AppConfiguration {
+final class AppConfiguration {
     /// The name of the app as shown in the UI
-    var appName: String { get }
-    
-    /// The list of server URLs, the first element is considered the default URL.
-    var serverURLs: [String] { get }
-}
-
-final class BolistikApplication: AppConfiguration {
-    
     let appName: String = "Bolistik"
     
+    /// The list of server URLs, the first element is considered the default URL.
     let serverURLs: [String] = ["https://bolistik.kz",
                                 "https://staging.bolistik.kz"]
 }

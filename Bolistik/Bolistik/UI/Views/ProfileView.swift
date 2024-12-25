@@ -9,7 +9,9 @@ import SwiftUI
 
 struct ProfileView: View {
     
+    @EnvironmentObject var appManager: AppManager
     @ObservedObject var model: UserViewModel
+    
     private let logger = AppLogger(category: "UI")
     
     var body: some View {
@@ -21,12 +23,12 @@ struct ProfileView: View {
                 .clipShape(Circle())
                 .shadow(radius: 10)
             
-            Text(model.formattedFullName())
+            Text(model.formattedFullName)
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding(.top, 10)
             
-            Text(model.formattedEmail())
+            Text(model.formattedEmail)
                 .font(.subheadline)
                 .foregroundColor(.gray)
             
@@ -36,7 +38,7 @@ struct ProfileView: View {
             Spacer()
             
             Button(action: {
-                model.signOut()
+                appManager.signOut()
             }) {
                 ActionText(text: "auth.signOut", tintColor: .red)
             }
@@ -48,10 +50,9 @@ struct ProfileView: View {
     }
 }
 
-// TODO: Make preview work
 #Preview {
-    let model = UserViewModel(userService: UserService())
-    model.email = "name.surname@bolistik.kz"
-    model.fullName = PersonNameComponents(givenName: "Name", familyName: "Surname")
+    let model = UserViewModel(accountService: AccountService())
+    model.fullName = PersonNameComponents(givenName: "Adil", familyName: "Yergaliyev")
+    model.email = "preview@bolistik.kz"
     return ProfileView(model: model)
 }
