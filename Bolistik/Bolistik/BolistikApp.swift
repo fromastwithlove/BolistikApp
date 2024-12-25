@@ -11,7 +11,7 @@ import SwiftUI
 struct BolistikApp: App {
     
     @Environment(\.scenePhase) private var scenePhase
-    @StateObject private var appManager: AppManager = AppManager(services: Services(appConfiguration: BolistikApplication(),
+    @StateObject private var appManager: AppManager = AppManager(services: Services(appConfiguration: AppConfiguration(),
                                                                                     networkService: NetworkService(),
                                                                                     accountService: AccountService()))
     private let logger = AppLogger(category: "App State")
@@ -30,8 +30,6 @@ struct BolistikApp: App {
                 case .ready:
                     MainView()
                         .environment(appManager)
-                        .transition(.move(edge: .top)
-                                    .combined(with: .opacity))
                 }
             }
             .animation(.default, value: appManager.launchState)

@@ -7,18 +7,13 @@
 
 import AuthenticationServices
 
-enum AuthenticationState {
-    case signedIn
-    case signedOut
-    case unknown
-}
-
 actor AccountService {
 
     // MARK: Private
     
     private let logger = AppLogger(category: "Session")
     private var authenticationState: AuthenticationState = .unknown
+    private var userDefaults = BolistikUserDefaults()
     
     // MARK: Public
     
@@ -27,16 +22,16 @@ actor AccountService {
     }
     
     public var fullName: PersonNameComponents? {
-        get async { BolistikUserDefaults.fullName }
+        get async { userDefaults.fullName }
     }
     
     public var email: String? {
-        get async { BolistikUserDefaults.email }
+        get async { userDefaults.email }
     }
     
     func verifyAccountStatus() async throws {
         logger.debug("Account verification started")
-        guard let currentUserID = BolistikUserDefaults.token else {
+        guard let currentUserID = userDefaults.token else {
             authenticationState = .unknown
             logger.debug("Account is not found")
             return
@@ -53,7 +48,7 @@ actor AccountService {
             case .revoked, .notFound:
                 logger.debug("Account is revoked or not found")
                 authenticationState = .unknown
-                BolistikUserDefaults.clearToken()
+                userDefaults.clearToken()
                 throw AuthenticationError.accountNotFound
             case .transferred:
                 authenticationState = .signedOut
@@ -73,14 +68,14 @@ actor AccountService {
         switch result {
         case .success(let authorization):
             if let credential = authorization.credential as? ASAuthorizationAppleIDCredential {
-                BolistikUserDefaults.token = credential.user
+                userDefaults.token = credential.user
                 if let fullName = credential.fullName,
                    let givenName = fullName.givenName,
                    let familyName = fullName.familyName {
-                    BolistikUserDefaults.fullName = PersonNameComponents(givenName: givenName, familyName: familyName)
+                    userDefaults.fullName = PersonNameComponents(givenName: givenName, familyName: familyName)
                 }
                 if let email = credential.email {
-                    BolistikUserDefaults.email = email
+                    userDefaults.email = email
                 }
 
                 authenticationState = .signedIn
@@ -96,7 +91,41 @@ actor AccountService {
     }
     
     func signOut() async {
-        BolistikUserDefaults.clearToken()
+        userDefaults.clearToken()
         authenticationState = .signedOut
+    }
+}
+
+extension AccountService {
+    /// Represents the possible authentication states of the user.
+    /// - `signedIn`: The user is authenticated and signed into the app.
+    /// - `signedOut`: The user is not authenticated and signed out of the app.
+    /// - `unknown`: The authentication state is not yet determined or undefined.
+    private enum AuthenticationState {
+        case signedIn
+        case signedOut
+        case unknown
+    }
+}
+
+extension AccountService {
+    /// Defines errors that may occur during authentication.
+    /// Provides localized messages for user-friendly error descriptions.
+    public enum AuthenticationError: LocalizedError {
+        case accountNotFound
+        case accountTransferred
+        case serverError
+
+        /// A computed property to return a localized error message for each error case.
+        public var errorDescription: String? {
+            switch self {
+            case .accountNotFound:
+                return NSLocalizedString("auth.error.message.accountNotFound", comment: "Error: Account not found")
+            case .serverError:
+                return NSLocalizedString("auth.error.message.serverError", comment: "Error: Server error")
+            case .accountTransferred:
+                return NSLocalizedString("auth.error.message.accountTransferred", comment: "Error: Account transferred")
+            }
+        }
     }
 }

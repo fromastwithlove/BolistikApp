@@ -23,7 +23,7 @@ struct MainView: View {
 }
 
 #Preview {
-    let appManager = AppManager(services: Services(appConfiguration: BolistikApplication(),
+    let appManager = AppManager(services: Services(appConfiguration: AppConfiguration(),
                                                    networkService: NetworkService(),
                                                    accountService: AccountService()))
     MainView()

@@ -9,6 +9,16 @@ import Foundation
 
 struct BolistikUserDefaults {
     
+    private let userDefaults: UserDefaults
+
+    init(suiteName: String? = Bundle.main.bundleIdentifier) {
+        if let suiteName = suiteName, let userDefaults = UserDefaults(suiteName: suiteName) {
+            self.userDefaults = userDefaults
+        } else {
+            self.userDefaults = .standard
+        }
+    }
+
     private enum Keys {
         static let fullName = "fullName"
         static let email = "email"
@@ -16,43 +26,43 @@ struct BolistikUserDefaults {
     }
 
     // MARK: - Full Name
-    static var fullName: PersonNameComponents? {
+    var fullName: PersonNameComponents? {
         get {
-            guard let data = UserDefaults.standard.data(forKey: Keys.fullName) else { return nil }
+            guard let data = userDefaults.data(forKey: Keys.fullName) else { return nil }
             return try? JSONDecoder().decode(PersonNameComponents.self, from: data)
         }
         set {
             if let newValue = newValue {
                 let data = try? JSONEncoder().encode(newValue)
-                UserDefaults.standard.set(data, forKey: Keys.fullName)
+                userDefaults.set(data, forKey: Keys.fullName)
             } else {
-                UserDefaults.standard.removeObject(forKey: Keys.fullName)
+                userDefaults.removeObject(forKey: Keys.fullName)
             }
         }
     }
 
     // MARK: - Email
-    static var email: String? {
+    var email: String? {
         get {
-            UserDefaults.standard.string(forKey: Keys.email)
+            userDefaults.string(forKey: Keys.email)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: Keys.email)
+            userDefaults.set(newValue, forKey: Keys.email)
         }
     }
 
     // MARK: - Token
-    static var token: String? {
+    var token: String? {
         get {
-            UserDefaults.standard.string(forKey: Keys.token)
+            userDefaults.string(forKey: Keys.token)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: Keys.token)
+            userDefaults.set(newValue, forKey: Keys.token)
         }
     }
 
-    // MARK: - Clear token
-    static func clearToken() {
-        UserDefaults.standard.removeObject(forKey: Keys.token)
+    // MARK: - Clear Token
+    func clearToken() {
+        userDefaults.removeObject(forKey: Keys.token)
     }
 }

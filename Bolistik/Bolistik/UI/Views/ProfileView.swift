@@ -23,12 +23,12 @@ struct ProfileView: View {
                 .clipShape(Circle())
                 .shadow(radius: 10)
             
-            Text(model.formattedFullName())
+            Text(model.formattedFullName)
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding(.top, 10)
             
-            Text(model.formattedEmail())
+            Text(model.formattedEmail)
                 .font(.subheadline)
                 .foregroundColor(.gray)
             
@@ -53,7 +53,5 @@ struct ProfileView: View {
 // TODO: Make preview work
 #Preview {
     let model = UserViewModel(accountService: AccountService())
-    model.email = "name.surname@bolistik.kz"
-    model.fullName = PersonNameComponents(givenName: "Name", familyName: "Surname")
     return ProfileView(model: model)
 }

@@ -23,10 +23,21 @@ final class UserViewModel: ObservableObject {
     
     var isLoading: Bool = false
     var error: LocalizedError?
-    var fullName: PersonNameComponents?
-    var email: String?
+    private(set) var fullName: PersonNameComponents?
+    private(set) var email: String?
     
-    // MARK: Public methods
+    // MARK: Public
+    
+    public var formattedEmail: String {
+        guard let email = email, !email.isEmpty else { return "" }
+        return email
+    }
+    
+    public var formattedFullName: String {
+        guard let fullName = fullName else { return "" }
+        let formatter = PersonNameComponentsFormatter()
+        return formatter.string(from: fullName)
+    }
     
     public func fetchUser() {
         Task {
@@ -34,32 +45,5 @@ final class UserViewModel: ObservableObject {
             email = await accountService.email
             logger.debug("Fetching user finished")
         }
-    }
-    
-    public func formattedFullName() -> String {
-        guard let fullName = fullName else { return "" }
-        
-        // Check if both given name and family name are non-empty
-        guard let givenName = fullName.givenName, !givenName.isEmpty else {
-            // If only the family name is non-empty
-            if let familyName = fullName.familyName, !familyName.isEmpty {
-                return familyName
-            }
-            return ""
-        }
-        
-        // If both names are non-empty, return "givenName, familyName"
-        if let familyName = fullName.familyName, !familyName.isEmpty {
-            return "\(givenName), \(familyName)"
-        }
-        
-        return givenName
-    }
-    
-    public func formattedEmail() -> String {
-        guard let email = email, !email.isEmpty else {
-            return ""
-        }
-        return email
     }
 }
