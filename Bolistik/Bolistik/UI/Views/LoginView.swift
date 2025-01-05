@@ -25,13 +25,13 @@ struct LoginView: View {
                 
                 Text("welcome.title")
                     .font(.largeTitle)
-                    .foregroundStyle(Color.accentColor)
+                    .foregroundStyle(.accent)
                     .padding(.vertical)
                     .multilineTextAlignment(.center)
                 
                 Text("welcome.subtitle")
                     .font(.title3)
-                    .foregroundStyle(Color.gray)
+                    .foregroundStyle(.gray)
                     .multilineTextAlignment(.center)
                 
                 Spacer()
@@ -46,7 +46,7 @@ struct LoginView: View {
                 NavigationLink(destination: EmptyView()) {
                     Text("auth.termAndCondition")
                         .font(.subheadline)
-                        .foregroundStyle(Color.gray)
+                        .foregroundStyle(.gray)
                 }
             }
             .padding()

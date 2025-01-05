@@ -20,10 +20,23 @@ class AppManager: ObservableObject {
         case ready
     }
     
+    enum Tabs: Hashable {
+        case home
+        case groups
+        case contacts
+        case profile
+    }
+    
     // MARK: Published properties
     
     private(set) var services: Services
     private(set) var launchState: LaunchState = .initializing
+    
+    // MARK: Navigation
+    
+    var selectedTab: Tabs = .home
+    
+    // MARK: Authentication
     
     public func verifyAuthenticationStatus() {
         Task {
