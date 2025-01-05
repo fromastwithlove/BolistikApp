@@ -14,8 +14,20 @@ struct MainView: View {
     private let logger = AppLogger(category: "UI")
     
     var body: some View {
-        TabView {
-            Tab("Profile", systemImage: "person.crop.circle.fill") {
+        TabView(selection: $appManager.selectedTab) {
+            Tab("Home", systemImage: "house", value: .home) {
+                EmptyView()
+            }
+            
+            Tab("Groups", systemImage: "person.2", value: .groups) {
+                GroupsView(model: ExpenseGroupViewModel())
+            }
+
+            Tab("Contacts", systemImage: "person", value: .contacts) {
+                ContactsView(model: ContactsViewModel())
+            }
+
+            Tab("Profile", systemImage: "person.crop.circle", value: .profile) {
                 ProfileView(model: UserViewModel(accountService: appManager.services.accountService))
             }
         }

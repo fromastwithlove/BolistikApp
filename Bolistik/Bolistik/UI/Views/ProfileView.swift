@@ -10,39 +10,67 @@ import SwiftUI
 struct ProfileView: View {
     
     @EnvironmentObject var appManager: AppManager
-    @ObservedObject var model: UserViewModel
+    @StateObject var model: UserViewModel
     
+    @State private var path: NavigationPath = NavigationPath()
     private let logger = AppLogger(category: "UI")
     
     var body: some View {
-        VStack {
-            Image(systemName: "person.crop.circle.fill")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 60, height: 60)
-                .clipShape(Circle())
-                .shadow(radius: 10)
-            
-            Text(model.formattedFullName)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .padding(.top, 10)
-            
-            Text(model.formattedEmail)
-                .font(.subheadline)
-                .foregroundColor(.gray)
-            
-            Divider()
-                .padding(.vertical, 20)
-            
-            Spacer()
-            
-            Button(action: {
-                appManager.signOut()
-            }) {
-                ActionText(text: "auth.signOut", tintColor: .red)
+        NavigationStack(path: $path) {
+            List {
+                Section {
+                    HStack {
+                        UserRowDetails(avatarURL: "https://upload.wikimedia.org/wikipedia/commons/4/40/Alan_Turing_%281912-1954%29_in_1936_at_Princeton_University_%28cropped%29.jpg",
+                                       fullName: model.formattedFullName,
+                                       email: model.formattedEmail)
+                        Spacer()
+                        Button {
+                            // Personal qrcode
+                        } label: {
+                            Image(systemName: "qrcode")
+                        }
+                        .buttonStyle(.bordered)
+                        .clipShape(.circle)
+                        .tint(.secondaryRed)
+                    }
+                }
+                
+                Text("Personal info")
+                Text("Notifications")
+                Text("Account and security")
+                Text("Payment methods")
+                Text("App appearance")
+                
+                Section {
+                    Text("Data and analytics")
+                    Text("Help & Support")
+                }
+                
+                Section {
+                    Button(action: {
+                        appManager.signOut()
+                    }) {
+                        Text("auth.signOut")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .foregroundStyle(.red)
+                    }
+                }
+                
+                Section {
+                    VStack {
+                        Text("Copyright © \(String(Calendar.current.component(.year, from: Date()))) Adil Yergaliyev")
+                        Text("Licensed under the Modified MIT License")
+                        Text(verbatim: "25.1.0 (48)")
+                    }
+                    .font(.footnote)
+                    .foregroundColor(.gray)
+                    .frame(maxWidth: .infinity)
+                }
             }
-            .padding()
+            .listStyle(.insetGrouped)
+            .navigationTitle("Account")
+            .navigationBarTitleDisplayMode(.inline)
         }
         .task {
             model.fetchUser()

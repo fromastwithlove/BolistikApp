@@ -1,6 +1,18 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Account" : {
+
+    },
+    "Account and security" : {
+
+    },
+    "Add Friend" : {
+
+    },
+    "App appearance" : {
+
+    },
     "auth.error.message.accountNotFound" : {
       "comment" : "Error: Account not found",
       "localizations" : {
@@ -88,62 +100,6 @@
         }
       }
     },
-    "auth.sendViaSMS" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Per SMS senden"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Send via SMS"
-          }
-        },
-        "kk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SMS арқылы жіберу"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Отправить через SMS"
-          }
-        }
-      }
-    },
-    "auth.sendViaWhatsApp" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Per WhatsApp senden"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Send via WhatsApp"
-          }
-        },
-        "kk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "WhatsApp арқылы жіберу"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Отправить через WhatsApp"
-          }
-        }
-      }
-    },
     "auth.signOut" : {
       "localizations" : {
         "de" : {
@@ -168,34 +124,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Выйти"
-          }
-        }
-      }
-    },
-    "auth.subtitle" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bitte geben Sie Ihre Handynummer an; wir senden Ihnen ein Einmalpasswort (OTP), um den Registrierungsprozess abzuschließen."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Please provide your mobile phone number; we will send you a one-time password (OTP) to complete the signup process."
-          }
-        },
-        "kk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Тіркелу үдерісін аяқтау үшін біз сізге бір реттік құпия сөз (OTP) жіберуіміз үшін телефон нөміріңізді енгізіңіз."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Пожалуйста, укажите номер вашего мобильного телефона; мы отправим вам одноразовый пароль (OTP) для завершения процесса регистрации."
           }
         }
       }
@@ -228,33 +156,47 @@
         }
       }
     },
-    "auth.title" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Registrierung"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Registration"
-          }
-        },
-        "kk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Тіркелу"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Регистрация"
-          }
-        }
-      }
+    "Contacts" : {
+
+    },
+    "Copyright © %@ Adil Yergaliyev" : {
+
+    },
+    "Create a group to start sharing and splitting expenses. Invite people you’re traveling with or living with, and keep track of all your bills together!" : {
+
+    },
+    "Data and analytics" : {
+
+    },
+    "Gather Your Crew and Split the Costs!" : {
+
+    },
+    "Groups" : {
+
+    },
+    "Help & Support" : {
+
+    },
+    "Home" : {
+
+    },
+    "Licensed under the Modified MIT License" : {
+
+    },
+    "Looks like you don’t have any friends yet. Go ahead, add some and make this place a party!" : {
+
+    },
+    "Notifications" : {
+
+    },
+    "Oops, It's Lonely Here!" : {
+
+    },
+    "Payment methods" : {
+
+    },
+    "Personal info" : {
+
     },
     "Profile" : {
       "localizations" : {
@@ -283,6 +225,9 @@
           }
         }
       }
+    },
+    "Start a group" : {
+
     },
     "welcome.subtitle" : {
       "localizations" : {
