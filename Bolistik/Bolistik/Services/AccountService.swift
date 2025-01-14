@@ -13,7 +13,7 @@ actor AccountService {
     
     private let logger = AppLogger(category: "Session")
     private var authenticationState: AuthenticationState = .unknown
-    private var userDefaults = BolistikUserDefaults()
+    private let userDefaults = UserDefaults()
     
     // MARK: Public
     
