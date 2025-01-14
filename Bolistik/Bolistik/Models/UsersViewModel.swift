@@ -1,5 +1,5 @@
 //
-//  UserViewModel.swift
+//  UsersViewModel.swift
 //  Bolistik
 //
 //  Created by Adil Yergaliyev on 03.12.24.
@@ -9,7 +9,7 @@ import Foundation
 
 @MainActor
 @Observable
-final class UserViewModel: ObservableObject {
+final class UsersViewModel: ObservableObject {
     
     // MARK: Private
     private let logger = AppLogger(category: "UI")

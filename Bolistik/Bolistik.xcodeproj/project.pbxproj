@@ -422,7 +422,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kz.testcompany.bolistik;
+				PRODUCT_BUNDLE_IDENTIFIER = kz.fromastwithlove.bolistik;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -457,7 +457,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kz.testcompany.bolistik;
+				PRODUCT_BUNDLE_IDENTIFIER = kz.fromastwithlove.bolistik;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -475,7 +475,7 @@
 				DEVELOPMENT_TEAM = GRMZ48Y4F9;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kz.testcompany.bolistikTests;
+				PRODUCT_BUNDLE_IDENTIFIER = kz.fromastwithlove.bolistikTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -493,7 +493,7 @@
 				DEVELOPMENT_TEAM = GRMZ48Y4F9;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kz.testcompany.bolistikTests;
+				PRODUCT_BUNDLE_IDENTIFIER = kz.fromastwithlove.bolistikTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -510,7 +510,7 @@
 				DEVELOPMENT_TEAM = GRMZ48Y4F9;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kz.testcompany.bolistikUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = kz.fromastwithlove.bolistikUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -527,7 +527,7 @@
 				DEVELOPMENT_TEAM = GRMZ48Y4F9;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kz.testcompany.bolistikUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = kz.fromastwithlove.bolistikUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;

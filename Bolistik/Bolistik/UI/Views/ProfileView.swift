@@ -10,7 +10,7 @@ import SwiftUI
 struct ProfileView: View {
     
     @EnvironmentObject var appManager: AppManager
-    @StateObject var model: UserViewModel
+    @StateObject var model: UsersViewModel
     
     @State private var path: NavigationPath = NavigationPath()
     private let logger = AppLogger(category: "UI")
@@ -79,7 +79,7 @@ struct ProfileView: View {
 }
 
 #Preview {
-    let model = UserViewModel(accountService: AccountService())
+    let model = UsersViewModel(accountService: AccountService())
     model.fullName = PersonNameComponents(givenName: "Adil", familyName: "Yergaliyev")
     model.email = "preview@bolistik.kz"
     return ProfileView(model: model)
