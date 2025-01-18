@@ -13,6 +13,7 @@ extension UserDefaults {
         static let fullName = "fullName"
         static let email = "email"
         static let token = "token"
+        static let baseURL = "baseURL"
     }
 
     // MARK: - Full Name
@@ -54,5 +55,15 @@ extension UserDefaults {
     // MARK: - Clear Token
     func clearToken() {
         self.removeObject(forKey: Keys.token)
+    }
+    
+    // MARK: - Network Base URL
+    var baseURL: String? {
+        get {
+            self.string(forKey: Keys.baseURL)
+        }
+        set {
+            self.set(newValue, forKey: Keys.baseURL)
+        }
     }
 }

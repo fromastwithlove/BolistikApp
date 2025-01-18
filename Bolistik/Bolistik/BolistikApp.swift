@@ -11,9 +11,7 @@ import SwiftUI
 struct BolistikApp: App {
     
     @Environment(\.scenePhase) private var scenePhase
-    @StateObject private var appManager: AppManager = AppManager(services: Services(appConfiguration: AppConfiguration(),
-                                                                                    networkService: NetworkService(),
-                                                                                    accountService: AccountService()))
+    @StateObject private var appManager: AppManager = AppManager(services: Services(appConfiguration: AppConfiguration(), accountService: AccountService()))
     private let logger = AppLogger(category: "App State")
     
     var body: some Scene {

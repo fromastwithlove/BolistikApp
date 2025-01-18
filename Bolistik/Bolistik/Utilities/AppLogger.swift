@@ -14,8 +14,11 @@ struct AppLogger {
     
     init(category: String) {
         self.category = category
-        let subsystem = Bundle.main.bundleIdentifier ?? "kz.bolistik.test"
-        logger = Logger(subsystem: subsystem, category: category)
+        if let subsystem = Bundle.main.bundleIdentifier {
+            logger = Logger(subsystem: subsystem, category: category)
+        } else {
+            logger = Logger()
+        }
     }
 
     func debug(_ message: String, metadata: [String: String]? = nil) {

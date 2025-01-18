@@ -22,30 +22,24 @@ actor NetworkService {
     
     private let logger = AppLogger(category: "Networking")
     
+    private let baseURLString: String
+    private let userDefaults = UserDefaults()
+    
+    private var session: URLSession {
+        // Use the ephemeral session so it doesn't download or cache anything.
+        let config: URLSessionConfiguration = .ephemeral
+        
+        // Cookie policy
+        config.httpCookieAcceptPolicy = .never
+        config.httpCookieStorage = nil
+        config.httpShouldSetCookies = false
+        
+        return URLSession(configuration: config)
+    }
+    
     // MARK: Public
     
-    func request<T: Decodable, U: Encodable>(
-        url: URL,
-        method: HttpMethod = .get,
-        payload: U? = nil,
-        headers: [String: String]? = nil
-    ) -> AnyPublisher<T, Error> {
-        var request = URLRequest(url: url)
-        request.httpMethod = method.rawValue
-        request.allHTTPHeaderFields = headers
-        
-        if let payload = payload {
-            do {
-                request.httpBody = try JSONEncoder().encode(payload)
-                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            } catch {
-                return Fail(error: error).eraseToAnyPublisher()
-            }
-        }
-        
-        return URLSession.shared.dataTaskPublisher(for: request)
-            .map(\.data)
-            .decode(type: T.self, decoder: JSONDecoder())
-            .eraseToAnyPublisher()
+    init(baseURLString: String) {
+        self.baseURLString = baseURLString
     }
 }
