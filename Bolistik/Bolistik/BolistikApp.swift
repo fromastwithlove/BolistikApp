@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import FirebaseCore
 
 @main
 struct BolistikApp: App {
     
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @Environment(\.scenePhase) private var scenePhase
     @StateObject private var appManager: AppManager = AppManager(services: Services(appConfiguration: AppConfiguration(), accountService: AccountService()))
     private let logger = AppLogger(category: "App State")
@@ -39,4 +41,11 @@ struct BolistikApp: App {
             }
         }
     }
+}
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    FirebaseApp.configure()
+    return true
+  }
 }
