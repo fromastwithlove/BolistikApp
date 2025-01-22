@@ -13,7 +13,7 @@ actor Services {
     
     init(appConfiguration: AppConfiguration, accountService: AccountService) {
         self.appConfiguration = appConfiguration
-        self.networkService = NetworkService(baseURLString: appConfiguration.serverURLs.first!)
+        self.networkService = NetworkService(defaultBaseURLString: appConfiguration.serverURLs.first!)
         self.accountService = accountService
     }
 }

@@ -29,11 +29,14 @@ actor AccountService {
         get async { userDefaults.email }
     }
     
+    private(set) var identityToken: String?
+    private(set) var authorizationCode: String?
+    
     func verifyAccountStatus() async throws {
-        logger.debug("Account verification started")
+        logger.debug("Apple account verification started")
         guard let currentUserID = userDefaults.token else {
             authenticationState = .unknown
-            logger.debug("Account is not found")
+            logger.debug("Apple account is not found")
             return
         }
 
@@ -43,19 +46,19 @@ actor AccountService {
             let credentialState = try await appleIDProvider.credentialState(forUserID: currentUserID)
             switch credentialState {
             case .authorized:
-                logger.debug("Account is signed in")
+                logger.debug("Apple account is signed in")
                 authenticationState = .signedIn
             case .revoked, .notFound:
-                logger.debug("Account is revoked or not found")
+                logger.debug("Apple account is revoked or not found")
                 authenticationState = .unknown
                 userDefaults.clearToken()
                 throw AuthenticationError.accountNotFound
             case .transferred:
                 authenticationState = .signedOut
-                logger.debug("Account is signed out")
+                logger.debug("Apple account is signed out")
                 throw AuthenticationError.accountTransferred
             default:
-                logger.debug("Account state is unknown")
+                logger.debug("Apple account state is unknown")
                 authenticationState = .unknown
                 throw AuthenticationError.serverError
             }
@@ -77,12 +80,18 @@ actor AccountService {
                 if let email = credential.email {
                     userDefaults.email = email
                 }
+                if let token = credential.identityToken {
+                    identityToken = String(data: token, encoding: .utf8)
+                }
+                if let code = credential.authorizationCode {
+                    authorizationCode = String(data: code, encoding: .utf8)
+                }
 
                 authenticationState = .signedIn
                 return true
             }
         case .failure(let error):
-            logger.error("Error signing in with Apple", metadata: ["Description": error.localizedDescription])
+            logger.error("Error signing in with Apple", metadata: ["Error": error.localizedDescription])
             throw error
         }
         
