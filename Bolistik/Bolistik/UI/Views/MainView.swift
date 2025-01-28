@@ -35,7 +35,6 @@ struct MainView: View {
 }
 
 #Preview {
-    let appManager = AppManager(services: Services(appConfiguration: AppConfiguration(), accountService: AccountService()))
     MainView()
-        .environmentObject(appManager)
+        .environmentObject(AppManager(services: Services()))
 }

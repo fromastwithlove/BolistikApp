@@ -13,7 +13,7 @@ struct BolistikApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @Environment(\.scenePhase) private var scenePhase
-    @StateObject private var appManager: AppManager = AppManager(services: Services(appConfiguration: AppConfiguration(), accountService: AccountService()))
+    @StateObject private var appManager: AppManager = AppManager(services: Services())
     private let logger = AppLogger(category: "App State")
     
     var body: some Scene {
@@ -23,7 +23,7 @@ struct BolistikApp: App {
                 case .initializing:
                     ProgressView().progressViewStyle(CircularProgressViewStyle())
                 case .awaitingAuthentication:
-                    LoginView()
+                    LoginView(model: UsersViewModel(accountService: appManager.services.accountService))
                         .environment(appManager)
                         .transition(.move(edge: .bottom)
                                     .combined(with: .opacity))
@@ -33,12 +33,6 @@ struct BolistikApp: App {
                 }
             }
             .animation(.default, value: appManager.launchState)
-        }
-        .onChange(of: scenePhase) {
-            if scenePhase == .active {
-                logger.debug("App is active")
-                appManager.verifyAuthenticationStatus()
-            }
         }
     }
 }

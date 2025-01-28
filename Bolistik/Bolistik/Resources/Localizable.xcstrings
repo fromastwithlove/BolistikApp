@@ -71,6 +71,9 @@
         }
       }
     },
+    "auth.error.message.missingNonce" : {
+      "comment" : "Error: Missing nonce"
+    },
     "auth.error.message.serverError" : {
       "comment" : "Error: Server error",
       "localizations" : {

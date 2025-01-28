@@ -41,21 +41,6 @@ extension UserDefaults {
             self.set(newValue, forKey: Keys.email)
         }
     }
-
-    // MARK: - Token
-    var token: String? {
-        get {
-            self.string(forKey: Keys.token)
-        }
-        set {
-            self.set(newValue, forKey: Keys.token)
-        }
-    }
-
-    // MARK: - Clear Token
-    func clearToken() {
-        self.removeObject(forKey: Keys.token)
-    }
     
     // MARK: - Network Base URL
     var baseURL: String? {
