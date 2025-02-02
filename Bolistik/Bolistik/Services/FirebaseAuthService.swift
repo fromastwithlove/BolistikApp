@@ -19,7 +19,7 @@ final class FirebaseAuthService {
     public var user: User? {
         return Auth.auth().currentUser
     }
-    
+    // TODO: Refactor this method
     public func appleUserUID() -> String? {
         let providerData = Auth.auth().currentUser?.providerData
         if let appleProviderData = providerData?.first(where: { $0.providerID == AuthProviderID.apple.rawValue }) {
@@ -41,7 +41,7 @@ final class FirebaseAuthService {
             }
         }
     }
-    
+    // TODO: Should this function throw?
     public func updateDisplayName(displayName: String) {
         guard let user = Auth.auth().currentUser, !displayName.isEmpty else {
             return

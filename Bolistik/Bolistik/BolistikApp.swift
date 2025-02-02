@@ -7,6 +7,9 @@
 
 import SwiftUI
 import FirebaseCore
+#if LOCAL_ENVIRONMENT
+import FirebaseAuth
+#endif
 
 @main
 struct BolistikApp: App {
@@ -38,8 +41,15 @@ struct BolistikApp: App {
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    FirebaseApp.configure()
-    return true
-  }
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        // Configure Firebase when the app launches
+        FirebaseApp.configure()
+        
+        #if LOCAL_ENVIRONMENT
+        // Set up Firebase Authentication to use the local emulator for testing
+        Auth.auth().useEmulator(withHost: "localhost", port: 9099)
+        #endif
+        
+        return true
+    }
 }

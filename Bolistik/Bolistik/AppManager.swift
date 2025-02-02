@@ -15,15 +15,12 @@ class AppManager: ObservableObject {
     
     private let logger = AppLogger(category: "App State")
     
+    // MARK: Public
+    
     init(services: Services) {
         self.services = services
-        
-        Task {
-            await verifyAuthenticationState()
-        }
+        verifyAuthenticationState()
     }
-    
-    // MARK: Public
     
     enum LaunchState {
         case initializing
@@ -49,13 +46,15 @@ class AppManager: ObservableObject {
     
     // MARK: State manager
     
-    private func verifyAuthenticationState() async {
-        do {
-            try await services.accountService.verifyAccountStatus()
-        } catch {
-            logger.debug("Apple verification failed with error \(error)")
+    private func verifyAuthenticationState() {
+        Task {
+            do {
+                try await services.accountService.verifyAccountStatus()
+            } catch {
+                logger.debug("Apple verification failed with error \(error)")
+            }
+            launchState = await services.accountService.isAuthenticated ? .ready : .awaitingAuthentication
         }
-        launchState = await services.accountService.isAuthenticated ? .ready : .awaitingAuthentication
     }
     
     func userDidAuthenticate() {

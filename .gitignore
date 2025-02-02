@@ -31,8 +31,15 @@ Package.resolved
 
 .build/
 
-# Firebase Service info
+# Firebase
 GoogleService-Info.plist
+
+## Cache
+.firebase/
+
+## Logs
+firebase-debug.log*
+firebase-debug.*.log*
 
 # CocoaPods
 #
