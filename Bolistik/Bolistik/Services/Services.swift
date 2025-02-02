@@ -11,9 +11,9 @@ actor Services {
     let networkService: NetworkService
     let accountService: AccountService
     
-    init(appConfiguration: AppConfiguration, networkService: NetworkService, accountService: AccountService) {
-        self.appConfiguration = appConfiguration
-        self.networkService = networkService
-        self.accountService = accountService
+    init() {
+        self.appConfiguration = AppConfiguration()
+        self.networkService = NetworkService(defaultBaseURLString: appConfiguration.serverURLs.first!)
+        self.accountService = AccountService(firebaseAuthService: FirebaseAuthService())
     }
 }

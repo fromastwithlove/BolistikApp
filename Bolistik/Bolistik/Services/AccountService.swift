@@ -12,99 +12,109 @@ actor AccountService {
     // MARK: Private
     
     private let logger = AppLogger(category: "Session")
-    private var authenticationState: AuthenticationState = .unknown
-    private let userDefaults = UserDefaults()
+    private var currentNonce: String?
+    private let firebaseAuthService: FirebaseAuthService
     
     // MARK: Public
     
-    public var isAuthenticated: Bool {
-        get async { authenticationState == .signedIn }
-    }
-    
-    public var fullName: PersonNameComponents? {
-        get async { userDefaults.fullName }
-    }
-    
-    public var email: String? {
-        get async { userDefaults.email }
-    }
-    
-    func verifyAccountStatus() async throws {
-        logger.debug("Account verification started")
-        guard let currentUserID = userDefaults.token else {
-            authenticationState = .unknown
-            logger.debug("Account is not found")
-            return
-        }
-
-        let appleIDProvider = ASAuthorizationAppleIDProvider()
+    init(firebaseAuthService: FirebaseAuthService) {
+        self.firebaseAuthService = firebaseAuthService
         
-        do {
-            let credentialState = try await appleIDProvider.credentialState(forUserID: currentUserID)
-            switch credentialState {
-            case .authorized:
-                logger.debug("Account is signed in")
-                authenticationState = .signedIn
-            case .revoked, .notFound:
-                logger.debug("Account is revoked or not found")
-                authenticationState = .unknown
-                userDefaults.clearToken()
-                throw AuthenticationError.accountNotFound
-            case .transferred:
-                authenticationState = .signedOut
-                logger.debug("Account is signed out")
-                throw AuthenticationError.accountTransferred
-            default:
-                logger.debug("Account state is unknown")
-                authenticationState = .unknown
-                throw AuthenticationError.serverError
+        if let firebaseUser = firebaseAuthService.user {
+            self.user = InternalUser(from: firebaseUser)
+        }
+    }
+    
+    public private(set) var user: InternalUser?
+    
+    public var isAuthenticated: Bool {
+        get async { user != nil }
+    }
+    
+    // MARK: Sign in with Apple
+    
+    public func prepareAppleSignIn(request: ASAuthorizationAppleIDRequest) async {
+        let nonce = firebaseAuthService.randomNonceString()
+        currentNonce = nonce
+        request.nonce = firebaseAuthService.sha256(nonce)
+    }
+    
+    public func handleSignInWithApple(result: Result<ASAuthorization, any Error>) async throws {
+        switch result {
+        case .success(let authorization):
+            if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+                guard let nonce = currentNonce else {
+                    logger.error("Error a login callback received without a nonce")
+                    throw AuthenticationError.missingNonce
+                }
+                
+                guard let token = appleIDCredential.identityToken,
+                      let tokenString = String(data: token, encoding: .utf8) else {
+                    logger.error("Missing identity token or unable to serialize it as a string")
+                    throw AuthenticationError.serverError
+                }
+
+                let task = firebaseAuthService.signInWith(appleIDToken: tokenString, nonce: nonce, fullName: appleIDCredential.fullName)
+                
+                do {
+                    user = try await task.value
+                } catch {
+                    logger.error("Signing in with Firebase is failed with error: \(error)")
+                }
+                
+                if let fullName = appleIDCredential.fullName, !fullName.formatted().isEmpty {
+                    firebaseAuthService.updateDisplayName(displayName: fullName.formatted())
+                    user?.displayName = fullName.formatted()
+                }
             }
+        case .failure(let error):
+            logger.error("Error signing in with Apple", metadata: ["Error": error.localizedDescription])
+            throw error
+        }
+    }
+    
+    func signOut() async throws {
+        do {
+            try firebaseAuthService.signOut()
         } catch {
             throw error
         }
     }
     
-    func signInWithApple(result: Result<ASAuthorization, any Error>) async throws -> Bool {
-        switch result {
-        case .success(let authorization):
-            if let credential = authorization.credential as? ASAuthorizationAppleIDCredential {
-                userDefaults.token = credential.user
-                if let fullName = credential.fullName,
-                   let givenName = fullName.givenName,
-                   let familyName = fullName.familyName {
-                    userDefaults.fullName = PersonNameComponents(givenName: givenName, familyName: familyName)
-                }
-                if let email = credential.email {
-                    userDefaults.email = email
-                }
-
-                authenticationState = .signedIn
-                return true
-            }
-        case .failure(let error):
-            logger.error("Error signing in with Apple", metadata: ["Description": error.localizedDescription])
-            throw error
+    func verifyAccountStatus() async throws {
+        logger.debug("Apple account verification started")
+        
+        guard let currentUserID = firebaseAuthService.appleUserUID() else {
+            logger.debug("Apple account is not found")
+            return
         }
         
-        authenticationState = .unknown
-        return false
-    }
-    
-    func signOut() async {
-        userDefaults.clearToken()
-        authenticationState = .signedOut
-    }
-}
-
-extension AccountService {
-    /// Represents the possible authentication states of the user.
-    /// - `signedIn`: The user is authenticated and signed into the app.
-    /// - `signedOut`: The user is not authenticated and signed out of the app.
-    /// - `unknown`: The authentication state is not yet determined or undefined.
-    private enum AuthenticationState {
-        case signedIn
-        case signedOut
-        case unknown
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        // TODO: Perform check if it is the apple provider
+        do {
+            let credentialState = try await appleIDProvider.credentialState(forUserID: currentUserID)
+            switch credentialState {
+            case .authorized:
+                logger.debug("Apple account is signed in")
+                break
+            case .revoked, .notFound:
+                logger.debug("Apple account is revoked or not found")
+                do {
+                    try firebaseAuthService.signOut()
+                    user = nil
+                } catch {
+                    throw AuthenticationError.serverError
+                }
+                throw AuthenticationError.accountNotFound
+            case .transferred:
+                logger.debug("Apple account is transferred")
+                throw AuthenticationError.accountTransferred
+            default:
+                throw AuthenticationError.serverError
+            }
+        } catch {
+            throw error
+        }
     }
 }
 
@@ -115,7 +125,8 @@ extension AccountService {
         case accountNotFound
         case accountTransferred
         case serverError
-
+        case missingNonce
+        
         /// A computed property to return a localized error message for each error case.
         public var errorDescription: String? {
             switch self {
@@ -125,6 +136,8 @@ extension AccountService {
                 return NSLocalizedString("auth.error.message.serverError", comment: "Error: Server error")
             case .accountTransferred:
                 return NSLocalizedString("auth.error.message.accountTransferred", comment: "Error: Account transferred")
+            case .missingNonce:
+                return NSLocalizedString("auth.error.message.missingNonce", comment: "Error: Missing nonce")
             }
         }
     }

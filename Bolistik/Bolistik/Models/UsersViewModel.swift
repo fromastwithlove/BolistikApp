@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AuthenticationServices
 
 @MainActor
 @Observable
@@ -16,6 +17,7 @@ final class UsersViewModel: ObservableObject {
     private let accountService: AccountService
     
     init(accountService: AccountService) {
+        logger.debug("Users' view model initialized")
         self.accountService = accountService
     }
     
@@ -23,27 +25,38 @@ final class UsersViewModel: ObservableObject {
     
     var isLoading: Bool = false
     var error: LocalizedError?
-    var fullName: PersonNameComponents?
-    var email: String?
-    
-    // MARK: Public
-    
-    public var formattedEmail: String {
-        guard let email = email, !email.isEmpty else { return "" }
-        return email
+    var user: InternalUser? {
+        get async { await accountService.user }
     }
     
-    public var formattedFullName: String {
-        guard let fullName = fullName else { return "" }
-        let formatter = PersonNameComponentsFormatter()
-        return formatter.string(from: fullName)
+    public var isAuthenticated: Bool {
+        get async { await accountService.isAuthenticated }
     }
     
-    public func fetchUser() {
+    // MARK: Authentication
+    
+    public func prepareAppleSignIn(request: ASAuthorizationAppleIDRequest) {
+        request.requestedScopes = [.fullName, .email];
+        // TODO: Here might be race condition
         Task {
-            fullName = await accountService.fullName
-            email = await accountService.email
-            logger.debug("Fetching user finished")
+            await accountService.prepareAppleSignIn(request: request)
+        }
+    }
+    
+    public func handleSignInWithApple(result: Result<ASAuthorization, Error>) async {
+        do {
+            try await accountService.handleSignInWithApple(result: result)
+        } catch {
+            logger.error("Login failed with Apple account: \(error)")
+        }
+    }
+    
+    public func signOut() async {
+        do {
+            try await accountService.signOut()
+            logger.debug("Logout successful")
+        } catch {
+            logger.error("Signout failed with error \(error)")
         }
     }
 }

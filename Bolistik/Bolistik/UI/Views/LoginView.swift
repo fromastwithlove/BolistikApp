@@ -12,6 +12,9 @@ struct LoginView: View {
     
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appManager: AppManager
+    @StateObject var model: UsersViewModel
+    
+    private let logger = AppLogger(category: "UI")
     
     var body: some View {
         GeometryReader { geometry in
@@ -37,9 +40,12 @@ struct LoginView: View {
                 Spacer()
                 
                 SignInWithAppleButtonView { request in
-                    request.requestedScopes = [.fullName, .email]
+                    model.prepareAppleSignIn(request: request)
                 } onCompletion: { result in
-                    appManager.signInWithApple(result: result)
+                    Task {
+                        await model.handleSignInWithApple(result: result)
+                        if await model.isAuthenticated { appManager.userDidAuthenticate() }
+                    }
                 }
                 .frame(height: geometry.size.height * 0.1)
                 
@@ -55,5 +61,5 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView()
+    LoginView(model: UsersViewModel(accountService: AccountService(firebaseAuthService: FirebaseAuthService())))
 }

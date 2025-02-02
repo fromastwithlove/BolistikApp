@@ -10,49 +10,16 @@ import Foundation
 extension UserDefaults {
     
     private enum Keys {
-        static let fullName = "fullName"
-        static let email = "email"
-        static let token = "token"
+        static let baseURL = "baseURL"
     }
-
-    // MARK: - Full Name
-    var fullName: PersonNameComponents? {
+    
+    // MARK: - Network Base URL
+    var baseURL: String? {
         get {
-            guard let data = self.data(forKey: Keys.fullName) else { return nil }
-            return try? JSONDecoder().decode(PersonNameComponents.self, from: data)
+            self.string(forKey: Keys.baseURL)
         }
         set {
-            if let newValue = newValue {
-                let data = try? JSONEncoder().encode(newValue)
-                self.set(data, forKey: Keys.fullName)
-            } else {
-                self.removeObject(forKey: Keys.fullName)
-            }
+            self.set(newValue, forKey: Keys.baseURL)
         }
-    }
-
-    // MARK: - Email
-    var email: String? {
-        get {
-            self.string(forKey: Keys.email)
-        }
-        set {
-            self.set(newValue, forKey: Keys.email)
-        }
-    }
-
-    // MARK: - Token
-    var token: String? {
-        get {
-            self.string(forKey: Keys.token)
-        }
-        set {
-            self.set(newValue, forKey: Keys.token)
-        }
-    }
-
-    // MARK: - Clear Token
-    func clearToken() {
-        self.removeObject(forKey: Keys.token)
     }
 }

@@ -6,14 +6,17 @@
 //
 
 import SwiftUI
+import FirebaseCore
+#if LOCAL_ENVIRONMENT
+import FirebaseAuth
+#endif
 
 @main
 struct BolistikApp: App {
     
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @Environment(\.scenePhase) private var scenePhase
-    @StateObject private var appManager: AppManager = AppManager(services: Services(appConfiguration: AppConfiguration(),
-                                                                                    networkService: NetworkService(),
-                                                                                    accountService: AccountService()))
+    @StateObject private var appManager: AppManager = AppManager(services: Services())
     private let logger = AppLogger(category: "App State")
     
     var body: some Scene {
@@ -23,7 +26,7 @@ struct BolistikApp: App {
                 case .initializing:
                     ProgressView().progressViewStyle(CircularProgressViewStyle())
                 case .awaitingAuthentication:
-                    LoginView()
+                    LoginView(model: UsersViewModel(accountService: appManager.services.accountService))
                         .environment(appManager)
                         .transition(.move(edge: .bottom)
                                     .combined(with: .opacity))
@@ -34,11 +37,19 @@ struct BolistikApp: App {
             }
             .animation(.default, value: appManager.launchState)
         }
-        .onChange(of: scenePhase) {
-            if scenePhase == .active {
-                logger.debug("App is active")
-                appManager.verifyAuthenticationStatus()
-            }
-        }
+    }
+}
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        // Configure Firebase when the app launches
+        FirebaseApp.configure()
+        
+        #if LOCAL_ENVIRONMENT
+        // Set up Firebase Authentication to use the local emulator for testing
+        Auth.auth().useEmulator(withHost: "localhost", port: 9099)
+        #endif
+        
+        return true
     }
 }

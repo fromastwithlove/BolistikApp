@@ -15,14 +15,16 @@ struct ProfileView: View {
     @State private var path: NavigationPath = NavigationPath()
     private let logger = AppLogger(category: "UI")
     
+    @State var user: InternalUser?
+    
     var body: some View {
         NavigationStack(path: $path) {
             List {
                 Section {
                     HStack {
                         UserRowDetails(avatarURL: "https://upload.wikimedia.org/wikipedia/commons/4/40/Alan_Turing_%281912-1954%29_in_1936_at_Princeton_University_%28cropped%29.jpg",
-                                       fullName: model.formattedFullName,
-                                       email: model.formattedEmail)
+                                       fullName: user?.displayName ?? "",
+                                       email: user?.email ?? "")
                         Spacer()
                         Button {
                             // Personal qrcode
@@ -48,7 +50,10 @@ struct ProfileView: View {
                 
                 Section {
                     Button(action: {
-                        appManager.signOut()
+                        Task {
+                            await model.signOut()
+                            appManager.userDidLogout()
+                        }
                     }) {
                         Text("auth.signOut")
                             .font(.headline)
@@ -73,14 +78,11 @@ struct ProfileView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
         .task {
-            model.fetchUser()
+            user = await model.user
         }
     }
 }
 
 #Preview {
-    let model = UsersViewModel(accountService: AccountService())
-    model.fullName = PersonNameComponents(givenName: "Adil", familyName: "Yergaliyev")
-    model.email = "preview@bolistik.kz"
-    return ProfileView(model: model)
+    ProfileView(model: UsersViewModel(accountService: AccountService(firebaseAuthService: FirebaseAuthService())))
 }
