@@ -1,1 +1,1 @@
-{"kind":"identitytoolkit#DownloadAccountResponse","users":[{"localId":"uJR0SY5qBJ964pCNgbcZ8admUVDh","createdAt":"1740510998280","lastLoginAt":"1740510998280","providerUserInfo":[{"providerId":"apple.com","rawId":"000402.b969c3543bad41899bc29ca748655f6e.2314","federatedId":"000402.b969c3543bad41899bc29ca748655f6e.2314"}],"lastRefreshAt":"2025-02-25T19:16:38.281Z"}]}
+{"kind":"identitytoolkit#DownloadAccountResponse","users":[]}
