@@ -18,7 +18,7 @@ final class UserProfileViewModel: ObservableObject {
     private let authenticationService: AuthenticationService
     
     init(authenticationService: AuthenticationService) {
-        logger.debug("Users profile view model initialized")
+        logger.debug("User profile view model initialized")
         self.authenticationService = authenticationService
     }
     
