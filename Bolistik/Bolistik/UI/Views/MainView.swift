@@ -20,7 +20,7 @@ struct MainView: View {
             }
             
             Tab("Groups", systemImage: "person.2", value: .groups) {
-                GroupsView(model: ExpenseGroupViewModel())
+                GroupsView(model: ExpenseGroupsViewModel())
             }
 
             Tab("Contacts", systemImage: "person", value: .contacts) {
@@ -28,7 +28,7 @@ struct MainView: View {
             }
 
             Tab("Profile", systemImage: "person.crop.circle", value: .profile) {
-                ProfileView(model: UsersProfileViewModel(authenticationService: appManager.services.authenticationService))
+                ProfileView(model: UserProfileViewModel(authenticationService: appManager.services.authenticationService))
             }
         }
     }

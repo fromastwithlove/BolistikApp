@@ -27,7 +27,7 @@ struct BolistikApp: App {
                 case .initializing:
                     ProgressView().progressViewStyle(CircularProgressViewStyle())
                 case .awaitingAuthentication:
-                    LoginView(model: UsersProfileViewModel(authenticationService: appManager.services.authenticationService))
+                    LoginView(model: UserProfileViewModel(authenticationService: appManager.services.authenticationService))
                         .environment(appManager)
                         .transition(.move(edge: .bottom)
                                     .combined(with: .opacity))

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GroupsView: View {
     
-    @StateObject var model: ExpenseGroupViewModel
+    @StateObject var model: ExpenseGroupsViewModel
     
     @State private var path: NavigationPath = NavigationPath()
     
@@ -41,5 +41,5 @@ struct GroupsView: View {
 }
 
 #Preview {
-    GroupsView(model: ExpenseGroupViewModel())
+    GroupsView(model: ExpenseGroupsViewModel())
 }

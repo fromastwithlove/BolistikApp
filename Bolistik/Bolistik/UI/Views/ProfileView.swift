@@ -10,7 +10,7 @@ import SwiftUI
 struct ProfileView: View {
     
     @EnvironmentObject var appManager: AppManager
-    @StateObject var model: UsersProfileViewModel
+    @StateObject var model: UserProfileViewModel
     
     @State private var path: NavigationPath = NavigationPath()
     private let logger = AppLogger(category: "UI")
@@ -82,5 +82,5 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView(model: UsersProfileViewModel(authenticationService: AuthenticationService(firebaseAuthService: FirebaseAuthService(), firestoreService: FirestoreService())))
+    ProfileView(model: UserProfileViewModel(authenticationService: AuthenticationService(firebaseAuthService: FirebaseAuthService(), firestoreService: FirestoreService())))
 }

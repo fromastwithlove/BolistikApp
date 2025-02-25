@@ -1,5 +1,5 @@
 //
-//  UsersProfileViewModel.swift
+//  UserProfileViewModel.swift
 //  Bolistik
 //
 //  Created by Adil Yergaliyev on 03.12.24.
@@ -10,7 +10,7 @@ import AuthenticationServices
 
 @MainActor
 @Observable
-final class UsersProfileViewModel: ObservableObject {
+final class UserProfileViewModel: ObservableObject {
     
     // MARK: Private Properties
     
