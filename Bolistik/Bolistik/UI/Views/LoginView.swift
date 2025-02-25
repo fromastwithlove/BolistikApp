@@ -12,7 +12,7 @@ struct LoginView: View {
     
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appManager: AppManager
-    @StateObject var model: UsersViewModel
+    @StateObject var model: UsersProfileViewModel
     
     private let logger = AppLogger(category: "UI")
     
@@ -61,5 +61,5 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView(model: UsersViewModel(accountService: AccountService(firebaseAuthService: FirebaseAuthService())))
+    LoginView(model: UsersProfileViewModel(authenticationService: AuthenticationService(firebaseAuthService: FirebaseAuthService(), firestoreService: FirestoreService())))
 }

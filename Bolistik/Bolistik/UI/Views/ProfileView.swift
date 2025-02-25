@@ -10,12 +10,10 @@ import SwiftUI
 struct ProfileView: View {
     
     @EnvironmentObject var appManager: AppManager
-    @StateObject var model: UsersViewModel
+    @StateObject var model: UsersProfileViewModel
     
     @State private var path: NavigationPath = NavigationPath()
     private let logger = AppLogger(category: "UI")
-    
-    @State var user: InternalUser?
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -23,8 +21,8 @@ struct ProfileView: View {
                 Section {
                     HStack {
                         UserRowDetails(avatarURL: "https://upload.wikimedia.org/wikipedia/commons/4/40/Alan_Turing_%281912-1954%29_in_1936_at_Princeton_University_%28cropped%29.jpg",
-                                       fullName: user?.displayName ?? "",
-                                       email: user?.email ?? "")
+                                       fullName: model.userProfile?.fullName?.formatted() ?? "",
+                                       email: model.userProfile?.email ?? "")
                         Spacer()
                         Button {
                             // Personal qrcode
@@ -78,11 +76,11 @@ struct ProfileView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
         .task {
-            user = await model.user
+            model.loadUserProfile()
         }
     }
 }
 
 #Preview {
-    ProfileView(model: UsersViewModel(accountService: AccountService(firebaseAuthService: FirebaseAuthService())))
+    ProfileView(model: UsersProfileViewModel(authenticationService: AuthenticationService(firebaseAuthService: FirebaseAuthService(), firestoreService: FirestoreService())))
 }

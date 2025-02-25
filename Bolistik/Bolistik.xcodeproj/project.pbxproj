@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C514D3252D501BB70013F334 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = C514D3242D501BB70013F334 /* FirebaseFirestore */; };
 		C52CA6402D419562008679DF /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = C52CA63F2D419562008679DF /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		C52CA6432D41A012008679DF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = C52CA6422D41A012008679DF /* FirebaseAuth */; };
 /* End PBXBuildFile section */
@@ -59,6 +60,7 @@
 			files = (
 				C52CA6402D419562008679DF /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				C52CA6432D41A012008679DF /* FirebaseAuth in Frameworks */,
+				C514D3252D501BB70013F334 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,6 +123,7 @@
 			packageProductDependencies = (
 				C52CA63F2D419562008679DF /* FirebaseAnalyticsWithoutAdIdSupport */,
 				C52CA6422D41A012008679DF /* FirebaseAuth */,
+				C514D3242D501BB70013F334 /* FirebaseFirestore */,
 			);
 			productName = bolistik;
 			productReference = C5685AB62CF8F2D30075537F /* Bolistik.app */;
@@ -599,6 +602,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C514D3242D501BB70013F334 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C52CA63E2D419562008679DF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
 		C52CA63F2D419562008679DF /* FirebaseAnalyticsWithoutAdIdSupport */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C52CA63E2D419562008679DF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

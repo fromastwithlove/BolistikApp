@@ -1,5 +1,5 @@
 //
-//  UsersViewModel.swift
+//  UsersProfileViewModel.swift
 //  Bolistik
 //
 //  Created by Adil Yergaliyev on 03.12.24.
@@ -10,27 +10,35 @@ import AuthenticationServices
 
 @MainActor
 @Observable
-final class UsersViewModel: ObservableObject {
+final class UsersProfileViewModel: ObservableObject {
     
-    // MARK: Private
+    // MARK: Private Properties
+    
     private let logger = AppLogger(category: "UI")
-    private let accountService: AccountService
+    private let authenticationService: AuthenticationService
     
-    init(accountService: AccountService) {
-        logger.debug("Users' view model initialized")
-        self.accountService = accountService
+    init(authenticationService: AuthenticationService) {
+        logger.debug("Users profile view model initialized")
+        self.authenticationService = authenticationService
     }
     
     // MARK: Published properties
     
     var isLoading: Bool = false
     var error: LocalizedError?
-    var user: InternalUser? {
-        get async { await accountService.user }
-    }
+    var userProfile: UserProfile?
     
     public var isAuthenticated: Bool {
-        get async { await accountService.isAuthenticated }
+        get async { await authenticationService.isAuthenticated }
+    }
+    
+    // MARK: Public methods
+    
+    public func loadUserProfile() {
+        Task {
+            let profile = await authenticationService.userProfile
+            userProfile = profile
+        }
     }
     
     // MARK: Authentication
@@ -39,13 +47,13 @@ final class UsersViewModel: ObservableObject {
         request.requestedScopes = [.fullName, .email];
         // TODO: Here might be race condition
         Task {
-            await accountService.prepareAppleSignIn(request: request)
+            await authenticationService.prepareAppleSignIn(request: request)
         }
     }
     
     public func handleSignInWithApple(result: Result<ASAuthorization, Error>) async {
         do {
-            try await accountService.handleSignInWithApple(result: result)
+            try await authenticationService.handleSignInWithApple(result: result)
         } catch {
             logger.error("Login failed with Apple account: \(error)")
         }
@@ -53,10 +61,11 @@ final class UsersViewModel: ObservableObject {
     
     public func signOut() async {
         do {
-            try await accountService.signOut()
+            try await authenticationService.signOut()
             logger.debug("Logout successful")
         } catch {
             logger.error("Signout failed with error \(error)")
         }
     }
+    
 }

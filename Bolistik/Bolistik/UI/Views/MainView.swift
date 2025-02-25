@@ -28,7 +28,7 @@ struct MainView: View {
             }
 
             Tab("Profile", systemImage: "person.crop.circle", value: .profile) {
-                ProfileView(model: UsersViewModel(accountService: appManager.services.accountService))
+                ProfileView(model: UsersProfileViewModel(authenticationService: appManager.services.authenticationService))
             }
         }
     }
