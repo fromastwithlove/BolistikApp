@@ -1,5 +1,5 @@
 //
-//  ExpenseGroupViewModel.swift
+//  ExpenseGroupsViewModel.swift
 //  Bolistik
 //
 //  Created by Adil Yergaliyev on 04.01.25.
@@ -9,7 +9,7 @@ import Foundation
 
 @MainActor
 @Observable
-final class ExpenseGroupViewModel: ObservableObject {
+final class ExpenseGroupsViewModel: ObservableObject {
     
     // MARK: Private
     

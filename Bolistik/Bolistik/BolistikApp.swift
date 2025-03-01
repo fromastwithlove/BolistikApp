@@ -9,6 +9,7 @@ import SwiftUI
 import FirebaseCore
 #if LOCAL_ENVIRONMENT
 import FirebaseAuth
+import FirebaseFirestore
 #endif
 
 @main
@@ -26,7 +27,7 @@ struct BolistikApp: App {
                 case .initializing:
                     ProgressView().progressViewStyle(CircularProgressViewStyle())
                 case .awaitingAuthentication:
-                    LoginView(model: UsersViewModel(accountService: appManager.services.accountService))
+                    LoginView(model: UserProfileViewModel(authenticationService: appManager.services.authenticationService))
                         .environment(appManager)
                         .transition(.move(edge: .bottom)
                                     .combined(with: .opacity))
@@ -47,7 +48,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         
         #if LOCAL_ENVIRONMENT
         // Set up Firebase Authentication to use the local emulator for testing
-        Auth.auth().useEmulator(withHost: "localhost", port: 9099)
+        Auth.auth().useEmulator(withHost: "127.0.0.1", port: 9099)
+        
+        let settings = Firestore.firestore().settings
+        settings.host = "127.0.0.1:8080"
+        settings.cacheSettings = MemoryCacheSettings()
+        settings.isSSLEnabled = false
+        Firestore.firestore().settings = settings
+        
         #endif
         
         return true

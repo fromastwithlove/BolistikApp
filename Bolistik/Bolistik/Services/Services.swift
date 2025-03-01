@@ -9,11 +9,13 @@ actor Services {
     
     let appConfiguration: AppConfiguration
     let networkService: NetworkService
-    let accountService: AccountService
+    let authenticationService: AuthenticationService
+    let firestoreService: FirestoreService
     
     init() {
         self.appConfiguration = AppConfiguration()
         self.networkService = NetworkService(defaultBaseURLString: appConfiguration.serverURLs.first!)
-        self.accountService = AccountService(firebaseAuthService: FirebaseAuthService())
+        self.authenticationService = AuthenticationService(firebaseAuthService: FirebaseAuthService(), firestoreService: FirestoreService())
+        self.firestoreService = FirestoreService()
     }
 }

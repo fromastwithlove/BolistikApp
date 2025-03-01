@@ -49,11 +49,11 @@ class AppManager: ObservableObject {
     private func verifyAuthenticationState() {
         Task {
             do {
-                try await services.accountService.verifyAccountStatus()
+                try await services.authenticationService.verifyAccountStatus()
             } catch {
                 logger.debug("Apple verification failed with error \(error)")
             }
-            launchState = await services.accountService.isAuthenticated ? .ready : .awaitingAuthentication
+            launchState = await services.authenticationService.isAuthenticated ? .ready : .awaitingAuthentication
         }
     }
     

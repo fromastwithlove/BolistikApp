@@ -28,20 +28,19 @@ final class FirebaseAuthService {
         return nil
     }
     
-    public func signInWith(appleIDToken: String, nonce: String, fullName: PersonNameComponents?) -> Task<InternalUser, Error> {
+    public func signInWith(appleIDToken: String, nonce: String, fullName: PersonNameComponents?) -> Task<Void, Error> {
         logger.debug("Signing in with Firebase using Apple ID")
         
         return Task {
             do {
                 let credential = OAuthProvider.appleCredential(withIDToken: appleIDToken, rawNonce: nonce, fullName: fullName)
-                let authResult = try await Auth.auth().signIn(with: credential)
-                return InternalUser(from: authResult.user)
+                try await Auth.auth().signIn(with: credential)
             } catch {
                 throw error
             }
         }
     }
-    // TODO: Should this function throw?
+    // TODO: Refactor this method!
     public func updateDisplayName(displayName: String) {
         guard let user = Auth.auth().currentUser, !displayName.isEmpty else {
             return

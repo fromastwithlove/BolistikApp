@@ -13,96 +13,6 @@
     "App appearance" : {
 
     },
-    "auth.error.message.accountNotFound" : {
-      "comment" : "Error: Account not found",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Konto nicht gefunden. Bitte überprüfen Sie Ihre Anmeldedaten."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Account not found. Please check your credentials."
-          }
-        },
-        "kk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Профиль табылмады. Өтінемін, өз мәліметтеріңізді тексеріңіз."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Учетная запись не найдена. Пожалуйста, проверьте ваши учетные данные."
-          }
-        }
-      }
-    },
-    "auth.error.message.accountTransferred" : {
-      "comment" : "Error: Account transferred",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Das Konto wurde übertragen. Bitte wenden Sie sich an den Support."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "The account has been transferred. Please contact support."
-          }
-        },
-        "kk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Профиль ауыстырылды. Қолдау қызметіне хабарласыңыз."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Учетная запись была передана. Пожалуйста, свяжитесь с поддержкой."
-          }
-        }
-      }
-    },
-    "auth.error.message.missingNonce" : {
-      "comment" : "Error: Missing nonce"
-    },
-    "auth.error.message.serverError" : {
-      "comment" : "Error: Server error",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Serverfehler. Bitte versuchen Sie es später erneut."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Server error. Please try again later."
-          }
-        },
-        "kk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Серверде қате пайда болды. Кейінірек қайтадан көріңіз."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ошибка сервера. Попробуйте снова позже.\n"
-          }
-        }
-      }
-    },
     "auth.signOut" : {
       "localizations" : {
         "de" : {
@@ -170,6 +80,30 @@
     },
     "Data and analytics" : {
 
+    },
+    "error.auth.accountNotFound" : {
+      "comment" : "Error: Account not found"
+    },
+    "error.auth.accountTransferred" : {
+      "comment" : "Error: Account transferred"
+    },
+    "error.auth.missingNonce" : {
+      "comment" : "Error: Missing nonce"
+    },
+    "error.auth.serverError" : {
+      "comment" : "Error: Server error"
+    },
+    "error.firestore.decodingFailed" : {
+      "comment" : "Error: Failed to decode data from Firestore."
+    },
+    "error.firestore.documentNotFound" : {
+      "comment" : "Error: The requested document was not found."
+    },
+    "error.firestore.encodingFailed" : {
+      "comment" : "Error: Failed to encode data before saving to Firestore."
+    },
+    "error.firestore.network" : {
+      "comment" : "Error: A network issue occurred."
     },
     "Gather Your Crew and Split the Costs!" : {
 
