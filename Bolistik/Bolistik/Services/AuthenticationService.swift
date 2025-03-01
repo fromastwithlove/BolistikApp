@@ -58,11 +58,11 @@ actor AuthenticationService {
                 logger.debug("No user profile found in Firestore, creating a new one for UID: \(firebaseUser.uid)")
                 
                 if let fullName = fullName, !fullName.formatted().isEmpty {
-                    let newUserProfile = UserProfile(uid: firebaseUser.uid, email: email, fullName: fullName)
+                    let newUserProfile = UserProfile(uid: firebaseUser.uid, email: email, fullName: fullName, locale: Locale.current.identifier, currency: Locale.current.currency?.identifier)
                     userProfile = newUserProfile
                     
                     try await firestoreService.save(newUserProfile, inCollection: FirestoreCollections.userProfiles, withDocumentId: newUserProfile.uid)
-                    logger.debug("User profile \(newUserProfile.uid) saved successfully in Firestore")       
+                    logger.debug("User profile \(newUserProfile.uid) saved successfully in Firestore")
                 }
             }
         } catch {

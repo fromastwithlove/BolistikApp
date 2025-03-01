@@ -36,8 +36,7 @@ final class UserProfileViewModel: ObservableObject {
     
     public func loadUserProfile() {
         Task {
-            let profile = await authenticationService.userProfile
-            userProfile = profile
+            userProfile = await authenticationService.userProfile
         }
     }
     

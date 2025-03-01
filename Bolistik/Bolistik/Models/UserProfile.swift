@@ -12,6 +12,9 @@ struct UserProfile: FirestoreModel {
     let email: String
     
     var fullName: PersonNameComponents?
+    
+    var locale: String
+    var currency: String?
 }
 
 // MARK: - Codable Implementation
@@ -21,6 +24,8 @@ extension UserProfile {
         case uid
         case email
         case fullName
+        case locale
+        case currency
     }
     
     func encode(to encoder: Encoder) throws {
@@ -28,6 +33,8 @@ extension UserProfile {
         try container.encode(uid, forKey: .uid)
         try container.encode(email, forKey: .email)
         try container.encode(fullName?.formatted(), forKey: .fullName)
+        try container.encode(locale, forKey: .locale)
+        try container.encode(currency, forKey: .currency)
     }
     
     init(from decoder: Decoder) throws {
@@ -37,5 +44,7 @@ extension UserProfile {
         if let fullNameString = try container.decodeIfPresent(String.self, forKey: .fullName) {
             self.fullName = PersonNameComponentsFormatter().personNameComponents(from: fullNameString)
         }
+        self.locale = try container.decode(String.self, forKey: .locale)
+        self.currency = try container.decodeIfPresent(String.self, forKey: .currency)
     }
 }

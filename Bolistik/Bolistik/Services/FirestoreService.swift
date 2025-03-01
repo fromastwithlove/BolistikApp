@@ -83,7 +83,6 @@ actor FirestoreService {
             let model = try documentSnapshot.data(as: T.self)
             logger.info("Successfully fetched document [\(documentId)] from collection [\(collection)]")
             return model
-            
         } catch {
             logger.error("Failed to fetch document [\(documentId)] from collection [\(collection)]: \(error.localizedDescription)")
             throw FirestoreServiceError.networkError(error)
