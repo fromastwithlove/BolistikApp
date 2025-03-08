@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AuthenticationServices
+import GoogleSignInSwift
 
 struct LoginView: View {
     
@@ -49,6 +50,14 @@ struct LoginView: View {
                 }
                 .frame(height: geometry.size.height * 0.1)
                 
+                GoogleSignInButton(scheme: .light, style: .wide, action: {
+                    Task {
+                        await model.handleSignInWithGoogle()
+                        if await model.isAuthenticated { appManager.userDidAuthenticate() }
+                    }
+                })
+                .padding(.bottom)
+
                 NavigationLink(destination: EmptyView()) {
                     Text("auth.termAndCondition")
                         .font(.subheadline)

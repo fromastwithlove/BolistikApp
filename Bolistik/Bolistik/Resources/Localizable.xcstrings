@@ -87,6 +87,12 @@
     "error.auth.accountTransferred" : {
       "comment" : "Error: Account transferred"
     },
+    "error.auth.googleIDTokenIsMissing" : {
+      "comment" : "Error: Missing Google ID token"
+    },
+    "error.auth.missingGoogleClientID" : {
+      "comment" : "Error: Missing Google client ID"
+    },
     "error.auth.missingNonce" : {
       "comment" : "Error: Missing nonce"
     },

@@ -34,7 +34,7 @@ extension UserProfile {
         try container.encode(email, forKey: .email)
         try container.encode(fullName?.formatted(), forKey: .fullName)
         try container.encode(locale, forKey: .locale)
-        try container.encode(currency, forKey: .currency)
+        try container.encodeIfPresent(currency, forKey: .currency)
     }
     
     init(from decoder: Decoder) throws {

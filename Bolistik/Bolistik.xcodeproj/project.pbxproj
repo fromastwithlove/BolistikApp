@@ -10,6 +10,8 @@
 		C514D3252D501BB70013F334 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = C514D3242D501BB70013F334 /* FirebaseFirestore */; };
 		C52CA6402D419562008679DF /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = C52CA63F2D419562008679DF /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		C52CA6432D41A012008679DF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = C52CA6422D41A012008679DF /* FirebaseAuth */; };
+		C5F3FDBF2D77A05C006F0298 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = C5F3FDBE2D77A05C006F0298 /* GoogleSignIn */; };
+		C5F3FDC12D77A05C006F0298 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C5F3FDC02D77A05C006F0298 /* GoogleSignInSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,9 +37,22 @@
 		C5685AD02CF8F2D40075537F /* BolistikUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BolistikUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		C57F05C12D7A59180039CD19 /* Exceptions for "Bolistik" folder in "Bolistik" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = C5685AB52CF8F2D30075537F /* Bolistik */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C5685AB82CF8F2D30075537F /* Bolistik */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C57F05C12D7A59180039CD19 /* Exceptions for "Bolistik" folder in "Bolistik" target */,
+			);
 			path = Bolistik;
 			sourceTree = "<group>";
 		};
@@ -58,7 +73,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5F3FDC12D77A05C006F0298 /* GoogleSignInSwift in Frameworks */,
 				C52CA6402D419562008679DF /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				C5F3FDBF2D77A05C006F0298 /* GoogleSignIn in Frameworks */,
 				C52CA6432D41A012008679DF /* FirebaseAuth in Frameworks */,
 				C514D3252D501BB70013F334 /* FirebaseFirestore in Frameworks */,
 			);
@@ -124,6 +141,8 @@
 				C52CA63F2D419562008679DF /* FirebaseAnalyticsWithoutAdIdSupport */,
 				C52CA6422D41A012008679DF /* FirebaseAuth */,
 				C514D3242D501BB70013F334 /* FirebaseFirestore */,
+				C5F3FDBE2D77A05C006F0298 /* GoogleSignIn */,
+				C5F3FDC02D77A05C006F0298 /* GoogleSignInSwift */,
 			);
 			productName = bolistik;
 			productReference = C5685AB62CF8F2D30075537F /* Bolistik.app */;
@@ -213,6 +232,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				C52CA63E2D419562008679DF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				C5F3FDBD2D77A05C006F0298 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C5685AB72CF8F2D30075537F /* Products */;
@@ -422,6 +442,7 @@
 				DEVELOPMENT_TEAM = GRMZ48Y4F9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Bolistik/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Bolistik;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -457,6 +478,7 @@
 				DEVELOPMENT_TEAM = GRMZ48Y4F9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Bolistik/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Bolistik;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -599,6 +621,14 @@
 				minimumVersion = 11.7.0;
 			};
 		};
+		C5F3FDBD2D77A05C006F0298 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -616,6 +646,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C52CA63E2D419562008679DF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		C5F3FDBE2D77A05C006F0298 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C5F3FDBD2D77A05C006F0298 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		C5F3FDC02D77A05C006F0298 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C5F3FDBD2D77A05C006F0298 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

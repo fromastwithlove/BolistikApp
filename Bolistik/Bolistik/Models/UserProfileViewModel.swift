@@ -58,6 +58,21 @@ final class UserProfileViewModel: ObservableObject {
         }
     }
     
+    public func handleSignInWithGoogle() async {
+        do {
+            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                  let window = windowScene.windows.first,
+                  let rootViewController = window.rootViewController else {
+                logger.error("There is no window or root view controller")
+                return
+            }
+
+            try await authenticationService.handleSignInWithGoogle(rootViewController: rootViewController)
+        } catch {
+            logger.error("Login failed with Google account: \(error)")
+        }
+    }
+    
     public func signOut() async {
         do {
             try await authenticationService.signOut()

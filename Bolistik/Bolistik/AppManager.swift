@@ -51,7 +51,7 @@ class AppManager: ObservableObject {
             do {
                 try await services.authenticationService.verifyAccountStatus()
             } catch {
-                logger.debug("Apple verification failed with error \(error)")
+                logger.debug("Account verification failed with error \(error)")
             }
             launchState = await services.authenticationService.isAuthenticated ? .ready : .awaitingAuthentication
         }
