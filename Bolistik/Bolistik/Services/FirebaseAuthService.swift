@@ -6,7 +6,9 @@
 //
 
 import FirebaseAuth
+import FirebaseCore
 import CryptoKit
+import GoogleSignIn
 
 final class FirebaseAuthService {
     
@@ -19,13 +21,9 @@ final class FirebaseAuthService {
     public var user: User? {
         return Auth.auth().currentUser
     }
-    // TODO: Refactor this method
-    public func appleUserUID() -> String? {
-        let providerData = Auth.auth().currentUser?.providerData
-        if let appleProviderData = providerData?.first(where: { $0.providerID == AuthProviderID.apple.rawValue }) {
-            return appleProviderData.uid
-        }
-        return nil
+    
+    public var userProviderData: [UserInfo]? {
+        return Auth.auth().currentUser?.providerData
     }
     
     public func signInWith(appleIDToken: String, nonce: String, fullName: PersonNameComponents?) -> Task<Void, Error> {
@@ -40,6 +38,34 @@ final class FirebaseAuthService {
             }
         }
     }
+
+    public func signInWithGoogle(rootViewController: UIViewController) -> Task<Void, Error> {
+        logger.debug("Signing in with Firebase using Google")
+        
+        return Task {
+            guard let clientID = FirebaseApp.app()?.options.clientID else {
+                throw AuthenticationError.missingGoogleClientID
+            }
+            
+            let config = GIDConfiguration(clientID: clientID)
+            GIDSignIn.sharedInstance.configuration = config
+            
+            do {
+                let userAuthentication = try await GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController)
+                let user = userAuthentication.user
+                
+                guard let idToken = user.idToken else {
+                    throw AuthenticationError.googleIDTokenIsMissing
+                }
+                
+                let credential = GoogleAuthProvider.credential(withIDToken: idToken.tokenString, accessToken: user.accessToken.tokenString)
+                try await Auth.auth().signIn(with: credential)
+            } catch {
+                throw error
+            }
+        }
+    }
+    
     // TODO: Refactor this method!
     public func updateDisplayName(displayName: String) {
         guard let user = Auth.auth().currentUser, !displayName.isEmpty else {
