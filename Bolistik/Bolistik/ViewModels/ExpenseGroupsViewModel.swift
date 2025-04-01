@@ -11,13 +11,13 @@ import Foundation
 @Observable
 final class ExpenseGroupsViewModel: ObservableObject {
     
-    // MARK: Private
+    // MARK: - Private
     
     private let logger = AppLogger(category: "UI")
     
-    // MARK: Published properties
+    // MARK: - Published properties
     
     var groups: [ExpenseGroup] = ExpenseGroup.samples
     
-    // MARK: Public
+    // MARK: - Public
 }

@@ -10,11 +10,13 @@ import SwiftUI
 struct ContactRow: View {
     
     @Binding var contact: Contact
+    let geometry: GeometryProxy
     
     var body: some View {
         HStack {
-            UserRowDetails(avatarURL: contact.imageUrl,
-                           fullName: contact.formattedFullName,
+            UserRowDetails(geometry: geometry,
+                           avatarPath: contact.avatarPath,
+                           displayName: contact.formattedFullName,
                            email: contact.email)
             Spacer()
             Button(action: {
@@ -29,5 +31,11 @@ struct ContactRow: View {
 }
 
 #Preview {
-    ContactRow(contact: .constant(Contact(imageUrl:"https://upload.wikimedia.org/wikipedia/commons/b/b8/Albert_Einstein_Head.jpg", fullName: PersonNameComponents(givenName: "Albert", familyName: "Einstein"), email: "albert.einstein@bolistik.kz")))
+    GeometryReader { geometry in
+        ContactRow(contact:
+                .constant(Contact(avatarPath: "public/albert.einstein.jpg",
+                                  fullName: PersonNameComponents(givenName: "Albert", familyName: "Einstein"),
+                                  email: "albert.einstein@bolistik.kz")),
+                   geometry: geometry)
+    }
 }

@@ -11,15 +11,15 @@ import Foundation
 @Observable
 final class ContactsViewModel: ObservableObject {
     
-    // MARK: Private
+    // MARK: - Private
     
     private let logger = AppLogger(category: "UI")
     
-    // MARK: Published properties
+    // MARK: - Published properties
     
     var searchText: String = ""
     
     var contacts: [Contact] = Contact.samples
     
-    // MARK: Public
+    // MARK: - Public
 }

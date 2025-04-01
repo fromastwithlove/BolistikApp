@@ -20,7 +20,7 @@ struct ContactsView: View {
                     ContactsEmptyView()
                 } else {
                     List($model.contacts) { $contact in
-                        ContactRow(contact: $contact)
+                        ContactRow(contact: $contact, geometry: geometry)
                     }
                     .listStyle(.insetGrouped)
                     .searchable(text: $model.searchText, placement: .navigationBarDrawer(displayMode: .always))

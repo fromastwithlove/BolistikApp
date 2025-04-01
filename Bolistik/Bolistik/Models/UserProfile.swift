@@ -5,46 +5,97 @@
 //  Created by Adil Yergaliyev on 27.01.25.
 //
 
-import FirebaseAuth
+import Foundation
 
 struct UserProfile: FirestoreModel {
-    let uid: String
-    let email: String
-    
-    var fullName: PersonNameComponents?
-    
+    var id: String
+    var email: String?
+    var avatarPath: String?
     var locale: String
-    var currency: String?
+    var currency: String
+    
+    var displayName: String {
+        get {
+            guard let fullName = fullName else {
+                return ""
+            }
+            return PersonNameComponentsFormatter().string(from: fullName)
+        }
+        set {
+            let formatter = PersonNameComponentsFormatter()
+            if let newFullName = formatter.personNameComponents(from: newValue) {
+                self.fullName = newFullName
+            }
+        }
+    }
+    
+    init(id: String, email: String?, avatarPath: String?, locale: String, currency: String, fullName: PersonNameComponents?) {
+        self.id = id
+        self.email = email
+        self.avatarPath = avatarPath
+        self.locale = locale
+        self.currency = currency
+        self.fullName = fullName
+    }
+    
+    // MARK: - Private properties
+    
+    private var givenName: String?
+    private var middleName: String?
+    private var familyName: String?
+    
+    private var fullName: PersonNameComponents? {
+        get {
+            var components = PersonNameComponents()
+            components.givenName = givenName
+            components.middleName = middleName
+            components.familyName = familyName
+            return components
+        }
+        set {
+            givenName = newValue?.givenName
+            middleName = newValue?.middleName
+            familyName = newValue?.familyName
+        }
+    }
+    
 }
 
 // MARK: - Codable Implementation
 
 extension UserProfile {
     enum CodingKeys: String, CodingKey {
-        case uid
+        case id
         case email
-        case fullName
+        case avatarPath
         case locale
         case currency
+        case givenName
+        case middleName
+        case familyName
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(uid, forKey: .uid)
-        try container.encode(email, forKey: .email)
-        try container.encode(fullName?.formatted(), forKey: .fullName)
+        try container.encode(id, forKey: .id)
+        try container.encodeIfPresent(email, forKey: .email)
+        try container.encodeIfPresent(avatarPath, forKey: .avatarPath)
         try container.encode(locale, forKey: .locale)
-        try container.encodeIfPresent(currency, forKey: .currency)
+        try container.encode(currency, forKey: .currency)
+        try container.encodeIfPresent(givenName, forKey: .givenName)
+        try container.encodeIfPresent(middleName, forKey: .middleName)
+        try container.encodeIfPresent(familyName, forKey: .familyName)
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.uid = try container.decode(String.self, forKey: .uid)
-        self.email = try container.decode(String.self, forKey: .email)
-        if let fullNameString = try container.decodeIfPresent(String.self, forKey: .fullName) {
-            self.fullName = PersonNameComponentsFormatter().personNameComponents(from: fullNameString)
-        }
+        self.id = try container.decode(String.self, forKey: .id)
+        self.email = try container.decodeIfPresent(String.self, forKey: .email)
+        self.avatarPath = try container.decodeIfPresent(String.self, forKey: .avatarPath)
         self.locale = try container.decode(String.self, forKey: .locale)
-        self.currency = try container.decodeIfPresent(String.self, forKey: .currency)
+        self.currency = try container.decode(String.self, forKey: .currency)
+        self.givenName = try container.decodeIfPresent(String.self, forKey: .givenName)
+        self.middleName = try container.decodeIfPresent(String.self, forKey: .middleName)
+        self.familyName = try container.decodeIfPresent(String.self, forKey: .familyName)
     }
 }

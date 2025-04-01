@@ -12,10 +12,12 @@ import GoogleSignInSwift
 struct LoginView: View {
     
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appManager: AppManager
-    @StateObject var model: UserProfileViewModel
+    @EnvironmentObject private var appManager: AppManager
+    @EnvironmentObject private var authenticationManager: AuthenticationManager
     
     private let logger = AppLogger(category: "UI")
+    
+    @State private var errorString: String?
     
     var body: some View {
         GeometryReader { geometry in
@@ -41,19 +43,28 @@ struct LoginView: View {
                 Spacer()
                 
                 SignInWithAppleButtonView { request in
-                    model.prepareAppleSignIn(request: request)
+                    authenticationManager.prepareAppleSignIn(request: request)
                 } onCompletion: { result in
                     Task {
-                        await model.handleSignInWithApple(result: result)
-                        if await model.isAuthenticated { appManager.userDidAuthenticate() }
+                        do {
+                            try await authenticationManager.handleSignInWithApple(result: result)
+                        } catch {
+                            errorString = error.localizedDescription
+                        }
+                        appManager.updateAppState(isAuthenticated: authenticationManager.isAuthenticated)
                     }
                 }
                 .frame(height: geometry.size.height * 0.1)
                 
                 GoogleSignInButton(scheme: .light, style: .wide, action: {
                     Task {
-                        await model.handleSignInWithGoogle()
-                        if await model.isAuthenticated { appManager.userDidAuthenticate() }
+                        do {
+                            try await authenticationManager.handleSignInWithGoogle()
+                        } catch {
+                            errorString = error.localizedDescription
+                        }
+                        
+                        appManager.updateAppState(isAuthenticated: authenticationManager.isAuthenticated)
                     }
                 })
                 .padding(.bottom)
@@ -70,5 +81,5 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView(model: UserProfileViewModel(authenticationService: AuthenticationService(firebaseAuthService: FirebaseAuthService(), firestoreService: FirestoreService())))
+    LoginView()
 }

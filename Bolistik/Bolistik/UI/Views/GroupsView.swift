@@ -20,7 +20,7 @@ struct GroupsView: View {
                     GroupsEmptyView()
                 } else {
                     List($model.groups) { $group in
-                        GroupRow(group: $group)
+                        GroupRow(group: $group, geometry: geometry)
                     }
                     .listStyle(.plain)
                 }

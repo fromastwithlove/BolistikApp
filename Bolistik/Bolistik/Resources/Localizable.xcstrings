@@ -78,7 +78,19 @@
     "Create a group to start sharing and splitting expenses. Invite people you’re traveling with or living with, and keep track of all your bills together!" : {
 
     },
+    "Currencies" : {
+
+    },
+    "Currency" : {
+
+    },
     "Data and analytics" : {
+
+    },
+    "Email" : {
+
+    },
+    "Error: %@" : {
 
     },
     "error.auth.accountNotFound" : {
@@ -96,20 +108,23 @@
     "error.auth.missingNonce" : {
       "comment" : "Error: Missing nonce"
     },
+    "error.auth.nameConversionFailed" : {
+      "comment" : "Error: Failed to convert display name to full name"
+    },
     "error.auth.serverError" : {
       "comment" : "Error: Server error"
     },
     "error.firestore.decodingFailed" : {
       "comment" : "Error: Failed to decode data from Firestore."
     },
-    "error.firestore.documentNotFound" : {
-      "comment" : "Error: The requested document was not found."
-    },
     "error.firestore.encodingFailed" : {
       "comment" : "Error: Failed to encode data before saving to Firestore."
     },
     "error.firestore.network" : {
       "comment" : "Error: A network issue occurred."
+    },
+    "Full Name" : {
+
     },
     "Gather Your Crew and Split the Costs!" : {
 
@@ -136,9 +151,6 @@
 
     },
     "Payment methods" : {
-
-    },
-    "Personal info" : {
 
     },
     "Profile" : {
@@ -168,6 +180,9 @@
           }
         }
       }
+    },
+    "Save" : {
+
     },
     "Start a group" : {
 

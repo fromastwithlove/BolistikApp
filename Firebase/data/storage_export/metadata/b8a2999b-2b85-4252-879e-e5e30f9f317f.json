@@ -1,0 +1,19 @@
+{
+  "name": "public/richard.feynman.jpg",
+  "bucket": "bolistik-kz.firebasestorage.app",
+  "metageneration": 1,
+  "generation": 1741720861539,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "a4e79970-cd19-46cd-abfa-94f06328245a"
+  ],
+  "etag": "V55EX0dZRmkHOKyO2uCYnR5XHBo",
+  "customMetadata": {},
+  "timeCreated": "2025-03-11T19:21:01.539Z",
+  "updated": "2025-03-11T19:21:01.539Z",
+  "size": 37235,
+  "md5Hash": "4MbQWIevNGK4ssAcnb4KQA==",
+  "crc32c": "536477390"
+}

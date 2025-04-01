@@ -1,0 +1,19 @@
+{
+  "name": "public/isaac.newton.jpg",
+  "bucket": "bolistik-kz.firebasestorage.app",
+  "metageneration": 1,
+  "generation": 1741720996490,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "f6d1bc48-711f-4a68-b339-aad41e6c4b52"
+  ],
+  "etag": "hHUyBBBKIWw6/jBpoBOYQ+DhK/I",
+  "customMetadata": {},
+  "timeCreated": "2025-03-11T19:23:16.490Z",
+  "updated": "2025-03-11T19:23:16.490Z",
+  "size": 324382,
+  "md5Hash": "HIiaNXMoDxptFRjSUY0/wg==",
+  "crc32c": "3446647257"
+}
