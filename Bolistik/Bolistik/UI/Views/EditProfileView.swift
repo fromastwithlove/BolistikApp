@@ -111,7 +111,7 @@ struct EditProfileView: View {
 
 #Preview {
     @Previewable @State var profileModel = UserProfileViewModel(firestoreService: FirestoreService(), userUID: "1")
-    @Previewable @State var imageModel = ImageViewModel(firebaseStorageService: FirebaseStorageService(), imagePath: "alan.turing")
+    @Previewable @State var imageModel = ImageViewModel(firebaseStorageService: FirebaseStorageService(), imagePath: "public/alan.turing.jpg")
     
     EditProfileView(profileModel: profileModel, imageModel: imageModel)
         .environment(AppManager(services: Services()))
