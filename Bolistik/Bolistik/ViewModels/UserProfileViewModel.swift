@@ -15,106 +15,58 @@ final class UserProfileViewModel: ObservableObject {
     
     private let logger = AppLogger(category: "UI")
     private let firestoreService: FirestoreService
-    private let userUID: String
+    private let userID: String
     
-    // FIXME: Init empty profile?
-    private var userProfile = UserProfile(id: "",
-                                          email: nil,
-                                          avatarPath: nil,
-                                          locale: "",
-                                          currency: "EUR",
-                                          fullName: nil)
+    // Regular Expressions for validation
+    private let nameRegex = #"^[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+)*$"#
+    private let emailRegex = #"^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"#
     
-    init(firestoreService: FirestoreService, userUID: String) {
+    init(firestoreService: FirestoreService, userID: String) {
         self.firestoreService = firestoreService
-        self.userUID = userUID
+        self.userID = userID
     }
     
     // MARK: - Published properties
     
-    var userId: String {
-        get {
-            return userProfile.id
-        }
-    }
-    
-    var avatarPath: String? {
-        get {
-            return userProfile.avatarPath
-        }
-        set {
-            userProfile.avatarPath = newValue
-        }
-    }
-    
-    var displayName: String {
-        get {
-            return userProfile.displayName
-        }
-        set {
-            userProfile.displayName = newValue
-        }
-    }
-    
-    var isDisplayNameValid: Bool {
-        let nameRegex = #"^[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+)+$"#
-        return NSPredicate(format: "SELF MATCHES %@", nameRegex).evaluate(with: displayName)
-    }
-    
-    var email: String {
-        get {
-            return userProfile.email ?? ""
-        }
-        set {
-            userProfile.email = newValue
-        }
-    }
-    
-    var isEmailValid: Bool {
-        let emailRegex = #"^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"#
-        return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: email)
-    }
-    
-    var currency: String {
-        get {
-            return userProfile.currency
-        }
-        set {
-            userProfile.currency = newValue
-        }
-    }
+    var userProfile: UserProfile?
     
     // MARK: - Public methods
     
     public func loadUserProfile() async {
         do {
-            if let existingProfile = try await firestoreService.getUserProfile(userUID: userUID) {
+            if let existingProfile = try await firestoreService.getUserProfile(userID: userID) {
                 userProfile = existingProfile
             }
+            logger.info("User profile loaded successfully")
         } catch {
             logger.error("Failed to load user profile: \(error)")
         }
     }
     
-    public func validateUserProfile() -> Bool {
-        guard isDisplayNameValid else {
-            logger.error("Invalid full name")
+    public func validate(profile: UserProfile) -> Bool {
+        // Check if Display Name matches the expected format (only letters and at least one space between names)
+        if !NSPredicate(format: "SELF MATCHES %@", nameRegex).evaluate(with: profile.displayName) {
+            logger.error("Invalid full name: \(profile.displayName)")
             return false
         }
         
-        guard isEmailValid else {
-            logger.error("Invalid email address")
+        // Check if Email matches the expected email pattern
+        if !NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: profile.email) {
+            logger.error("Invalid email format: Please enter a valid email address.")
             return false
         }
         
         return true
     }
     
-    public func updateUserProfile() async {
-        guard validateUserProfile() else { return }
+    public func update(profile: UserProfile) async {
+        guard validate(profile: profile) else { return }
+        
+        // Overwrite the profile locally to reflect changes immediately, since updating Firestore and reloading the profile takes time.
+        userProfile = profile
         
         do {
-            try await firestoreService.updateUserProfile(userUID: userUID, userProfile: userProfile)
+            try await firestoreService.updateUserProfile(userID: userID, userProfile: profile)
             logger.info("User profile updated successfully")
         } catch {
             logger.error("Failed to updated user profile: \(error.localizedDescription)")

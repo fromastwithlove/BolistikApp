@@ -22,26 +22,30 @@ struct ProfileView: View {
             GeometryReader { geometry in
                 List {
                     Section {
-                        NavigationLink(destination: EditProfileView(profileModel: model,
-                                                                    imageModel: ImageViewModel(firebaseStorageService: appManager.services.firebaseStorageService,
-                                                                                               imagePath: model.avatarPath))) {
-                            HStack {
-                                UserRowDetails(
-                                    geometry: geometry,
-                                    avatarPath: model.avatarPath,
-                                    displayName: model.displayName,
-                                    email: model.email
-                                )
-                                Spacer()
-                                Button {
-                                    // Personal QR code logic
-                                } label: {
-                                    Image(systemName: "qrcode")
+                        if let profile = model.userProfile {
+                            NavigationLink(destination: EditProfileView(profileModel: model,
+                                                                        imageModel: ImageViewModel(firebaseStorageService: appManager.services.firebaseStorageService,
+                                                                                                   imagePath: model.userProfile?.avatarPath), userProfile: profile)) {
+                                HStack {
+                                    UserRowDetails(
+                                        geometry: geometry,
+                                        avatarPath: profile.avatarPath,
+                                        displayName: profile.displayName,
+                                        email: profile.email
+                                    )
+                                    Spacer()
+                                    Button {
+                                        // Personal QR code logic
+                                    } label: {
+                                        Image(systemName: "qrcode")
+                                    }
+                                    .buttonStyle(.bordered)
+                                    .clipShape(.circle)
+                                    .tint(.secondaryRed)
                                 }
-                                .buttonStyle(.bordered)
-                                .clipShape(.circle)
-                                .tint(.secondaryRed)
                             }
+                        } else {
+                            Text("Profile not set up yet.")
                         }
                     }
                     
@@ -92,7 +96,7 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView(model: UserProfileViewModel(firestoreService: FirestoreService(), userUID: "1"))
+    ProfileView(model: UserProfileViewModel(firestoreService: FirestoreService(), userID: "1"))
         .environment(AppManager(services: Services()))
         .environment(AuthenticationManager(firestoreService: FirestoreService()))
 }

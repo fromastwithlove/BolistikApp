@@ -9,25 +9,28 @@ import SwiftUI
 import PhotosUI
 import CoreTransferable
 
-enum ImageUploadError: Error, LocalizedError {
+enum ImageOperationError: Error, LocalizedError {
     case noImageSelected
     case failedToRetrieveImageData
     case failedToConvertToUIImage
-    case exceedsMaxSize
-    case uploadFailed(Error)
+    case failedToCompressImage
+    case operationFailed(Error)
+    case failedToDeleteImage(Error)
     
     var errorDescription: String? {
         switch self {
         case .noImageSelected:
-            return "No image was selected for upload."
+            return "No image was selected for operation."
         case .failedToRetrieveImageData:
             return "Failed to retrieve image data from the selected item."
         case .failedToConvertToUIImage:
             return "Failed to convert image data into a UIImage."
-        case .exceedsMaxSize:
-            return "Image exceeds the maximum allowed size of 3MB."
-        case .uploadFailed(let error):
-            return "Image upload failed: \(error.localizedDescription)"
+        case .failedToCompressImage:
+            return "Failed to compress image data."
+        case .operationFailed(let error):
+            return "Image operation failed: \(error.localizedDescription)"
+        case .failedToDeleteImage(let error):
+            return "Image deletion failed: \(error.localizedDescription)"
         }
     }
 }
@@ -35,32 +38,6 @@ enum ImageUploadError: Error, LocalizedError {
 @MainActor
 @Observable
 class ImageViewModel: ObservableObject {
-    
-    // MARK: - Private Properties
-    
-    private let logger = AppLogger(category: "UI")
-    private let firebaseStorageService: FirebaseStorageService
-    private(set) var imageState: ImageState = .empty
-    
-    // MARK: - Published property
-    
-    public var imagePath: String?
-    
-    init(firebaseStorageService: FirebaseStorageService, imagePath: String?) {
-        self.firebaseStorageService = firebaseStorageService
-        self.imagePath = imagePath
-    }
-    
-    public var imageSelection: PhotosPickerItem? = nil {
-        didSet {
-            if let imageSelection {
-                let progress = loadTransferable(from: imageSelection)
-                imageState = .loading(progress)
-            } else {
-                imageState = .empty
-            }
-        }
-    }
     
     // MARK: - Public properties
     
@@ -71,9 +48,36 @@ class ImageViewModel: ObservableObject {
         case failure(Error)
     }
     
+    // MARK: - Private Properties
+    
+    private let logger = AppLogger(category: "UI")
+    private let firebaseStorageService: FirebaseStorageService
+    private(set) var imageState: ImageState = .empty
+    
+    // MARK: - Published property
+    
+    init(firebaseStorageService: FirebaseStorageService, imagePath: String?) {
+        self.firebaseStorageService = firebaseStorageService
+        self.imagePath = imagePath
+    }
+    
+    public var imagePath: String?
+
+    public var imageSelection: PhotosPickerItem? {
+        didSet {
+            if let imageSelection {
+                let progress = loadTransferable(from: imageSelection)
+                imageState = .loading(progress)
+            } else {
+                imageState = .empty
+            }
+        }
+    }
+    
+    // MARK: - Public Methods
+    
     public func loadImage() async {
         imageState = .loading(Progress())
-        
         guard let path = imagePath, !path.isEmpty else {
             imageState = .empty
             return
@@ -97,13 +101,26 @@ class ImageViewModel: ObservableObject {
         do {
             guard let imageData = try await imageSelection.loadTransferable(type: Data.self) else {
                 logger.error("Failed to retrieve image data.")
-                throw ImageUploadError.failedToRetrieveImageData
+                throw ImageOperationError.failedToRetrieveImageData
             }
             
             try await firebaseStorageService.uploadImage(data: imageData, path: path)
         } catch {
             logger.error("Image upload failed: \(error)")
-            throw ImageUploadError.uploadFailed(error)
+            throw ImageOperationError.operationFailed(error)
+        }
+    }
+    
+    public func deleteImage(path: String) async throws {
+        imageState = .loading(Progress())
+        
+        do {
+            try await firebaseStorageService.deleteImage(path: path)
+            imageState = .empty
+        } catch {
+            logger.error("Image deletion failed: \(error)")
+            imageState = .failure(error)
+            throw ImageOperationError.failedToDeleteImage(error)
         }
     }
     

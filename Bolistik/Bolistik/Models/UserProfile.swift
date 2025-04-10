@@ -9,9 +9,9 @@ import Foundation
 
 struct UserProfile: FirestoreModel {
     var id: String
-    var email: String?
-    var avatarPath: String?
     var locale: String
+    var email: String
+    var avatarPath: String?
     var currency: String
     
     var displayName: String {
@@ -29,12 +29,12 @@ struct UserProfile: FirestoreModel {
         }
     }
     
-    init(id: String, email: String?, avatarPath: String?, locale: String, currency: String, fullName: PersonNameComponents?) {
+    init(id: String, email: String?, avatarPath: String?, locale: String, currency: String?, fullName: PersonNameComponents?) {
         self.id = id
-        self.email = email
+        self.email = email ?? ""
         self.avatarPath = avatarPath
         self.locale = locale
-        self.currency = currency
+        self.currency = currency ?? "EUR"
         self.fullName = fullName
     }
     
@@ -78,19 +78,19 @@ extension UserProfile {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
-        try container.encodeIfPresent(email, forKey: .email)
-        try container.encodeIfPresent(avatarPath, forKey: .avatarPath)
+        try container.encode(email.isEmpty ? nil : email, forKey: .email)
+        try container.encode(avatarPath, forKey: .avatarPath)
         try container.encode(locale, forKey: .locale)
         try container.encode(currency, forKey: .currency)
-        try container.encodeIfPresent(givenName, forKey: .givenName)
-        try container.encodeIfPresent(middleName, forKey: .middleName)
-        try container.encodeIfPresent(familyName, forKey: .familyName)
+        try container.encode(givenName, forKey: .givenName)
+        try container.encode(middleName, forKey: .middleName)
+        try container.encode(familyName, forKey: .familyName)
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(String.self, forKey: .id)
-        self.email = try container.decodeIfPresent(String.self, forKey: .email)
+        self.email = try container.decodeIfPresent(String.self, forKey: .email) ?? ""
         self.avatarPath = try container.decodeIfPresent(String.self, forKey: .avatarPath)
         self.locale = try container.decode(String.self, forKey: .locale)
         self.currency = try container.decode(String.self, forKey: .currency)

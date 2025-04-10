@@ -69,6 +69,9 @@
         }
       }
     },
+    "Choose image" : {
+
+    },
     "Contacts" : {
 
     },
@@ -85,6 +88,9 @@
 
     },
     "Data and analytics" : {
+
+    },
+    "Delete image" : {
 
     },
     "Email" : {
@@ -180,6 +186,12 @@
           }
         }
       }
+    },
+    "Profile not set up yet." : {
+
+    },
+    "Profile Picture" : {
+
     },
     "Save" : {
 

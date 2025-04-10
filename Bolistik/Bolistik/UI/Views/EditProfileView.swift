@@ -16,6 +16,10 @@ struct EditProfileView: View {
     
     private let logger = AppLogger(category: "UI")
 
+    @State var userProfile: UserProfile
+    @State private var showPhotoActionSheet: Bool = false
+    @State private var showPhotoPicker: Bool = false
+    
     var body: some View {
         GeometryReader { geometry in
             Form {
@@ -30,21 +34,69 @@ struct EditProfileView: View {
                                        height: min(geometry.size.width * 0.4, 120))
                                 .clipShape(.circle)
                                 .clipped()
+                                .overlay(alignment: .bottomTrailing) {
+                                    Image(systemName: "pencil.circle.fill")
+                                        .symbolRenderingMode(.multicolor)
+                                        .font(.system(size: 30))
+                                        .foregroundColor(.secondaryRed)
+                                }
                         } placeholder: {
                             Image(systemName: "person.circle.fill")
                                 .resizable()
                                 .frame(width: min(geometry.size.width * 0.4, 120),
                                        height: min(geometry.size.width * 0.4, 120))
                                 .opacity(0.5)
+                                .overlay(alignment: .bottomTrailing) {
+                                    Image(systemName: "pencil.circle.fill")
+                                        .symbolRenderingMode(.multicolor)
+                                        .font(.system(size: 30))
+                                        .foregroundColor(.secondaryRed)
+                                }
                         }
-                        .overlay(alignment: .bottomTrailing) {
-                            PhotosPicker(selection: $imageModel.imageSelection,
-                                         matching: .images,
-                                         photoLibrary: .shared()) {
-                                Image(systemName: "pencil.circle.fill")
-                                    .symbolRenderingMode(.multicolor)
-                                    .font(.system(size: 30))
-                                    .foregroundColor(.secondaryRed)
+                        .onTapGesture {
+                            showPhotoActionSheet.toggle()
+                        }
+                        .confirmationDialog("Profile Picture", isPresented: $showPhotoActionSheet) {
+                            Button {
+                                showPhotoPicker.toggle()
+                            } label: {
+                                Text("Choose image")
+                            }
+                            
+                            if imageModel.imageSelection != nil || userProfile.avatarPath != nil {
+                                Button(role: .destructive) {
+                                    imageModel.imageSelection = nil
+                                    
+                                    guard let path = userProfile.avatarPath else {
+                                        return
+                                    }
+    
+                                    Task {
+                                        // Update image view model
+                                        try await imageModel.deleteImage(path: path) //FIXME: Maybe catch an error?
+                                        imageModel.imagePath = nil
+                                        // Update user profile view model
+                                        userProfile.avatarPath = nil
+                                        await profileModel.update(profile: userProfile)
+                                    }
+                                } label: {
+                                    Text("Delete image")
+                                }
+                            }
+                        }
+                        .photosPicker(isPresented: $showPhotoPicker, selection: $imageModel.imageSelection, matching: .any(of: [.images, .not(.screenshots)]))
+                        .task(id: imageModel.imageSelection) {
+                            guard imageModel.imageSelection != nil else { return }
+                            let avatarPath = "\(FirebaseStoragePath.avatarsFolder.rawValue)/\(userProfile.id)/avatar"
+                            do {
+                                // Update image model
+                                try await imageModel.uploadImage(path: avatarPath)
+                                imageModel.imagePath = avatarPath
+                                // Update user profile
+                                userProfile.avatarPath = avatarPath
+                                await profileModel.update(profile: userProfile)
+                            } catch {
+                                logger.error("Failed to upload avatar image: \(error.localizedDescription)")
                             }
                         }
                         Spacer()
@@ -57,7 +109,7 @@ struct EditProfileView: View {
                         Image(systemName: "person.fill")
                             .foregroundStyle(.secondaryRed)
                             .frame(width: 40)
-                        TextField("Full Name", text: $profileModel.displayName)
+                        TextField("Full Name", text: $userProfile.displayName)
                             .padding(.vertical, 8)
                             .autocorrectionDisabled()
                     }
@@ -65,7 +117,7 @@ struct EditProfileView: View {
                         Image(systemName: "envelope.fill")
                             .foregroundStyle(.secondaryRed)
                             .frame(width: 40)
-                        TextField("Email", text: $profileModel.email)
+                        TextField("Email", text: $userProfile.email)
                             .keyboardType(.emailAddress)
                             .autocapitalization(.none)
                             .autocorrectionDisabled()
@@ -74,45 +126,49 @@ struct EditProfileView: View {
                 }
                 
                 Section {
-                    NavigationLink(destination: CurrenciesListView(selectedCurrency: $profileModel.currency)) {
+                    NavigationLink(destination: CurrenciesListView(selectedCurrency: $userProfile.currency)) {
                         HStack {
                             Image(systemName: "dollarsign.circle.fill")
                                 .foregroundStyle(.secondaryRed)
                                 .frame(width: 40)
                             Text("Currency")
                             Spacer()
-                            Text(profileModel.currency)
+                            Text(userProfile.currency)
                                 .foregroundStyle(.gray)
                         }
                     }
                 }
             }
-            .navigationBarItems(trailing: Button(action: {
-                Task {
-                    if imageModel.imageSelection != nil {
-                        let avatarPath = "\(FirebaseStoragePath.avatarsFolder.rawValue)/\(profileModel.userId)/avatar"
-                        try await imageModel.uploadImage(path: avatarPath)
-                        
-                        profileModel.avatarPath = avatarPath
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        Task {
+                            await profileModel.update(profile: userProfile)
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    } label: {
+                        Text("Save")
+                            .fontWeight(.bold)
                     }
-                    
-                    await profileModel.updateUserProfile()
-                    presentationMode.wrappedValue.dismiss()
+                    .disabled(!profileModel.validate(profile: userProfile) || profileModel.userProfile == userProfile)
                 }
-            }) {
-                Text("Save")
-                    .fontWeight(.bold)
             }
-                .disabled(!profileModel.validateUserProfile())
-            )
         }
     }
 }
 
 #Preview {
-    @Previewable @State var profileModel = UserProfileViewModel(firestoreService: FirestoreService(), userUID: "1")
+    @Previewable @State var profileModel = UserProfileViewModel(firestoreService: FirestoreService(), userID: "1")
+    @Previewable @State var userProfile = UserProfile(id: "1",
+                                                      email: nil,
+                                                      avatarPath: "public/alan.turing.jpg",
+                                                      locale: Locale.current.identifier,
+                                                      currency: "EUR",
+                                                      fullName: PersonNameComponents(givenName: "Alan", familyName: "Turing"))
     @Previewable @State var imageModel = ImageViewModel(firebaseStorageService: FirebaseStorageService(), imagePath: "public/alan.turing.jpg")
     
-    EditProfileView(profileModel: profileModel, imageModel: imageModel)
-        .environment(AppManager(services: Services()))
+    EditProfileView(profileModel: profileModel,
+                    imageModel: imageModel,
+                    userProfile: userProfile)
+    .environment(AppManager(services: Services()))
 }

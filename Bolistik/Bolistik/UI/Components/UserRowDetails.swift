@@ -18,10 +18,10 @@ struct UserRowDetails: View {
     
     var body: some View {
         HStack {
-            if let path = avatarPath, !path.isEmpty {
+            if let avatarPath, !avatarPath.isEmpty {
                 // Avatar Image
                 ImageView(model: ImageViewModel(firebaseStorageService: appManager.services.firebaseStorageService,
-                                                imagePath: path)) { image in
+                                                imagePath: avatarPath)) { image in
                     image
                         .resizable()
                         .scaledToFill()
@@ -31,10 +31,10 @@ struct UserRowDetails: View {
                         .clipped()
                 } placeholder: {
                     Image(systemName: "person.circle.fill")
+                        .resizable()
                         .frame(width: min(geometry.size.width * 0.2, 90),
                                height: min(geometry.size.width * 0.2, 90))
                         .opacity(0.5)
-                        .symbolEffect(.bounce.down.wholeSymbol)
                 }
             }
 

@@ -31,7 +31,7 @@ struct MainView: View {
 
                 Tab("Profile", systemImage: "person.crop.circle", value: .profile) {
                     ProfileView(model: UserProfileViewModel(firestoreService: appManager.services.firestoreService,
-                                                            userUID: user.uid))
+                                                            userID: user.uid))
                 }
             }
         } else {

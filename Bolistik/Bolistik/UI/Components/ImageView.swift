@@ -19,20 +19,20 @@ struct ImageView<I, P>: View where I: View, P: View {
             case .empty:
                 placeholder()
             case .loading:
-                placeholder()
+                ProgressView()
             case .success(let image):
-                content(image.resizable())
+                content(image)
             case .failure(let error):
                 VStack {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(.yellow)
                     Text("Error: \(error.localizedDescription)")
                         .font(.footnote)
                         .foregroundColor(.gray)
                         .multilineTextAlignment(.center)
-                    Image(systemName: "exclamationmark.triangle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 80, height: 80)
-                        .foregroundColor(.yellow)
                 }
             }
         }

@@ -183,7 +183,7 @@ extension AuthenticationManager {
     }
     
     private func createUserProfile(firebaseUser: User, displayName: String?) async throws {
-        let userProfileExists = try await firestoreService.userProfileExists(userUID: firebaseUser.uid)
+        let userProfileExists = try await firestoreService.userProfileExists(userID: firebaseUser.uid)
         
         // Profile already exists, no need to create a new one
         if userProfileExists { return }
@@ -193,7 +193,7 @@ extension AuthenticationManager {
             PersonNameComponentsFormatter().personNameComponents(from: $0)
         }
         
-        try await firestoreService.saveUserProfile(userUID: firebaseUser.uid,
+        try await firestoreService.saveUserProfile(userID: firebaseUser.uid,
                                                    email: firebaseUser.email,
                                                    avatarPath: nil,
                                                    fullName: fullName)
