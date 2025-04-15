@@ -440,7 +440,7 @@
 				CODE_SIGN_ENTITLEMENTS = Bolistik/Bolistik.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 49.locally.modified;
 				DEVELOPMENT_ASSET_PATHS = "\"bolistik/Preview Content\"";
 				DEVELOPMENT_TEAM = GRMZ48Y4F9;
 				ENABLE_PREVIEWS = YES;
@@ -476,7 +476,7 @@
 				CODE_SIGN_ENTITLEMENTS = Bolistik/Bolistik.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 49.locally.modified;
 				DEVELOPMENT_ASSET_PATHS = "\"bolistik/Preview Content\"";
 				DEVELOPMENT_TEAM = GRMZ48Y4F9;
 				ENABLE_PREVIEWS = YES;
@@ -509,7 +509,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 49.locally.modified;
 				DEVELOPMENT_TEAM = GRMZ48Y4F9;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -527,7 +527,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 49.locally.modified;
 				DEVELOPMENT_TEAM = GRMZ48Y4F9;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -544,7 +544,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 49.locally.modified;
 				DEVELOPMENT_TEAM = GRMZ48Y4F9;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -561,7 +561,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 49.locally.modified;
 				DEVELOPMENT_TEAM = GRMZ48Y4F9;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;

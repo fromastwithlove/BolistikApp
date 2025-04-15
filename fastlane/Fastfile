@@ -1,0 +1,47 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+
+  # Define global variables
+  project_path = "Bolistik/Bolistik.xcodeproj"
+  plist_path = "Bolistik/Info.plist"
+
+  desc "Set build number based on Git commit count"
+  lane :set_build_number do
+    # Get the Git commit count
+    version_local = `git rev-list HEAD --count`.strip
+
+    # Check for uncommitted tracked changes
+    is_modified = !`git status --porcelain --untracked-files=no`.strip.empty?
+    modified_suffix = is_modified ? ".locally.modified" : ""
+
+    # Final build number
+    build_number = "#{version_local}#{modified_suffix}"
+
+    # Update the build number in the Xcode project
+    update_info_plist(
+      xcodeproj: project_path,
+      plist_path: plist_path,
+      block: lambda { |plist|
+        plist['CFBundleVersion'] = build_number
+      }
+    )
+
+    UI.success("Set CFBundleVersion to #{build_number}")
+  end
+end
