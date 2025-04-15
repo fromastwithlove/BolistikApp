@@ -10,11 +10,11 @@ import Combine
 
 actor NetworkService {
     
-    // MARK: Private
+    // MARK: - Private properties
     
     private let logger = AppLogger(category: "Network")
     
-    private let defaultBaseURLString: String
+    private let defaultBaseURLString = ""
     private let userDefaults = UserDefaults()
     
     private var session: URLSession {
@@ -33,11 +33,7 @@ actor NetworkService {
         return baseURLString.appending("/api/v1")
     }
     
-    // MARK: Public
-    
-    init(defaultBaseURLString: String) {
-        self.defaultBaseURLString = defaultBaseURLString
-    }
+    // MARK: - Public properties
     
     public var baseURLString: String {
         get {
@@ -55,7 +51,7 @@ actor NetworkService {
         }
     }
     
-    // MARK: Requests
+    // MARK: - Requests
     
     func registerWithApple(identityToken: String, authorizationCode: String, timeout: TimeInterval = 30) async throws -> (Data, URLResponse) {
         logger.debug("Register in backend with Apple credentials started")

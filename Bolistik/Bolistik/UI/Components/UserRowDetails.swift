@@ -9,31 +9,38 @@ import SwiftUI
 
 struct UserRowDetails: View {
     
-    var avatarURL: String
-    var fullName: String
-    var email: String
+    @EnvironmentObject private var appManager: AppManager
+    
+    let geometry: GeometryProxy
+    let avatarPath: String?
+    let displayName: String
+    let email: String
     
     var body: some View {
         HStack {
-            // Profile Image
-            AsyncImage(url: URL(string: avatarURL)) { image in
-                image
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 65, height: 65)
-                    .clipShape(Circle())
-            } placeholder: {
-                Image(systemName: "photo.circle")
-                    .resizable()
-                    .frame(width: 65, height: 65)
-                    .clipShape(.circle)
-                    .foregroundStyle(.secondaryRed)
-                    .opacity(0.5)
-                    .symbolEffect(.bounce.down.wholeSymbol)
+            if let avatarPath, !avatarPath.isEmpty {
+                // Avatar Image
+                ImageView(model: ImageViewModel(firebaseStorageService: appManager.services.firebaseStorageService,
+                                                imagePath: avatarPath)) { image in
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: min(geometry.size.width * 0.2, 90),
+                               height: min(geometry.size.width * 0.2, 90))
+                        .clipShape(.circle)
+                        .clipped()
+                } placeholder: {
+                    Image(systemName: "person.circle.fill")
+                        .resizable()
+                        .frame(width: min(geometry.size.width * 0.2, 90),
+                               height: min(geometry.size.width * 0.2, 90))
+                        .opacity(0.5)
+                }
             }
+
             // Full name
             VStack(alignment: .leading) {
-                Text(fullName)
+                Text(displayName)
                     .font(.headline)
                 Text(email)
                     .font(.subheadline)
@@ -43,7 +50,13 @@ struct UserRowDetails: View {
 }
 
 #Preview {
-    UserRowDetails(avatarURL: "https://upload.wikimedia.org/wikipedia/commons/4/40/Alan_Turing_%281912-1954%29_in_1936_at_Princeton_University_%28cropped%29.jpg",
-                   fullName: "Alan Turing",
-                   email: "alan.turing@bolistik.kz")
+    @Previewable @State var avatarPath: String = "public/alan.turing.jpg"
+    @Previewable @State var displayName: String = "Alan Turing"
+    @Previewable @State var email: String = "alan.turing@bolistik.kz"
+    GeometryReader { geometry in
+        UserRowDetails(geometry: geometry,
+                       avatarPath: avatarPath,
+                       displayName: displayName,
+                       email: email)
+    }
 }

@@ -11,16 +11,11 @@ import Foundation
 @MainActor
 class AppManager: ObservableObject {
     
-    // MARK: Private
+    // MARK: - Private Properties
     
     private let logger = AppLogger(category: "App State")
     
-    // MARK: Public
-    
-    init(services: Services) {
-        self.services = services
-        verifyAuthenticationState()
-    }
+    // MARK: - Public Enums
     
     enum LaunchState {
         case initializing
@@ -35,35 +30,25 @@ class AppManager: ObservableObject {
         case profile
     }
     
-    // MARK: Published properties
+    // MARK: - Published Properties
     
-    private(set) var services: Services
     private(set) var launchState: LaunchState = .initializing
+    private(set) var services: Services
     
-    // MARK: Navigation
+    init(services: Services) {
+        self.services = services
+    }
     
+    // MARK: - Navigation
+    
+    /// The selected tab in the app's navigation.
     var selectedTab: Tabs = .home
     
-    // MARK: State manager
+    // MARK: - State Management
     
-    private func verifyAuthenticationState() {
-        Task {
-            do {
-                try await services.authenticationService.verifyAccountStatus()
-            } catch {
-                logger.debug("Account verification failed with error \(error)")
-            }
-            launchState = await services.authenticationService.isAuthenticated ? .ready : .awaitingAuthentication
-        }
-    }
-    
-    func userDidAuthenticate() {
-        logger.debug("Signed in successfully")
-        launchState = .ready
-    }
-    
-    func userDidLogout() {
-        logger.debug("Signed out successfully")
-        launchState = .awaitingAuthentication
+    /// Updates the app state based on authentication status.
+    /// - Parameter isAuthenticated: Whether the user is authenticated or not.
+    func updateAppState(isAuthenticated: Bool) {
+        launchState = isAuthenticated ? .ready : .awaitingAuthentication
     }
 }

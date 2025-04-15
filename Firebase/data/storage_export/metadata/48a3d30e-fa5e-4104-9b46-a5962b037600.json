@@ -1,0 +1,19 @@
+{
+  "name": "public/michael.faraday.jpg",
+  "bucket": "bolistik-kz.firebasestorage.app",
+  "metageneration": 1,
+  "generation": 1741720861540,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "af6e6135-a95c-4377-bba3-28ba64943704"
+  ],
+  "etag": "OG5SSlV6pbnq5wf3dl+3FJbpvMo",
+  "customMetadata": {},
+  "timeCreated": "2025-03-11T19:21:01.540Z",
+  "updated": "2025-03-11T19:21:01.540Z",
+  "size": 61931,
+  "md5Hash": "agixTZlVQy/KoA9/2/X5KA==",
+  "crc32c": "989120081"
+}

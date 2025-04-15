@@ -1,0 +1,19 @@
+{
+  "name": "public/charles.darwin.jpg",
+  "bucket": "bolistik-kz.firebasestorage.app",
+  "metageneration": 1,
+  "generation": 1741720861528,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "1e2964c5-265e-42cf-b0a4-014d50ac93f8"
+  ],
+  "etag": "E4xaxD5OmHgLNlegbXd21c4RBsY",
+  "customMetadata": {},
+  "timeCreated": "2025-03-11T19:21:01.528Z",
+  "updated": "2025-03-11T19:21:01.528Z",
+  "size": 348271,
+  "md5Hash": "5gn4u3bQhs+sdcjuXrQ0wg==",
+  "crc32c": "1923234371"
+}
