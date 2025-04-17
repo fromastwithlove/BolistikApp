@@ -39,7 +39,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		C57F05C12D7A59180039CD19 /* Exceptions for "Bolistik" folder in "Bolistik" target */ = {
+		C53591762DB170E000B2570B /* Exceptions for "Scripts" folder in "Bolistik" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				update_build_number.py,
+			);
+			target = C5685AB52CF8F2D30075537F /* Bolistik */;
+		};
+		C5A9A6792DB182E600BAB10B /* Exceptions for "Bolistik" folder in "Bolistik" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -49,22 +56,20 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		C53591742DB170AE00B2570B /* Scripts */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C53591762DB170E000B2570B /* Exceptions for "Scripts" folder in "Bolistik" target */,
+			);
+			path = Scripts;
+			sourceTree = "<group>";
+		};
 		C5685AB82CF8F2D30075537F /* Bolistik */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				C57F05C12D7A59180039CD19 /* Exceptions for "Bolistik" folder in "Bolistik" target */,
+				C5A9A6792DB182E600BAB10B /* Exceptions for "Bolistik" folder in "Bolistik" target */,
 			);
 			path = Bolistik;
-			sourceTree = "<group>";
-		};
-		C5685AC92CF8F2D40075537F /* BolistikTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = BolistikTests;
-			sourceTree = "<group>";
-		};
-		C5685AD32CF8F2D40075537F /* BolistikUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = BolistikUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -104,9 +109,8 @@
 			isa = PBXGroup;
 			children = (
 				C5685AB82CF8F2D30075537F /* Bolistik */,
-				C5685AC92CF8F2D40075537F /* BolistikTests */,
-				C5685AD32CF8F2D40075537F /* BolistikUITests */,
 				C5685AB72CF8F2D30075537F /* Products */,
+				C53591742DB170AE00B2570B /* Scripts */,
 			);
 			sourceTree = "<group>";
 		};
@@ -130,12 +134,14 @@
 				C5685AB22CF8F2D30075537F /* Sources */,
 				C5685AB32CF8F2D30075537F /* Frameworks */,
 				C5685AB42CF8F2D30075537F /* Resources */,
+				C53591692DB16E1100B2570B /* Run Script (Update build number inside the bundle) */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				C53591742DB170AE00B2570B /* Scripts */,
 				C5685AB82CF8F2D30075537F /* Bolistik */,
 			);
 			name = Bolistik;
@@ -164,9 +170,6 @@
 			dependencies = (
 				C5685AC82CF8F2D40075537F /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				C5685AC92CF8F2D40075537F /* BolistikTests */,
-			);
 			name = BolistikTests;
 			packageProductDependencies = (
 			);
@@ -186,9 +189,6 @@
 			);
 			dependencies = (
 				C5685AD22CF8F2D40075537F /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				C5685AD32CF8F2D40075537F /* BolistikUITests */,
 			);
 			name = BolistikUITests;
 			packageProductDependencies = (
@@ -273,6 +273,29 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		C53591692DB16E1100B2570B /* Run Script (Update build number inside the bundle) */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script (Update build number inside the bundle)";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\"${SRCROOT}/scripts/update_build_number.py\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		C5685AB22CF8F2D30075537F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -345,10 +368,9 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -365,6 +387,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 25.4.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -409,10 +432,9 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -423,6 +445,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 25.4.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -440,13 +463,10 @@
 				CODE_SIGN_ENTITLEMENTS = Bolistik/Bolistik.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"bolistik/Preview Content\"";
 				DEVELOPMENT_TEAM = GRMZ48Y4F9;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Bolistik/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Bolistik;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -458,7 +478,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = kz.fromastwithlove.bolistik;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -476,13 +495,10 @@
 				CODE_SIGN_ENTITLEMENTS = Bolistik/Bolistik.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"bolistik/Preview Content\"";
 				DEVELOPMENT_TEAM = GRMZ48Y4F9;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Bolistik/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Bolistik;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -494,7 +510,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = kz.fromastwithlove.bolistik;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -511,8 +526,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GRMZ48Y4F9;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = kz.fromastwithlove.bolistikTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -529,8 +544,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GRMZ48Y4F9;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = kz.fromastwithlove.bolistikTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -546,8 +561,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GRMZ48Y4F9;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = kz.fromastwithlove.bolistikUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -563,8 +578,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GRMZ48Y4F9;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = kz.fromastwithlove.bolistikUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;

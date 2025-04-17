@@ -77,7 +77,10 @@ struct ProfileView: View {
                         VStack {
                             Text("Copyright © \(String(Calendar.current.component(.year, from: Date()))) Adil Yergaliyev")
                             Text("Licensed under the Modified MIT License")
-                            Text(verbatim: "25.1.0 (48)")
+                            if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+                               let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+                                Text(verbatim: "\(version) (\(build))")
+                            }
                         }
                         .font(.footnote)
                         .foregroundColor(.gray)
