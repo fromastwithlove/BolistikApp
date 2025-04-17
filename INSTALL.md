@@ -26,7 +26,7 @@ Bundler is used to manage the dependencies for the project. The version being us
 
 Check version: `bundle --version`, Output: `Bundler version 2.4.1`
 
-### gem
+### Gem
 
 RubyGems version for managing gems:
 
@@ -51,7 +51,9 @@ fastlane 2.227.1
 ## Installation Steps
 
 1. Install `rbenv` using Homebrew: `brew install rbenv`
-Then initialize it by adding the following to your shell config (.zshrc, .bashrc, etc.):
+
+Add the following to your shell configuration file (e.g., .zshrc, .bash_profile, or .bashrc):
+
 ```
 # Path to rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
@@ -60,7 +62,10 @@ if which rbenv > /dev/null; then
 fi
 ```
 
+After editing the file, reload your shell: `source ~/.zshrc` (or the appropriate file)
+
 2. Install Ruby 3.2.0:
+
 ```
 rbenv install 3.2.0
 rbenv local 3.2.0
@@ -70,4 +75,4 @@ rbenv local 3.2.0
 
 ## Notes
 
-Always run Fastlane through `bundle exec fastlane <command>` to ensure you're using the locked version of the project.
+Always run Fastlane through `bundle exec fastlane <command>` to ensure you're using the locked version in your project.
