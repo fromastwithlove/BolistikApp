@@ -9,6 +9,7 @@ import Foundation
 import os
 
 struct AppLogger {
+    
     private let logger: Logger
     private let category: String
     
@@ -21,28 +22,45 @@ struct AppLogger {
         }
     }
 
-    func debug(_ message: String, metadata: [String: String]? = nil) {
+    // MARK: - Public Methods
+    
+    func debug<T: Encodable>(_ message: String, metadata: T? = Optional<Data>.none) {
         log(message, level: .debug, metadata: metadata)
     }
 
-    func info(_ message: String, metadata: [String: String]? = nil) {
+    func info<T: Encodable>(_ message: String, metadata: T? = Optional<Data>.none) {
         log(message, level: .info, metadata: metadata)
     }
 
-    func error(_ message: String, metadata: [String: String]? = nil) {
+    func error<T: Encodable>(_ message: String, metadata: T? = Optional<Data>.none) {
         log(message, level: .error, metadata: metadata)
     }
 
-    func fault(_ message: String, metadata: [String: String]? = nil) {
+    func fault<T: Encodable>(_ message: String, metadata: T? = Optional<Data>.none) {
         log(message, level: .fault, metadata: metadata)
     }
-
-    private func log(_ message: String, level: OSLogType, metadata: [String: String]? = nil) {
-        if let metadata = metadata {
-            let data = metadata.map { "\($0.key): \($0.value)" }.joined(separator: ", ")
-            logger.log(level: level, "[\(category)]: \(message) -> \(data, privacy: .public)")
+    
+    // MARK: - Private Methods
+    
+    private func log<T: Encodable>(_ message: String, level: OSLogType, metadata: T? = nil) {
+        let timestamp = DateFormatter.localizedString(from: Date(), dateStyle: .none, timeStyle: .medium)
+        let baseLogMessage = "[\(timestamp)] [\(category)]: \(message)"
+        
+        let fullMessage: String
+        if let metadata = metadata, let json = encodeToJSONString(metadata) {
+            fullMessage = "\(baseLogMessage)\nMetadata:\n\(json)"
         } else {
-            logger.log(level: level, "[\(category)]: \(message)")
+            fullMessage = baseLogMessage
         }
+        
+        logger.log(level: level, "\(fullMessage)")
     }
+    
+    private func encodeToJSONString<T: Encodable>(_ value: T) -> String? {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
+        guard let data = try? encoder.encode(value) else { return nil }
+        return String(data: data, encoding: .utf8)
+    }
+
 }
