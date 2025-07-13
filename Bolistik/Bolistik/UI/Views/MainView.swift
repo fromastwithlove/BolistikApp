@@ -12,7 +12,7 @@ struct MainView: View {
     @EnvironmentObject private var appManager: AppManager
     @EnvironmentObject private var authenticationManager: AuthenticationManager
     
-    private let logger = AppLogger(category: "UI")
+    private let logger = AppLogger(category: "UI.MainView")
     
     var body: some View {
         if let user = authenticationManager.user {

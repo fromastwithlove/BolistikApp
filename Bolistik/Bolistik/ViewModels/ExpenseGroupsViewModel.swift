@@ -13,7 +13,7 @@ final class ExpenseGroupsViewModel: ObservableObject {
     
     // MARK: - Private
     
-    private let logger = AppLogger(category: "UI")
+    private let logger = AppLogger(category: "UI.ExpenseGroupsViewModel")
     
     // MARK: - Published properties
     

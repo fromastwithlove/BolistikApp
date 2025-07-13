@@ -13,7 +13,7 @@ final class ContactsViewModel: ObservableObject {
     
     // MARK: - Private
     
-    private let logger = AppLogger(category: "UI")
+    private let logger = AppLogger(category: "UI.ContactsViewModel")
     
     // MARK: - Published properties
     

@@ -13,7 +13,7 @@ final class UserProfileViewModel: ObservableObject {
     
     // MARK: - Private Properties
     
-    private let logger = AppLogger(category: "UI")
+    private let logger = AppLogger(category: "UI.UserProfileViewModel")
     private let firestoreService: FirestoreService
     private let userID: String
     
