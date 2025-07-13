@@ -50,7 +50,7 @@ class ImageViewModel: ObservableObject {
     
     // MARK: - Private Properties
     
-    private let logger = AppLogger(category: "UI")
+    private let logger = AppLogger(category: "UI.ImageViewModel")
     private let firebaseStorageService: FirebaseStorageService
     private(set) var imageState: ImageState = .empty
     

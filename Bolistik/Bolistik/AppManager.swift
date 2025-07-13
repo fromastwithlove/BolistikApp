@@ -13,7 +13,7 @@ class AppManager: ObservableObject {
     
     // MARK: - Private Properties
     
-    private let logger = AppLogger(category: "App State")
+    private let logger = AppLogger(category: "AppManager")
     
     // MARK: - Public Enums
     

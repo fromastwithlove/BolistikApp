@@ -13,13 +13,13 @@ struct Contact: Identifiable, Codable {
     var avatarPath: String
     var fullName: PersonNameComponents
     var email: String
-    var isFavourite: Bool
+    var isFavorite: Bool
     
-    init(avatarPath: String, fullName: PersonNameComponents, email: String, isFavourite: Bool = false) {
+    init(avatarPath: String, fullName: PersonNameComponents, email: String, isFavorite: Bool = false) {
         self.avatarPath = avatarPath
         self.fullName = fullName
         self.email = email
-        self.isFavourite = isFavourite
+        self.isFavorite = isFavorite
     }
     
     public var formattedFullName: String {

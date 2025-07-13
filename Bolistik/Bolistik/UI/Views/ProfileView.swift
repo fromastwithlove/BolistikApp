@@ -15,7 +15,7 @@ struct ProfileView: View {
     
     @State private var path: NavigationPath = NavigationPath()
 
-    private let logger = AppLogger(category: "UI")
+    private let logger = AppLogger(category: "UI.ProfileView")
     
     var body: some View {
         NavigationStack(path: $path) {

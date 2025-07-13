@@ -15,7 +15,7 @@ struct LoginView: View {
     @EnvironmentObject private var appManager: AppManager
     @EnvironmentObject private var authenticationManager: AuthenticationManager
     
-    private let logger = AppLogger(category: "UI")
+    private let logger = AppLogger(category: "UI.LoginView")
     
     @State private var errorString: String?
     
