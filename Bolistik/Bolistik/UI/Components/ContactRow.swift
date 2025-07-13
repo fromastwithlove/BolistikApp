@@ -20,10 +20,10 @@ struct ContactRow: View {
                            email: contact.email)
             Spacer()
             Button(action: {
-                contact.isFavourite.toggle()
+                contact.isFavorite.toggle()
             }) {
-                Image(systemName: contact.isFavourite ? "star.fill" : "star")
-                    .foregroundColor(contact.isFavourite ? .yellow : .gray)
+                Image(systemName: contact.isFavorite ? "star.fill" : "star")
+                    .foregroundColor(contact.isFavorite ? .yellow : .gray)
                     .symbolEffect(.scale)
             }
         }
