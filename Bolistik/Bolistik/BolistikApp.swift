@@ -32,6 +32,7 @@ struct BolistikApp: App {
 
 class AppDelegate: NSObject, UIApplicationDelegate {
 
+    private let logger = AppLogger(category: "AppDelegate")
     private(set) var services: Services?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -41,6 +42,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         services = Services()
         
         #if LOCAL_ENVIRONMENT
+        logger.info("Running in local environment setup")
         // Set up Firebase Authentication to use the local emulator for testing
         Auth.auth().useEmulator(withHost: "127.0.0.1", port: 9099)
         
