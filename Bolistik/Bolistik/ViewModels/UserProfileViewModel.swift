@@ -14,14 +14,14 @@ final class UserProfileViewModel: ObservableObject {
     // MARK: - Private Properties
     
     private let logger = AppLogger(category: "UI.UserProfileViewModel")
-    private let firestoreService: FirestoreService
+    private let firestoreService: FirestoreServiceProtocol
     private let userID: String
     
     // Regular Expressions for validation
     private let nameRegex = #"^[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+)*$"#
     private let emailRegex = #"^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"#
     
-    init(firestoreService: FirestoreService, userID: String) {
+    init(firestoreService: FirestoreServiceProtocol, userID: String) {
         self.firestoreService = firestoreService
         self.userID = userID
     }
@@ -34,7 +34,7 @@ final class UserProfileViewModel: ObservableObject {
     
     public func loadUserProfile() async {
         do {
-            if let existingProfile = try await firestoreService.getUserProfile(userID: userID) {
+            if let existingProfile = try await firestoreService.getProfile(id: userID) {
                 userProfile = existingProfile
             }
             logger.info("User profile loaded successfully")
@@ -66,7 +66,7 @@ final class UserProfileViewModel: ObservableObject {
         userProfile = profile
         
         do {
-            try await firestoreService.updateUserProfile(userID: userID, userProfile: profile)
+            try await firestoreService.updateProfile(id: userID, profile: profile)
             logger.info("User profile updated successfully")
         } catch {
             logger.error("Failed to updated user profile: \(error.localizedDescription)")

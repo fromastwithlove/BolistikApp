@@ -53,9 +53,9 @@ final class AuthenticationManager: ObservableObject {
     
     private let logger = AppLogger(category: "Authentication")
     private var currentNonce: String?
-    private var firestoreService: FirestoreService
+    private var firestoreService: FirestoreServiceProtocol
     
-    init(firestoreService: FirestoreService) {
+    init(firestoreService: FirestoreServiceProtocol) {
         self.firestoreService = firestoreService
     }
     
@@ -183,7 +183,7 @@ extension AuthenticationManager {
     }
     
     private func createUserProfile(firebaseUser: User, displayName: String?) async throws {
-        let userProfileExists = try await firestoreService.userProfileExists(userID: firebaseUser.uid)
+        let userProfileExists = try await firestoreService.profileExists(id: firebaseUser.uid)
         
         // Profile already exists, no need to create a new one
         if userProfileExists { return }
@@ -193,10 +193,10 @@ extension AuthenticationManager {
             PersonNameComponentsFormatter().personNameComponents(from: $0)
         }
         
-        try await firestoreService.saveUserProfile(userID: firebaseUser.uid,
-                                                   email: firebaseUser.email,
-                                                   avatarPath: nil,
-                                                   fullName: fullName)
+        try await firestoreService.saveProfile(id: firebaseUser.uid,
+                                               email: firebaseUser.email,
+                                               avatarPath: nil,
+                                               fullName: fullName)
     }
 }
 
