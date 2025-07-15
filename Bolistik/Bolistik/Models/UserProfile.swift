@@ -8,6 +8,9 @@
 import Foundation
 
 struct UserProfile: FirestoreModel {
+    
+    // MARK: - Public Properties
+    
     var id: String
     var locale: String
     var email: String
@@ -38,7 +41,9 @@ struct UserProfile: FirestoreModel {
         self.fullName = fullName
     }
     
-    // MARK: - Private properties
+    // MARK: - Public Functions
+    
+    // MARK: - Private Properties
     
     private var givenName: String?
     private var middleName: String?

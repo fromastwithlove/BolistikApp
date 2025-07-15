@@ -39,7 +39,7 @@ enum ImageOperationError: Error, LocalizedError {
 @Observable
 class ImageViewModel: ObservableObject {
     
-    // MARK: - Public properties
+    // MARK: - Public Properties
     
     enum ImageState {
         case empty
@@ -54,7 +54,7 @@ class ImageViewModel: ObservableObject {
     private let firebaseStorageService: FirebaseStorageService
     private(set) var imageState: ImageState = .empty
     
-    // MARK: - Published property
+    // MARK: - Published Property
     
     init(firebaseStorageService: FirebaseStorageService, imagePath: String?) {
         self.firebaseStorageService = firebaseStorageService

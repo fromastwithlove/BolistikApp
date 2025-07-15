@@ -26,11 +26,11 @@ final class UserProfileViewModel: ObservableObject {
         self.userID = userID
     }
     
-    // MARK: - Published properties
+    // MARK: - Published Properties
     
     var userProfile: UserProfile?
     
-    // MARK: - Public methods
+    // MARK: - Public Methods
     
     public func loadUserProfile() async {
         do {

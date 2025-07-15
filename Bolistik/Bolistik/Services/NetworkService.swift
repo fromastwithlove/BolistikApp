@@ -10,7 +10,7 @@ import Combine
 
 actor NetworkService {
     
-    // MARK: - Private properties
+    // MARK: - Private Properties
     
     private let logger = AppLogger(category: "Network")
     
@@ -33,7 +33,7 @@ actor NetworkService {
         return baseURLString.appending("/api/v1")
     }
     
-    // MARK: - Public properties
+    // MARK: - Public Properties
     
     public var baseURLString: String {
         get {

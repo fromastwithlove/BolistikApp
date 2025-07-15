@@ -20,7 +20,7 @@ enum FirebaseStoragePath: String {
 
 actor FirebaseStorageService {
     
-    // MARK: - Private
+    // MARK: - Private Properties
     
     private let logger = AppLogger(category: "FirebaseStorage")
     
@@ -31,7 +31,7 @@ actor FirebaseStorageService {
     // This helps avoid redundant network calls and improves performance.
     private var cache: [String: UIImage] = [:]
 
-    // MARK: - Public methods
+    // MARK: - Public Methods
     
     func fetchImage(path: String) async throws -> UIImage? {
         // Check if the image is already cached
