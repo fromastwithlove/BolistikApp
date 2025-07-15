@@ -16,6 +16,8 @@ struct MainView: View {
     
     var body: some View {
         if let user = authenticationManager.user {
+            let model = ContactViewModel(firestoreService: appManager.services.firestoreService, userID: user.uid)
+            
             TabView(selection: $appManager.selectedTab) {
                 Tab("Home", systemImage: "house", value: .home) {
                     EmptyView()
@@ -26,18 +28,17 @@ struct MainView: View {
                 }
 
                 Tab("Contacts", systemImage: "person", value: .contacts) {
-                    ContactsView(model: ContactsViewModel())
+                    ContactsView(model: model)
                 }
 
                 Tab("Profile", systemImage: "person.crop.circle", value: .profile) {
-                    ProfileView(model: UserProfileViewModel(firestoreService: appManager.services.firestoreService,
-                                                            userID: user.uid))
+                    ContactView(model: model)
                 }
             }
         } else {
             ProgressView().progressViewStyle(CircularProgressViewStyle())
                 .task {
-                    logger.error("User not logged in")
+                    logger.error("Contact not logged in")
                     appManager.updateAppState(isAuthenticated: false)
                 }
         }

@@ -1,5 +1,5 @@
 //
-//  ProfileView.swift
+//  ContactView.swift
 //  Bolistik
 //
 //  Created by Adil Yergaliyev on 15.12.24.
@@ -7,31 +7,31 @@
 
 import SwiftUI
 
-struct ProfileView: View {
+struct ContactView: View {
     
     @EnvironmentObject private var appManager: AppManager
     @EnvironmentObject private var authenticationManager: AuthenticationManager
-    @StateObject var model: UserProfileViewModel
+    @StateObject var model: ContactViewModel
     
     @State private var path: NavigationPath = NavigationPath()
 
-    private let logger = AppLogger(category: "UI.ProfileView")
+    private let logger = AppLogger(category: "UI.ContactView")
     
     var body: some View {
         NavigationStack(path: $path) {
             GeometryReader { geometry in
                 List {
                     Section {
-                        if let profile = model.userProfile {
-                            NavigationLink(destination: EditProfileView(profileModel: model,
+                        if let currentUser = model.currentUser {
+                            NavigationLink(destination: EditContactView(contactModel: model,
                                                                         imageModel: ImageViewModel(firebaseStorageService: appManager.services.firebaseStorageService,
-                                                                                                   imagePath: model.userProfile?.avatarPath), userProfile: profile)) {
+                                                                                                   imagePath: model.currentUser?.avatarPath), contact: currentUser)) {
                                 HStack {
-                                    UserRowDetails(
+                                    ContactRowDetails(
                                         geometry: geometry,
-                                        avatarPath: profile.avatarPath,
-                                        displayName: profile.displayName,
-                                        email: profile.email
+                                        avatarPath: currentUser.avatarPath,
+                                        displayName: currentUser.displayName,
+                                        email: currentUser.email
                                     )
                                     Spacer()
                                     Button {
@@ -45,7 +45,7 @@ struct ProfileView: View {
                                 }
                             }
                         } else {
-                            Text("Profile not set up yet.")
+                            Text("Current user is not set up yet.")
                         }
                     }
                     
@@ -92,14 +92,14 @@ struct ProfileView: View {
                 .navigationBarTitleDisplayMode(.inline)
             }
             .task {
-                await model.loadUserProfile()
+                await model.loadCurrentUser()
             }
         }
     }
 }
 
 #Preview {
-    ProfileView(model: UserProfileViewModel(firestoreService: FirestoreService(), userID: "1"))
+    ContactView(model: ContactViewModel(firestoreService: FirestoreService(), userID: "1"))
         .environment(AppManager(services: Services()))
         .environment(AuthenticationManager(firestoreService: FirestoreService()))
 }

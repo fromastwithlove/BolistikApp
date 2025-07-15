@@ -69,10 +69,10 @@ struct GroupRow: View {
             name: "Trip in Paris",
             type: "trip",
             members: [
-                Contact(avatarPath: "public/marie.curie.jpg", fullName: PersonNameComponents(givenName: "Marie", familyName: "Curie"), email: "marie.curie@bolistik.kz"),
-                Contact(avatarPath: "public/nikola.tesla.jpg", fullName: PersonNameComponents(givenName: "Nikola", familyName: "Tesla"), email: "nikola.tesla@bolistik.kz"),
-                Contact(avatarPath: "public/albert.einstein.jpg", fullName: PersonNameComponents(givenName: "Albert", familyName: "Einstein"), email: "albert.einstein@bolistik.kz"),
-                Contact(avatarPath: "public/richard.feynman.jpg", fullName: PersonNameComponents(givenName: "Richard", familyName: "Feynman"), email: "richard.feynman@bolistik.kz")
+                Contact(id: "1", email: "marie.curie@bolistik.kz", avatarPath: "public/marie.curie.jpg", locale: Locale.current.identifier, currency: "USD", fullName: PersonNameComponents(givenName: "Marie", familyName: "Curie")),
+                Contact(id: "2", email: "nikola.tesla@bolistik.kz", avatarPath: "public/nikola.tesla.jpg", locale: Locale.current.identifier, currency: "EUR", fullName: PersonNameComponents(givenName: "Nikola", familyName: "Tesla")),
+                Contact(id: "3", email: "albert.einstein@bolistik.kz", avatarPath: "public/albert.einstein.jpg", locale: Locale.current.identifier, currency: "CHF", fullName: PersonNameComponents(givenName: "Albert", familyName: "Einstein")),
+                Contact(id: "4", email: "richard.feynman@bolistik.kz", avatarPath: "public/richard.feynman.jpg", locale: Locale.current.identifier, currency: "USD", fullName: PersonNameComponents(givenName: "Richard", familyName: "Feynman"))
             ]
         )), geometry: geometry)
     }

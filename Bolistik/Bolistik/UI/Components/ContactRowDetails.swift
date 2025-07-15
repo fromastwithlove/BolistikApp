@@ -1,5 +1,5 @@
 //
-//  UserRowDetails.swift
+//  ContactRowDetails.swift
 //  Bolistik
 //
 //  Created by Adil Yergaliyev on 28.12.24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct UserRowDetails: View {
+struct ContactRowDetails: View {
     
     @EnvironmentObject private var appManager: AppManager
     
@@ -54,7 +54,7 @@ struct UserRowDetails: View {
     @Previewable @State var displayName: String = "Alan Turing"
     @Previewable @State var email: String = "alan.turing@bolistik.kz"
     GeometryReader { geometry in
-        UserRowDetails(geometry: geometry,
+        ContactRowDetails(geometry: geometry,
                        avatarPath: avatarPath,
                        displayName: displayName,
                        email: email)

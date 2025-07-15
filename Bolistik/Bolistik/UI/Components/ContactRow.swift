@@ -14,9 +14,9 @@ struct ContactRow: View {
     
     var body: some View {
         HStack {
-            UserRowDetails(geometry: geometry,
+            ContactRowDetails(geometry: geometry,
                            avatarPath: contact.avatarPath,
-                           displayName: contact.formattedFullName,
+                           displayName: contact.displayName,
                            email: contact.email)
             Spacer()
             Button(action: {
@@ -31,11 +31,14 @@ struct ContactRow: View {
 }
 
 #Preview {
+    @Previewable @State var contact: Contact = Contact(id: "1",
+                                                       email: "albert.einstein@bolistik.kz",
+                                                       avatarPath: "public/albert.einstein.jpg",
+                                                       locale: Locale.current.identifier,
+                                                       currency: "USD",
+                                                       fullName: PersonNameComponents(givenName: "Albert",
+                                                                                      familyName: "Einstein"))
     GeometryReader { geometry in
-        ContactRow(contact:
-                .constant(Contact(avatarPath: "public/albert.einstein.jpg",
-                                  fullName: PersonNameComponents(givenName: "Albert", familyName: "Einstein"),
-                                  email: "albert.einstein@bolistik.kz")),
-                   geometry: geometry)
+        ContactRow(contact:.constant(contact), geometry: geometry)
     }
 }

@@ -9,10 +9,10 @@ import Foundation
 
 protocol FirestoreServiceProtocol: Sendable {
     
-    // MARK: - Profile Methods
+    // MARK: - Contact Methods
     
-    func profileExists(id: String) async throws -> Bool
-    func getProfile(id: String) async throws -> UserProfile?
-    func saveProfile(id: String, email: String?, avatarPath: String?, fullName: PersonNameComponents?) async throws
-    func updateProfile(id: String, profile: UserProfile) async throws
+    func contactExists(id: String) async throws -> Bool
+    func getContact(id: String) async throws -> Contact?
+    func saveContact(id: String, email: String?, avatarPath: String?, fullName: PersonNameComponents?) async throws
+    func updateContact(id: String, contact: Contact) async throws
 }

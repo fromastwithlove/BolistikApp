@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContactsView: View {
 
-    @StateObject var model: ContactsViewModel
+    @StateObject var model: ContactViewModel
 
     @State private var path: NavigationPath = NavigationPath()
     
@@ -42,5 +42,5 @@ struct ContactsView: View {
 }
 
 #Preview {
-    ContactsView(model: ContactsViewModel())
+    ContactsView(model: ContactViewModel(firestoreService: FirestoreService(), userID: "1"))
 }

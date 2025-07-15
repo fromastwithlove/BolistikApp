@@ -14,7 +14,7 @@ protocol FirestoreModel: Codable, Identifiable, Sendable, Equatable {}
 // MARK: - Firestore Collections Enum
 
 public enum FirestoreCollections {
-    static let userProfiles = "userProfiles"
+    static let contacts = "contacts"
 }
 
 // MARK: - Firestore Service Error
@@ -98,38 +98,38 @@ actor FirestoreService {
 
 extension FirestoreService: FirestoreServiceProtocol {
     
-    // MARK: - Profile Methods
+    // MARK: - Contact Methods
     
-    func profileExists(id: String) async throws -> Bool {
-        return try await documentExists(documentId: id, collection: FirestoreCollections.userProfiles)
+    func contactExists(id: String) async throws -> Bool {
+        return try await documentExists(documentId: id, collection: FirestoreCollections.contacts)
     }
     
-    func getProfile(id: String) async throws -> UserProfile? {
-        return try await fetch(documentId: id, collection: FirestoreCollections.userProfiles)
+    func getContact(id: String) async throws -> Contact? {
+        return try await fetch(documentId: id, collection: FirestoreCollections.contacts)
     }
     
-    func saveProfile(id: String, email: String?, avatarPath: String?, fullName: PersonNameComponents?) async throws {
-        let userProfile = UserProfile(id: id,
+    func saveContact(id: String, email: String?, avatarPath: String?, fullName: PersonNameComponents?) async throws {
+        let contact = Contact(id: id,
                                       email: email,
                                       avatarPath: avatarPath,
                                       locale: Locale.current.identifier,
                                       currency: Locale.current.currency?.identifier,
                                       fullName: fullName)
         do {
-            try await save(model: userProfile, collection: FirestoreCollections.userProfiles, documentId: id)
-            logger.debug("Successfully saved user profile for id: \(id) in collection [\(FirestoreCollections.userProfiles)]")
+            try await save(model: contact, collection: FirestoreCollections.contacts, documentId: id)
+            logger.debug("Successfully saved current user contact for id: \(id) in collection [\(FirestoreCollections.contacts)]")
         } catch {
-            logger.error("Failed to save user profile: \(error.localizedDescription)")
+            logger.error("Failed to save current user contact: \(error.localizedDescription)")
             throw FirestoreServiceError.networkError(error)
         }
     }
     
-    func updateProfile(id: String, profile: UserProfile) async throws {
+    func updateContact(id: String, contact: Contact) async throws {
         do {
-            try await save(model: profile, collection: FirestoreCollections.userProfiles, documentId: id)
-            logger.debug("Successfully updated user profile for id: \(id) in collection [\(FirestoreCollections.userProfiles)]")
+            try await save(model: contact, collection: FirestoreCollections.contacts, documentId: id)
+            logger.debug("Successfully updated current user contact for id: \(id) in collection [\(FirestoreCollections.contacts)]")
         } catch {
-            logger.error("Failed to update user profile: \(error.localizedDescription)")
+            logger.error("Failed to update current user contact: \(error.localizedDescription)")
             throw FirestoreServiceError.networkError(error)
         }
     }

@@ -72,6 +72,9 @@
     "Choose image" : {
 
     },
+    "Contact Picture" : {
+
+    },
     "Contacts" : {
 
     },
@@ -85,6 +88,9 @@
 
     },
     "Currency" : {
+
+    },
+    "Current user is not set up yet." : {
 
     },
     "Data and analytics" : {
@@ -160,37 +166,6 @@
 
     },
     "Profile" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Profil"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Profile"
-          }
-        },
-        "kk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Профиль"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Профиль"
-          }
-        }
-      }
-    },
-    "Profile not set up yet." : {
-
-    },
-    "Profile Picture" : {
 
     },
     "Save" : {

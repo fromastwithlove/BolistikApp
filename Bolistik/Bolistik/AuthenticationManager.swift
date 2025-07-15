@@ -170,7 +170,7 @@ extension AuthenticationManager {
                 
                 do {
                     let result = try await Auth.auth().signIn(with: credential)
-                    try await createUserProfile(firebaseUser: result.user, displayName: appleIDCredential.fullName?.formatted())
+                    try await createContact(firebaseUser: result.user, displayName: appleIDCredential.fullName?.formatted())
                 } catch {
                     logger.error("Signing in with Firebase using Apple ID is failed with error: \(error)")
                     throw AuthenticationError.serverError
@@ -182,18 +182,18 @@ extension AuthenticationManager {
         }
     }
     
-    private func createUserProfile(firebaseUser: User, displayName: String?) async throws {
-        let userProfileExists = try await firestoreService.profileExists(id: firebaseUser.uid)
+    private func createContact(firebaseUser: User, displayName: String?) async throws {
+        let contactExists = try await firestoreService.contactExists(id: firebaseUser.uid)
         
-        // Profile already exists, no need to create a new one
-        if userProfileExists { return }
+        // Contact already exists, no need to create a new one
+        if contactExists { return }
         
         // Extract full name from displayName if available
         let fullName = displayName.flatMap {
             PersonNameComponentsFormatter().personNameComponents(from: $0)
         }
         
-        try await firestoreService.saveProfile(id: firebaseUser.uid,
+        try await firestoreService.saveContact(id: firebaseUser.uid,
                                                email: firebaseUser.email,
                                                avatarPath: nil,
                                                fullName: fullName)
@@ -229,7 +229,7 @@ extension AuthenticationManager {
             
             let credential = GoogleAuthProvider.credential(withIDToken: idToken.tokenString, accessToken: user.accessToken.tokenString)
             let result = try await Auth.auth().signIn(with: credential)
-            try await createUserProfile(firebaseUser: result.user, displayName: result.user.displayName)
+            try await createContact(firebaseUser: result.user, displayName: result.user.displayName)
         } catch {
             logger.error("Login failed with Google account: \(error)")
             throw error
