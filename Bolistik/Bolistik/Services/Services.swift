@@ -8,5 +8,4 @@
 actor Services {
     let firestoreService: FirestoreServiceProtocol = FirestoreService()
     let firebaseStorageService: FirebaseStorageService = FirebaseStorageService()
-    let networkService: NetworkService = NetworkService()
 }
