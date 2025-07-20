@@ -1,41 +1,18 @@
 //
-//  BolistikApp.swift
+//  AppDelegate.swift
 //  Bolistik
 //
-//  Created by Adil Yergaliyev on 28.11.24.
+//  Created by Adil Yergaliyev on 20.07.25.
 //
 
-import SwiftUI
+import UIKit
+
 import FirebaseCore
 #if LOCAL_ENVIRONMENT
 import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
 #endif
-
-@main
-struct BolistikApp: App {
-    
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    
-    @StateObject private var appManager: AppManager = .init()
-    @State private var dependencies: AppDependenciesProtocol?
-    
-    var body: some Scene {
-        WindowGroup {
-            if let dependencies = dependencies {
-                RootView()
-                    .environment(appManager)
-                    .environment(\.dependencies, dependencies)
-            } else {
-                ProgressView()
-                    .task {
-                        dependencies = AppDependencies()
-                    }
-            }
-        }
-    }
-}
 
 class AppDelegate: NSObject, UIApplicationDelegate {
 
