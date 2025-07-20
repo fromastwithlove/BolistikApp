@@ -23,7 +23,7 @@ struct BolistikApp: App {
     var body: some Scene {
         WindowGroup {
             if let dependencies = dependencies {
-                EntryPointView(appManager: AppManager())
+                RootView(appManager: AppManager())
                     .environment(\.dependencies, dependencies)
             } else {
                 ProgressView()

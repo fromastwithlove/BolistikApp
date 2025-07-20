@@ -1,5 +1,5 @@
 //
-//  EntryPointView.swift
+//  RootView.swift
 //  Bolistik
 //
 //  Created by Adil Yergaliyev on 13.03.25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct EntryPointView: View {
+struct RootView: View {
     
     @StateObject var appManager: AppManager
     @Environment(\.dependencies) var dependencies
