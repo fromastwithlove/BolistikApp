@@ -10,6 +10,7 @@ import SwiftUI
 struct ContactRowDetails: View {
     
     @EnvironmentObject private var appManager: AppManager
+    @Environment(\.dependencies) private var dependencies
     
     let geometry: GeometryProxy
     let avatarPath: String?
@@ -20,7 +21,7 @@ struct ContactRowDetails: View {
         HStack {
             if let avatarPath, !avatarPath.isEmpty {
                 // Avatar Image
-                ImageView(model: ImageViewModel(firebaseStorageService: appManager.services.firebaseStorageService,
+                ImageView(model: ImageViewModel(storageService: dependencies.storageService,
                                                 imagePath: avatarPath)) { image in
                     image
                         .resizable()

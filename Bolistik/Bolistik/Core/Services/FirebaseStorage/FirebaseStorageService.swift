@@ -18,7 +18,7 @@ enum FirebaseStoragePath: String {
     }
 }
 
-actor FirebaseStorageService {
+actor FirebaseStorageService: FirebaseStorageServiceProtocol {
     
     // MARK: - Private Properties
     

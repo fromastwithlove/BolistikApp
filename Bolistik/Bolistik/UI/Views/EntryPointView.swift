@@ -10,7 +10,7 @@ import SwiftUI
 struct EntryPointView: View {
     
     @StateObject var appManager: AppManager
-    @StateObject var authenticationManager: AuthenticationManager
+    @Environment(\.dependencies) var dependencies
     
     private let logger = AppLogger(category: "BolistikApp")
     
@@ -22,24 +22,22 @@ struct EntryPointView: View {
                 case .awaitingAuthentication:
                     LoginView()
                         .environment(appManager)
-                        .environment(authenticationManager)
                         .transition(.move(edge: .bottom)
                                     .combined(with: .opacity))
                 case .ready:
                     MainView()
                         .environment(appManager)
-                        .environment(authenticationManager)
             }
         }
         .animation(.default, value: appManager.launchState)
         .task {
             do {
-                try await authenticationManager.verifyAuthenticationState()
+                try await dependencies.authService.verifyAuthenticationState()
             } catch {
                 logger.error("Verification of authentication state failed: \(error)")
             }
             
-            appManager.updateAppState(isAuthenticated: authenticationManager.isAuthenticated)
+            appManager.updateAppState(isAuthenticated: dependencies.authService.isAuthenticated)
         }
     }
 }

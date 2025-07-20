@@ -51,13 +51,13 @@ class ImageViewModel: ObservableObject {
     // MARK: - Private Properties
     
     private let logger = AppLogger(category: "UI.ImageViewModel")
-    private let firebaseStorageService: FirebaseStorageService
+    private let storageService: FirebaseStorageServiceProtocol
     private(set) var imageState: ImageState = .empty
     
     // MARK: - Published Property
     
-    init(firebaseStorageService: FirebaseStorageService, imagePath: String?) {
-        self.firebaseStorageService = firebaseStorageService
+    init(storageService: FirebaseStorageServiceProtocol, imagePath: String?) {
+        self.storageService = storageService
         self.imagePath = imagePath
     }
     
@@ -84,7 +84,7 @@ class ImageViewModel: ObservableObject {
         }
         
         do {
-            if let fetchedImage = try await firebaseStorageService.fetchImage(path: path) {
+            if let fetchedImage = try await storageService.fetchImage(path: path) {
                 imageState = .success(Image(uiImage: fetchedImage))
             }
         } catch {
@@ -104,7 +104,7 @@ class ImageViewModel: ObservableObject {
                 throw ImageOperationError.failedToRetrieveImageData
             }
             
-            try await firebaseStorageService.uploadImage(data: imageData, path: path)
+            try await storageService.uploadImage(data: imageData, path: path)
         } catch {
             logger.error("Image upload failed: \(error)")
             throw ImageOperationError.operationFailed(error)
@@ -115,7 +115,7 @@ class ImageViewModel: ObservableObject {
         imageState = .loading(Progress())
         
         do {
-            try await firebaseStorageService.deleteImage(path: path)
+            try await storageService.deleteImage(path: path)
             imageState = .empty
         } catch {
             logger.error("Image deletion failed: \(error)")

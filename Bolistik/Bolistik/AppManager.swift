@@ -33,11 +33,6 @@ class AppManager: ObservableObject {
     // MARK: - Published Properties
     
     private(set) var launchState: LaunchState = .initializing
-    private(set) var services: Services
-    
-    init(services: Services) {
-        self.services = services
-    }
     
     // MARK: - Navigation
     

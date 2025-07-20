@@ -165,10 +165,10 @@ struct EditContactView: View {
                                                       locale: Locale.current.identifier,
                                                       currency: "EUR",
                                                       fullName: PersonNameComponents(givenName: "Alan", familyName: "Turing"))
-    @Previewable @State var imageModel = ImageViewModel(firebaseStorageService: FirebaseStorageService(), imagePath: "public/alan.turing.jpg")
+    @Previewable @State var imageModel = ImageViewModel(storageService: FirebaseStorageService(), imagePath: "public/alan.turing.jpg")
     
     EditContactView(contactModel: contactModel,
                     imageModel: imageModel,
                     contact: contact)
-    .environment(AppManager(services: Services()))
+    .environment(AppManager())
 }

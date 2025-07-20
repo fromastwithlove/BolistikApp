@@ -10,7 +10,7 @@ import SwiftUI
 struct ContactView: View {
     
     @EnvironmentObject private var appManager: AppManager
-    @EnvironmentObject private var authenticationManager: AuthenticationManager
+    @Environment(\.dependencies) private var dependencies
     @StateObject var model: ContactViewModel
     
     @State private var path: NavigationPath = NavigationPath()
@@ -24,7 +24,7 @@ struct ContactView: View {
                     Section {
                         if let currentUser = model.currentUser {
                             NavigationLink(destination: EditContactView(contactModel: model,
-                                                                        imageModel: ImageViewModel(firebaseStorageService: appManager.services.firebaseStorageService,
+                                                                        imageModel: ImageViewModel(storageService: dependencies.storageService,
                                                                                                    imagePath: model.currentUser?.avatarPath), contact: currentUser)) {
                                 HStack {
                                     ContactRowDetails(
@@ -62,8 +62,8 @@ struct ContactView: View {
                     Section {
                         Button(action: {
                             Task {
-                                await authenticationManager.signOut()
-                                appManager.updateAppState(isAuthenticated: authenticationManager.isAuthenticated)
+                                await dependencies.authService.signOut()
+                                appManager.updateAppState(isAuthenticated: dependencies.authService.isAuthenticated)
                             }
                         }) {
                             Text("auth.signOut")
@@ -99,7 +99,8 @@ struct ContactView: View {
 }
 
 #Preview {
+    @Previewable @State var firestoreService: FirestoreService = FirestoreService()
     ContactView(model: ContactViewModel(firestoreService: FirestoreService(), userID: "1"))
-        .environment(AppManager(services: Services()))
-        .environment(AuthenticationManager(firestoreService: FirestoreService()))
+        .environment(AppManager())
+        .environment(\.dependencies, AppDependencies(firestoreService: FirestoreService()))
 }

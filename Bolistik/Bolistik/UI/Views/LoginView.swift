@@ -11,9 +11,9 @@ import GoogleSignInSwift
 
 struct LoginView: View {
     
-    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.dependencies) private var dependencies
     @EnvironmentObject private var appManager: AppManager
-    @EnvironmentObject private var authenticationManager: AuthenticationManager
     
     private let logger = AppLogger(category: "UI.LoginView")
     
@@ -43,15 +43,15 @@ struct LoginView: View {
                 Spacer()
                 
                 SignInWithAppleButtonView { request in
-                    authenticationManager.prepareAppleSignIn(request: request)
+                    dependencies.authService.prepareAppleSignIn(request: request)
                 } onCompletion: { result in
                     Task {
                         do {
-                            try await authenticationManager.handleSignInWithApple(result: result)
+                            try await dependencies.authService.handleSignInWithApple(result: result)
                         } catch {
                             errorString = error.localizedDescription
                         }
-                        appManager.updateAppState(isAuthenticated: authenticationManager.isAuthenticated)
+                        appManager.updateAppState(isAuthenticated: dependencies.authService.isAuthenticated)
                     }
                 }
                 .frame(height: geometry.size.height * 0.1)
@@ -59,12 +59,12 @@ struct LoginView: View {
                 GoogleSignInButton(scheme: .light, style: .wide, action: {
                     Task {
                         do {
-                            try await authenticationManager.handleSignInWithGoogle()
+                            try await dependencies.authService.handleSignInWithGoogle()
                         } catch {
                             errorString = error.localizedDescription
                         }
                         
-                        appManager.updateAppState(isAuthenticated: authenticationManager.isAuthenticated)
+                        appManager.updateAppState(isAuthenticated: dependencies.authService.isAuthenticated)
                     }
                 })
                 .padding(.bottom)

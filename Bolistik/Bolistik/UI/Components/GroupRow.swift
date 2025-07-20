@@ -10,6 +10,7 @@ import SwiftUI
 struct GroupRow: View {
     
     @EnvironmentObject private var appManager: AppManager
+    @Environment(\.dependencies) private var dependencies
     @Binding var group: ExpenseGroup
     let geometry: GeometryProxy
     
@@ -36,7 +37,7 @@ struct GroupRow: View {
                     .font(.headline)
                 HStack(spacing: -10) {
                     ForEach(group.members) { member in
-                        ImageView(model: ImageViewModel(firebaseStorageService: appManager.services.firebaseStorageService,
+                        ImageView(model: ImageViewModel(storageService: dependencies.storageService,
                                                         imagePath: member.avatarPath)) { image in
                             image
                                 .frame(width: min(geometry.size.width * 0.08, 40),

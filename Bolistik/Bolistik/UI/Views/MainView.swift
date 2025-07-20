@@ -10,13 +10,13 @@ import SwiftUI
 struct MainView: View {
     
     @EnvironmentObject private var appManager: AppManager
-    @EnvironmentObject private var authenticationManager: AuthenticationManager
+    @Environment(\.dependencies) private var dependencies
     
     private let logger = AppLogger(category: "UI.MainView")
     
     var body: some View {
-        if let user = authenticationManager.user {
-            let model = ContactViewModel(firestoreService: appManager.services.firestoreService, userID: user.uid)
+        if let userID = dependencies.authService.userID {
+            let model = ContactViewModel(firestoreService: dependencies.firestoreService, userID: userID)
             
             TabView(selection: $appManager.selectedTab) {
                 Tab("Home", systemImage: "house", value: .home) {
@@ -47,5 +47,5 @@ struct MainView: View {
 
 #Preview {
     MainView()
-        .environment(AppManager(services: Services()))
+        .environment(AppManager())
 }

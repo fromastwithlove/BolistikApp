@@ -18,13 +18,18 @@ struct BolistikApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
+    @State private var dependencies: AppDependenciesProtocol?
+    
     var body: some Scene {
         WindowGroup {
-            if let services = appDelegate.services {
-                EntryPointView(appManager: AppManager(services: services),
-                            authenticationManager: AuthenticationManager(firestoreService: services.firestoreService))
+            if let dependencies = dependencies {
+                EntryPointView(appManager: AppManager())
+                    .environment(\.dependencies, dependencies)
             } else {
-                fatalError("Services not initialized")
+                ProgressView()
+                    .task {
+                        dependencies = AppDependencies()
+                    }
             }
         }
     }
@@ -33,13 +38,10 @@ struct BolistikApp: App {
 class AppDelegate: NSObject, UIApplicationDelegate {
 
     private let logger = AppLogger(category: "AppDelegate")
-    private(set) var services: Services?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         // Configure Firebase when the app launches
         FirebaseApp.configure()
-        // Configure Services after Firebase configuration
-        services = Services()
         
         #if LOCAL_ENVIRONMENT
         logger.info("Running in local environment setup")

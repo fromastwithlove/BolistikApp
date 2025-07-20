@@ -1,5 +1,5 @@
 //
-//  AuthenticationManager.swift
+//  AuthenticationService.swift
 //  Bolistik
 //
 //  Created by Adil Yergaliyev on 12.03.25.
@@ -12,42 +12,7 @@ import FirebaseCore
 @preconcurrency import GoogleSignIn
 import CryptoKit
 
-// MARK: - Authentication Error Enum
-
-public enum AuthenticationError: LocalizedError {
-    case accountNotFound
-    case accountTransferred
-    case serverError
-    case missingNonce
-    case missingGoogleClientID
-    case googleIDTokenIsMissing
-    case nameConversionFailed
-    
-    /// A computed property to return a localized error message for each error case.
-    public var errorDescription: String? {
-        switch self {
-            case .accountNotFound:
-                return NSLocalizedString("error.auth.accountNotFound", comment: "Error: Account not found")
-            case .serverError:
-                return NSLocalizedString("error.auth.serverError", comment: "Error: Server error")
-            case .accountTransferred:
-                return NSLocalizedString("error.auth.accountTransferred", comment: "Error: Account transferred")
-            case .missingNonce:
-                return NSLocalizedString("error.auth.missingNonce", comment: "Error: Missing nonce")
-            case .missingGoogleClientID:
-                return NSLocalizedString("error.auth.missingGoogleClientID", comment: "Error: Missing Google client ID")
-            case .googleIDTokenIsMissing:
-                return NSLocalizedString("error.auth.googleIDTokenIsMissing", comment: "Error: Missing Google ID token")
-            case .nameConversionFailed:
-                return NSLocalizedString("error.auth.nameConversionFailed", comment: "Error: Failed to convert display name to full name")
-            
-        }
-    }
-}
-
-@MainActor
-@Observable
-final class AuthenticationManager: ObservableObject {
+final class AuthenticationService: AuthenticationServiceProtocol {
     
     // MARK: - Private properties
     
@@ -60,35 +25,21 @@ final class AuthenticationManager: ObservableObject {
     }
     
     // MARK: - User Information
-     
-    public var user: User? {
-        return Auth.auth().currentUser
-    }
     
-    public var isAuthenticated: Bool {
+    var isAuthenticated: Bool {
         return Auth.auth().currentUser != nil
     }
     
-    // MARK: - Sign-Out
-    
-    public func signOut() async {
-        do {
-            try Auth.auth().signOut()
-            logger.debug("Successfully signed out from Firebase.")
-        } catch {
-            logger.error("Error signing out from Firebase: \(error.localizedDescription)")
-        }
+    var userID: String? {
+        return Auth.auth().currentUser?.uid
     }
-}
-
-// MARK: - Authentication Verification
-
-extension AuthenticationManager {
-     
-    public func verifyAuthenticationState() async throws {
+    
+    // MARK: - Account Verification
+    
+    func verifyAuthenticationState() async throws {
         logger.debug("Account verification started")
         
-        guard let currentUser = user else {
+        guard let currentUser = Auth.auth().currentUser else {
             await signOut()
             throw AuthenticationError.accountNotFound
         }
@@ -113,6 +64,7 @@ extension AuthenticationManager {
         }
     }
     
+    @MainActor
     private func verifyAppleAccountStatus(appleProvider: UserInfo) async throws {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         
@@ -136,20 +88,17 @@ extension AuthenticationManager {
             throw error
         }
     }
-}
-
-// MARK: - Apple Sign-In
-
-extension AuthenticationManager {
     
-    public func prepareAppleSignIn(request: ASAuthorizationAppleIDRequest) {
+    // MARK: - Apple Sign-In
+    
+    func prepareAppleSignIn(request: ASAuthorizationAppleIDRequest) {
         request.requestedScopes = [.fullName, .email];
         let nonce = randomNonceString()
         currentNonce = nonce
         request.nonce = sha256(nonce)
     }
     
-    public func handleSignInWithApple(result: Result<ASAuthorization, Error>) async throws {
+    func handleSignInWithApple(result: Result<ASAuthorization, Error>) async throws {
         switch result {
         case .success(let authorization):
             if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
@@ -170,7 +119,9 @@ extension AuthenticationManager {
                 
                 do {
                     let result = try await Auth.auth().signIn(with: credential)
-                    try await createContact(firebaseUser: result.user, displayName: appleIDCredential.fullName?.formatted())
+                    Task {
+                        try await createContact(firebaseUser: result.user, displayName: appleIDCredential.fullName?.formatted())
+                    }
                 } catch {
                     logger.error("Signing in with Firebase using Apple ID is failed with error: \(error)")
                     throw AuthenticationError.serverError
@@ -182,29 +133,9 @@ extension AuthenticationManager {
         }
     }
     
-    private func createContact(firebaseUser: User, displayName: String?) async throws {
-        let contactExists = try await firestoreService.contactExists(id: firebaseUser.uid)
-        
-        // Contact already exists, no need to create a new one
-        if contactExists { return }
-        
-        // Extract full name from displayName if available
-        let fullName = displayName.flatMap {
-            PersonNameComponentsFormatter().personNameComponents(from: $0)
-        }
-        
-        try await firestoreService.saveContact(id: firebaseUser.uid,
-                                               email: firebaseUser.email,
-                                               avatarPath: nil,
-                                               fullName: fullName)
-    }
-}
-
-// MARK: - Google Sign-In
-
-extension AuthenticationManager {
+    // MARK: - Google Sign-In
     
-    public func handleSignInWithGoogle() async throws {
+    func handleSignInWithGoogle() async throws {
         guard let clientID = FirebaseApp.app()?.options.clientID else {
             throw AuthenticationError.missingGoogleClientID
         }
@@ -229,19 +160,50 @@ extension AuthenticationManager {
             
             let credential = GoogleAuthProvider.credential(withIDToken: idToken.tokenString, accessToken: user.accessToken.tokenString)
             let result = try await Auth.auth().signIn(with: credential)
-            try await createContact(firebaseUser: result.user, displayName: result.user.displayName)
+            Task {
+                try await createContact(firebaseUser: result.user, displayName: result.user.displayName)
+            }
         } catch {
             logger.error("Login failed with Google account: \(error)")
             throw error
         }
     }
-}
-
-// MARK: - Apple and Firebase security requirements
-
-extension AuthenticationManager {
     
-    public func randomNonceString(length: Int = 32) -> String {
+    // MARK: - Firestore Account Creation
+    
+    private func createContact(firebaseUser: User, displayName: String?) async throws {
+        
+        // FIXME: It doesn't fetch the request if there is not "contacts" collection.
+        let contactExists = try await firestoreService.contactExists(id: firebaseUser.uid)
+        
+        // Contact already exists, no need to create a new one
+        if contactExists { return }
+        
+        // Extract full name from displayName if available
+        let fullName = displayName.flatMap {
+            PersonNameComponentsFormatter().personNameComponents(from: $0)
+        }
+        
+        try await firestoreService.saveContact(id: firebaseUser.uid,
+                                               email: firebaseUser.email,
+                                               avatarPath: nil,
+                                               fullName: fullName)
+    }
+    
+    // MARK: - Sign Out
+    
+    func signOut() async {
+        do {
+            try Auth.auth().signOut()
+            logger.debug("Successfully signed out from Firebase.")
+        } catch {
+            logger.error("Error signing out from Firebase: \(error.localizedDescription)")
+        }
+    }
+    
+    // MARK: - Apple and Firebase security requirements
+    
+    private func randomNonceString(length: Int = 32) -> String {
       precondition(length > 0)
       var randomBytes = [UInt8](repeating: 0, count: length)
       let errorCode = SecRandomCopyBytes(kSecRandomDefault, randomBytes.count, &randomBytes)
@@ -262,7 +224,7 @@ extension AuthenticationManager {
       return String(nonce)
     }
 
-    public func sha256(_ input: String) -> String {
+    private func sha256(_ input: String) -> String {
       let inputData = Data(input.utf8)
       let hashedData = SHA256.hash(data: inputData)
       let hashString = hashedData.compactMap {
