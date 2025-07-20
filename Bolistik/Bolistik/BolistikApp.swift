@@ -18,12 +18,14 @@ struct BolistikApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
+    @StateObject private var appManager: AppManager = .init()
     @State private var dependencies: AppDependenciesProtocol?
     
     var body: some Scene {
         WindowGroup {
             if let dependencies = dependencies {
-                RootView(appManager: AppManager())
+                RootView()
+                    .environment(appManager)
                     .environment(\.dependencies, dependencies)
             } else {
                 ProgressView()

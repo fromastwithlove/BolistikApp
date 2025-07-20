@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RootView: View {
     
-    @StateObject var appManager: AppManager
+    @EnvironmentObject private var appManager: AppManager
     @Environment(\.dependencies) var dependencies
     
     private let logger = AppLogger(category: "BolistikApp")
