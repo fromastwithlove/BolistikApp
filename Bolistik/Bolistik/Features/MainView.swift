@@ -16,7 +16,7 @@ struct MainView: View {
     
     var body: some View {
         if let userID = dependencies.authService.userID {
-            let model = ContactViewModel(firestoreService: dependencies.firestoreService, userID: userID)
+            let model = ProfileViewModel(profileRepository: dependencies.profileRepository, userID: userID)
             
             TabView(selection: $appManager.selectedTab) {
                 Tab("Home", systemImage: "house", value: .home) {
@@ -32,7 +32,7 @@ struct MainView: View {
                 }
 
                 Tab("Profile", systemImage: "person.crop.circle", value: .profile) {
-                    ContactView(model: model)
+                    ProfileView(model: model)
                 }
             }
         } else {

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContactsView: View {
 
-    @StateObject var model: ContactViewModel
+    @StateObject var model: ProfileViewModel
 
     @State private var path: NavigationPath = NavigationPath()
     
@@ -42,5 +42,6 @@ struct ContactsView: View {
 }
 
 #Preview {
-    ContactsView(model: ContactViewModel(firestoreService: FirestoreService(), userID: "1"))
+    @Previewable @State var profileRepository: ProfileRepositoryProtocol = ProfileRepository(firestoreService: FirestoreService())
+    ContactsView(model: ProfileViewModel(profileRepository: profileRepository, userID: "1"))
 }

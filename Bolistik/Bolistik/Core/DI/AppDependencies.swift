@@ -6,19 +6,23 @@
 //
 
 protocol AppDependenciesProtocol {
-    var firestoreService: FirestoreServiceProtocol { get }
-    var storageService: FirebaseStorageServiceProtocol { get }
     var authService: AuthenticationServiceProtocol { get }
+    var storageService: FirebaseStorageServiceProtocol { get }
+    var profileRepository: ProfileRepositoryProtocol { get }
 }
 
 struct AppDependencies: AppDependenciesProtocol {
+    
     let authService: AuthenticationServiceProtocol
     let firestoreService: FirestoreServiceProtocol
     let storageService: FirebaseStorageServiceProtocol
+    let profileRepository: ProfileRepositoryProtocol
     
-    init(firestoreService: FirestoreServiceProtocol = FirestoreService()) {
+    init(firestoreService: FirestoreServiceProtocol = FirestoreService(),
+         storageService: FirebaseStorageServiceProtocol = FirebaseStorageService()) {
         self.authService = AuthenticationService(firestoreService: firestoreService)
         self.firestoreService = firestoreService
-        self.storageService = FirebaseStorageService()
+        self.storageService = storageService
+        self.profileRepository = ProfileRepository(firestoreService: firestoreService)
     }
 }

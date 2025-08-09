@@ -1,5 +1,5 @@
 //
-//  ContactView.swift
+//  ProfileView.swift
 //  Bolistik
 //
 //  Created by Adil Yergaliyev on 15.12.24.
@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct ContactView: View {
+struct ProfileView: View {
     
     @EnvironmentObject private var appManager: AppManager
     @Environment(\.dependencies) private var dependencies
-    @StateObject var model: ContactViewModel
+    @StateObject var model: ProfileViewModel
     
     @State private var path: NavigationPath = NavigationPath()
 
@@ -23,9 +23,10 @@ struct ContactView: View {
                 List {
                     Section {
                         if let currentUser = model.currentUser {
-                            NavigationLink(destination: EditContactView(contactModel: model,
-                                                                        imageModel: ImageViewModel(storageService: dependencies.storageService,
-                                                                                                   imagePath: model.currentUser?.avatarPath), contact: currentUser)) {
+                            let imageViewModel = ImageViewModel(storageService: dependencies.storageService, imagePath: model.currentUser?.avatarPath)
+                            NavigationLink(destination: EditProfileView(profileModel: model,
+                                                                        imageModel: imageViewModel,
+                                                                        profile: currentUser)) {
                                 HStack {
                                     ContactRowDetails(
                                         geometry: geometry,
@@ -99,8 +100,8 @@ struct ContactView: View {
 }
 
 #Preview {
-    @Previewable @State var firestoreService: FirestoreService = FirestoreService()
-    ContactView(model: ContactViewModel(firestoreService: FirestoreService(), userID: "1"))
+    @Previewable @State var profileRepository: ProfileRepositoryProtocol = ProfileRepository(firestoreService: FirestoreService())
+    ProfileView(model: ProfileViewModel(profileRepository: profileRepository, userID: "1"))
         .environment(AppManager())
         .environment(\.dependencies, AppDependencies(firestoreService: FirestoreService()))
 }

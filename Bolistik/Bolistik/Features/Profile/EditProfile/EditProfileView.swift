@@ -1,5 +1,5 @@
 //
-//  EditContactView.swift
+//  EditProfileView.swift
 //  Bolistik
 //
 //  Created by Adil Yergaliyev on 08.03.25.
@@ -8,15 +8,15 @@
 import SwiftUI
 import PhotosUI
 
-struct EditContactView: View {
+struct EditProfileView: View {
     
     @Environment(\.presentationMode) private var presentationMode
-    @ObservedObject var contactModel: ContactViewModel
+    @ObservedObject var profileModel: ProfileViewModel
     @ObservedObject var imageModel: ImageViewModel
     
     private let logger = AppLogger(category: "UI.EditContactView")
 
-    @State var contact: Contact
+    @State var profile: Contact
     @State private var showPhotoActionSheet: Bool = false
     @State private var showPhotoPicker: Bool = false
     
@@ -63,11 +63,11 @@ struct EditContactView: View {
                                 Text("Choose image")
                             }
                             
-                            if imageModel.imageSelection != nil || contact.avatarPath != nil {
+                            if imageModel.imageSelection != nil || profile.avatarPath != nil {
                                 Button(role: .destructive) {
                                     imageModel.imageSelection = nil
                                     
-                                    guard let path = contact.avatarPath else {
+                                    guard let path = profile.avatarPath else {
                                         return
                                     }
     
@@ -75,9 +75,9 @@ struct EditContactView: View {
                                         // Update image view model
                                         try await imageModel.deleteImage(path: path) //FIXME: Maybe catch an error?
                                         imageModel.imagePath = nil
-                                        // Update contact view model
-                                        contact.avatarPath = nil
-                                        await contactModel.update(contact: contact)
+                                        // Update profile view model
+                                        profile.avatarPath = nil
+                                        await profileModel.update(profile: profile)
                                     }
                                 } label: {
                                     Text("Delete image")
@@ -87,14 +87,14 @@ struct EditContactView: View {
                         .photosPicker(isPresented: $showPhotoPicker, selection: $imageModel.imageSelection, matching: .any(of: [.images, .not(.screenshots)]))
                         .task(id: imageModel.imageSelection) {
                             guard imageModel.imageSelection != nil else { return }
-                            let avatarPath = "\(FirebaseStoragePath.avatarsFolder.rawValue)/\(contact.id)/avatar"
+                            let avatarPath = "\(FirebaseStoragePath.avatarsFolder.rawValue)/\(profile.id)/avatar"
                             do {
                                 // Update image model
                                 try await imageModel.uploadImage(path: avatarPath)
                                 imageModel.imagePath = avatarPath
-                                // Update user contact
-                                contact.avatarPath = avatarPath
-                                await contactModel.update(contact: contact)
+                                // Update user profile
+                                profile.avatarPath = avatarPath
+                                await profileModel.update(profile: profile)
                             } catch {
                                 logger.error("Failed to upload avatar image: \(error.localizedDescription)")
                             }
@@ -109,7 +109,7 @@ struct EditContactView: View {
                         Image(systemName: "person.fill")
                             .foregroundStyle(.secondaryRed)
                             .frame(width: 40)
-                        TextField("Full Name", text: $contact.displayName)
+                        TextField("Full Name", text: $profile.displayName)
                             .padding(.vertical, 8)
                             .autocorrectionDisabled()
                     }
@@ -117,7 +117,7 @@ struct EditContactView: View {
                         Image(systemName: "envelope.fill")
                             .foregroundStyle(.secondaryRed)
                             .frame(width: 40)
-                        TextField("Email", text: $contact.email)
+                        TextField("Email", text: $profile.email)
                             .keyboardType(.emailAddress)
                             .autocapitalization(.none)
                             .autocorrectionDisabled()
@@ -126,14 +126,14 @@ struct EditContactView: View {
                 }
                 
                 Section {
-                    NavigationLink(destination: CurrenciesListView(selectedCurrency: $contact.currency)) {
+                    NavigationLink(destination: CurrenciesListView(selectedCurrency: $profile.currency)) {
                         HStack {
                             Image(systemName: "dollarsign.circle.fill")
                                 .foregroundStyle(.secondaryRed)
                                 .frame(width: 40)
                             Text("Currency")
                             Spacer()
-                            Text(contact.currency)
+                            Text(profile.currency)
                                 .foregroundStyle(.gray)
                         }
                     }
@@ -143,14 +143,14 @@ struct EditContactView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         Task {
-                            await contactModel.update(contact: contact)
+                            await profileModel.update(profile: profile)
                             presentationMode.wrappedValue.dismiss()
                         }
                     } label: {
                         Text("Save")
                             .fontWeight(.bold)
                     }
-                    .disabled(!contactModel.validate(contact: contact) || contactModel.currentUser == contact)
+                    .disabled(!profileModel.validate(profile: profile) || profileModel.currentUser == profile)
                 }
             }
         }
@@ -158,8 +158,8 @@ struct EditContactView: View {
 }
 
 #Preview {
-    @Previewable @State var contactModel = ContactViewModel(firestoreService: FirestoreService(), userID: "1")
-    @Previewable @State var contact = Contact(id: "1",
+    @Previewable @State var profileModel = ProfileViewModel(profileRepository: ProfileRepository(firestoreService: FirestoreService()), userID: "1")
+    @Previewable @State var profile = Contact(id: "1",
                                                       email: nil,
                                                       avatarPath: "public/alan.turing.jpg",
                                                       locale: Locale.current.identifier,
@@ -167,8 +167,8 @@ struct EditContactView: View {
                                                       fullName: PersonNameComponents(givenName: "Alan", familyName: "Turing"))
     @Previewable @State var imageModel = ImageViewModel(storageService: FirebaseStorageService(), imagePath: "public/alan.turing.jpg")
     
-    EditContactView(contactModel: contactModel,
+    EditProfileView(profileModel: profileModel,
                     imageModel: imageModel,
-                    contact: contact)
+                    profile: profile)
     .environment(AppManager())
 }
