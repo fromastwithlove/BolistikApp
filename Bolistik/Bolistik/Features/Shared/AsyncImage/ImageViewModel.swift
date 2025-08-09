@@ -28,16 +28,16 @@ class ImageViewModel: ObservableObject {
     private let storageService: FirebaseStorageServiceProtocol
     private(set) var imageState: ImageState = .empty
     
-    // MARK: - Published Property
-    
     init(storageService: FirebaseStorageServiceProtocol, imagePath: String?) {
         self.storageService = storageService
         self.imagePath = imagePath
     }
     
-    public var imagePath: String?
+    // MARK: - Published Properties
+    
+    var imagePath: String?
 
-    public var imageSelection: PhotosPickerItem? {
+    var imageSelection: PhotosPickerItem? {
         didSet {
             if let imageSelection {
                 let progress = loadTransferable(from: imageSelection)
@@ -50,7 +50,7 @@ class ImageViewModel: ObservableObject {
     
     // MARK: - Public Methods
     
-    public func loadImage() async {
+    func loadImage() async {
         imageState = .loading(Progress())
         guard let path = imagePath, !path.isEmpty else {
             imageState = .empty
@@ -67,7 +67,7 @@ class ImageViewModel: ObservableObject {
         }
     }
     
-    public func uploadImage(path: String) async throws {
+    func uploadImage(path: String) async throws {
         guard let imageSelection else {
             return
         }
@@ -85,7 +85,7 @@ class ImageViewModel: ObservableObject {
         }
     }
     
-    public func deleteImage(path: String) async throws {
+    func deleteImage(path: String) async throws {
         imageState = .loading(Progress())
         
         do {

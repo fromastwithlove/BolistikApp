@@ -34,7 +34,7 @@ final class ProfileViewModel: ObservableObject {
     
     // MARK: - Public Methods
     
-    public func loadCurrentUser() async {
+    func loadCurrentUser() async {
         do {
             if let existingUser = try await profileRepository.getProfile(id: userID) {
                 currentUser = existingUser
@@ -45,7 +45,7 @@ final class ProfileViewModel: ObservableObject {
         }
     }
     
-    public func validate(profile: Contact) -> Bool {
+    func validate(profile: Contact) -> Bool {
         // Check if Display Name matches the expected format (only letters and at least one space between names)
         if !NSPredicate(format: "SELF MATCHES %@", nameRegex).evaluate(with: profile.displayName) {
             logger.error("Invalid full name: \(profile.displayName)")
@@ -61,7 +61,7 @@ final class ProfileViewModel: ObservableObject {
         return true
     }
     
-    public func update(profile: Contact) async {
+    func update(profile: Contact) async {
         guard validate(profile: profile) else { return }
         
         // Overwrite the current user locally to reflect changes immediately, since updating Firestore and reloading the current user takes time.
