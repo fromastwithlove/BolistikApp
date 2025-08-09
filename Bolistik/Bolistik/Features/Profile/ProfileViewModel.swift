@@ -13,7 +13,7 @@ final class ProfileViewModel: ObservableObject {
     
     // MARK: - Private Properties
     
-    private let logger = AppLogger(category: "UI.ContactViewModel")
+    private let logger = AppLogger(category: "UI.ProfileViewModel")
     private let profileRepository: ProfileRepositoryProtocol
     private let userID: String
     

@@ -14,7 +14,7 @@ struct EditProfileView: View {
     @ObservedObject var profileModel: ProfileViewModel
     @ObservedObject var imageModel: ImageViewModel
     
-    private let logger = AppLogger(category: "UI.EditContactView")
+    private let logger = AppLogger(category: "UI.EditProfileView")
 
     @State var profile: Contact
     @State private var showPhotoActionSheet: Bool = false
