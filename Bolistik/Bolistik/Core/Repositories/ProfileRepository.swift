@@ -19,7 +19,7 @@ final class ProfileRepository: ProfileRepositoryProtocol {
     
     // MARK: - Private Properties
     
-    private let logger = AppLogger(category: "Firestore")
+    private let logger = AppLogger(category: "ProfileRepository")
     private let firestoreService: FirestoreServiceProtocol
     
     init(firestoreService: FirestoreServiceProtocol) {
